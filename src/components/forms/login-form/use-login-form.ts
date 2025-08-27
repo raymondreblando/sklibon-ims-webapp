@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "@tanstack/react-router";
 
 import { login } from "@/services/api/auth";
-import { loginSchema, type LoginField } from "../schema";
+import { loginSchema, type LoginField } from "@/lib/schemas/login";
 import { handleRequestError } from "@/lib/error-handler";
 
 export const useLoginForm = () => {
