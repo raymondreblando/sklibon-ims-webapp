@@ -9,27 +9,87 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as MainIndexRouteImport } from './routes/main/index'
+import { Route as authIndexRouteImport } from './routes/(auth)/index'
+import { Route as authRegisterRouteImport } from './routes/(auth)/register'
 
-export interface FileRoutesByFullPath {}
-export interface FileRoutesByTo {}
+const MainIndexRoute = MainIndexRouteImport.update({
+  id: '/main/',
+  path: '/main/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const authIndexRoute = authIndexRouteImport.update({
+  id: '/(auth)/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const authRegisterRoute = authRegisterRouteImport.update({
+  id: '/(auth)/register',
+  path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+
+export interface FileRoutesByFullPath {
+  '/register': typeof authRegisterRoute
+  '/': typeof authIndexRoute
+  '/main': typeof MainIndexRoute
+}
+export interface FileRoutesByTo {
+  '/register': typeof authRegisterRoute
+  '/': typeof authIndexRoute
+  '/main': typeof MainIndexRoute
+}
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
+  '/(auth)/register': typeof authRegisterRoute
+  '/(auth)/': typeof authIndexRoute
+  '/main/': typeof MainIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: never
+  fullPaths: '/register' | '/' | '/main'
   fileRoutesByTo: FileRoutesByTo
-  to: never
-  id: '__root__'
+  to: '/register' | '/' | '/main'
+  id: '__root__' | '/(auth)/register' | '/(auth)/' | '/main/'
   fileRoutesById: FileRoutesById
 }
-export interface RootRouteChildren {}
-
-declare module '@tanstack/react-router' {
-  interface FileRoutesByPath {}
+export interface RootRouteChildren {
+  authRegisterRoute: typeof authRegisterRoute
+  authIndexRoute: typeof authIndexRoute
+  MainIndexRoute: typeof MainIndexRoute
 }
 
-const rootRouteChildren: RootRouteChildren = {}
+declare module '@tanstack/react-router' {
+  interface FileRoutesByPath {
+    '/main/': {
+      id: '/main/'
+      path: '/main'
+      fullPath: '/main'
+      preLoaderRoute: typeof MainIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(auth)/': {
+      id: '/(auth)/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof authIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(auth)/register': {
+      id: '/(auth)/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof authRegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+  }
+}
+
+const rootRouteChildren: RootRouteChildren = {
+  authRegisterRoute: authRegisterRoute,
+  authIndexRoute: authIndexRoute,
+  MainIndexRoute: MainIndexRoute,
+}
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
