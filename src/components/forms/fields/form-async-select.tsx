@@ -1,5 +1,8 @@
+import { cn } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
-import { useFormContext, type FieldValues, type Path } from "react-hook-form";
+import type { ApiResponse, FormField as FormFieldType } from "@/types";
+
+import { useFormContext, type FieldValues } from "react-hook-form";
 import {
   FormField,
   FormItem,
@@ -15,20 +18,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { cn } from "@/lib/utils";
-import type { ApiResponse } from "@/types";
-
-type FormAsyncSelectProps<T extends FieldValues, TData> = {
-  name: Path<T>;
-  label: string;
+interface FormAsyncSelectProps<T extends FieldValues, TData>
+  extends FormFieldType<T> {
   queryKey: unknown[];
   queryFn: () => Promise<ApiResponse<TData[]>>;
   labelKey: keyof TData;
   valueKey: keyof TData;
-  placeholder?: string;
-  className?: string;
   size?: "default" | "sm" | "lg" | "xl";
-};
+}
 
 export const FormAsyncSelect = <T extends FieldValues, TData>({
   name,
@@ -58,7 +55,7 @@ export const FormAsyncSelect = <T extends FieldValues, TData>({
       control={control}
       name={name}
       render={({ field, fieldState }) => (
-        <FormItem className={className}>
+        <FormItem className={cn("flex flex-col justify-start", className)}>
           <FormLabel className="text-base">{label}</FormLabel>
           <Select onValueChange={field.onChange} value={field.value}>
             <FormControl>

@@ -1,4 +1,7 @@
-import { useFormContext, type FieldValues, type Path } from "react-hook-form";
+import { cn } from "@/lib/utils";
+import { useFormContext, type FieldValues } from "react-hook-form";
+import type { FormField as FormFieldType } from "@/types";
+
 import {
   FormField,
   FormItem,
@@ -13,21 +16,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { cn } from "@/lib/utils";
 
 type Option = {
   key: string;
   value: string;
 };
 
-type FormSelectProps<T extends FieldValues> = {
-  name: Path<T>;
-  label: string;
+interface FormSelectProps<T extends FieldValues> extends FormFieldType<T> {
   options: Option[];
   size?: "default" | "sm" | "lg" | "xl";
-  placeholder?: string;
-  className?: string;
-};
+}
 
 export const FormSelect = <T extends FieldValues>({
   name,
@@ -44,7 +42,7 @@ export const FormSelect = <T extends FieldValues>({
       control={control}
       name={name}
       render={({ field, fieldState }) => (
-        <FormItem className={className}>
+        <FormItem className={cn("flex flex-col justify-start", className)}>
           <FormLabel className="text-base">{label}</FormLabel>
           <Select onValueChange={field.onChange} defaultValue={field.value}>
             <FormControl>

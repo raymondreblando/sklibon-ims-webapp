@@ -1,7 +1,11 @@
 import type { ReactElement } from "react";
 import type { VariantProps } from "class-variance-authority";
-import { useFormContext, type FieldValues, type Path } from "react-hook-form";
+
+import { cn } from "@/lib/utils";
+import { useFormContext, type FieldValues } from "react-hook-form";
 import { Input, inputVariants } from "@/components/ui/input";
+import type { FormField as FormFieldType, InputType } from "@/types";
+
 import {
   FormField,
   FormItem,
@@ -10,17 +14,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-export type FormInputProps<T extends FieldValues> = Pick<
-  VariantProps<typeof inputVariants>,
-  "variant"
-> & {
-  name: Path<T>;
-  label: string;
-  placeholder?: string;
-  className?: string;
-  type?: string;
+interface FormInputProps<T extends FieldValues>
+  extends FormFieldType<T>,
+    Pick<VariantProps<typeof inputVariants>, "variant"> {
+  type?: InputType;
   icon?: ReactElement;
-};
+}
 
 export const FormInput = <T extends FieldValues>({
   variant,
@@ -39,7 +38,7 @@ export const FormInput = <T extends FieldValues>({
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem className={className}>
+        <FormItem className={cn("flex flex-col justify-start", className)}>
           <FormLabel className="text-base">{label}</FormLabel>
           <div className="relative">
             {Icon && Icon}
