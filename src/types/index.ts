@@ -1,3 +1,4 @@
+import type { LucideIcon } from "lucide-react";
 import type { FieldValues, Path } from "react-hook-form";
 
 export type ApiResponse<T> = {
@@ -29,3 +30,16 @@ export type InputType =
   | "file"
   | "hidden"
   | "range";
+
+export interface SidebarItemProps {
+  title: string;
+  url: string;
+  authorize: string[];
+  icon?: LucideIcon;
+  isActive?: boolean;
+  items?: {
+    title: string;
+    url: string;
+    icon?: LucideIcon;
+  }[];
+}
