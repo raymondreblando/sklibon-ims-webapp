@@ -9,10 +9,10 @@ export const InternalError = () => {
         <img
           src={InterServerIcon}
           alt="Internal Server Error"
-          className="w-[400px]"
+          className="w-[320px] md:w-[400px]"
         />
-        <h1 className="text-4xl font-extrabold">Oops! Something went wrong.</h1>
-        <p className="text-muted text-base font-medium">
+        <h1 className="text-3xl md:text-4xl font-extrabold">Oops! Something went wrong.</h1>
+        <p className="text-muted text-sm md:text-base font-medium">
           An unexpected error occurred. Please try going back or return to the
           homepage.
         </p>
