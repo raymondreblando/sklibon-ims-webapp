@@ -14,7 +14,11 @@ export const NavMain = () => {
       <SidebarGroupLabel>Menus</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) =>
-          item.items ? <NavCollapsible item={item} /> : <NavItem item={item} />,
+          item.items ? (
+            <NavCollapsible key={item.title} item={item} />
+          ) : (
+            <NavItem key={item.title} item={item} />
+          ),
         )}
       </SidebarMenu>
     </SidebarGroup>
