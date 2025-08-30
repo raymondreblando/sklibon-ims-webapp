@@ -2,7 +2,7 @@ import { api } from "@/lib/axios";
 import type { ApiResponse } from "@/types";
 import type { AuthResponse } from "@/types/schema";
 
-import { API_ENDPOINTS } from "@/lib/api-constants";
+import { API_ENDPOINTS } from "@/lib/constants/api-constants";
 import type { LoginField } from "@/lib/schemas/login";
 import type { RegisterField } from "@/lib/schemas/register";
 

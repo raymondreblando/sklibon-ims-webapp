@@ -1,4 +1,4 @@
-import { ROLES } from "@/constants";
+import { ROLES } from "@/lib/constants";
 import type { SidebarItemProps } from "@/types";
 import {
   Award,

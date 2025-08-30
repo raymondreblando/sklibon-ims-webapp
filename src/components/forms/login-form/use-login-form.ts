@@ -5,7 +5,7 @@ import { useNavigate } from "@tanstack/react-router";
 
 import { login } from "@/services/api/auth";
 import { loginSchema, type LoginField } from "@/lib/schemas/login";
-import { handleRequestError } from "@/lib/error-handler";
+import { handleRequestError } from "@/lib/utils/error-handler";
 
 export const useLoginForm = () => {
   const navigate = useNavigate();

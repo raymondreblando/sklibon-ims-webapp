@@ -1,6 +1,6 @@
 import SKLogo from "@/assets/logo.webp";
 import { useSidebar } from "@/components/ui/sidebar";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/utils";
 
 export const SidebarLogo = () => {
   const { open } = useSidebar();

@@ -1,7 +1,7 @@
 import type { ReactElement } from "react";
 import type { VariantProps } from "class-variance-authority";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/utils";
 import { useFormContext, type FieldValues } from "react-hook-form";
 import { Input, inputVariants } from "@/components/ui/input";
 import type { FormField as FormFieldType, InputType } from "@/types";

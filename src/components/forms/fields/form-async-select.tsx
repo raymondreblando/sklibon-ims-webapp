@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/utils";
 import { useQuery } from "@tanstack/react-query";
 import type { ApiResponse, FormField as FormFieldType } from "@/types";
 

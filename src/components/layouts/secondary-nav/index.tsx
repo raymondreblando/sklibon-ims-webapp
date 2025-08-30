@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/utils";
 
 import { Chat } from "./chat";
 import { UserProfile } from "./user-profile";
@@ -11,7 +11,7 @@ export const SecondaryNav = () => {
   return (
     <nav
       className={cn(
-        "border-input shadow-sm shadow-background-muted flex w-full items-center justify-between border-b px-4 py-6",
+        "border-input shadow-background-muted flex w-full items-center justify-between border-b px-4 py-6 shadow-sm",
       )}
     >
       <div className="flex items-center gap-x-4">
