@@ -1,5 +1,11 @@
 import { Link } from "@tanstack/react-router";
-import { ImageUp, LogOut, RotateCcwKey, User } from "lucide-react";
+import {
+  ImageUp,
+  LogOut,
+  RotateCcwKey,
+  User,
+  type LucideIcon,
+} from "lucide-react";
 
 import { getAuthUser } from "@/lib/utils/auth";
 
@@ -11,34 +17,44 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useLogout } from "@/hooks/auth/use-logout";
 
-const menus = [
-  {
-    title: "My Profile",
-    url: "/profile",
-    icon: User,
-  },
-  {
-    title: "Change Profile",
-    url: "/profile",
-    icon: ImageUp,
-  },
-  {
-    title: "Account Security",
-    url: "/profile",
-    icon: RotateCcwKey,
-  },
-  {
-    title: "Sign Out",
-    url: "/profile",
-    icon: LogOut,
-  },
-];
+interface ProfileMenu {
+  title: string;
+  icon: LucideIcon;
+  url?: string;
+  action?: () => void;
+}
 
 export const UserProfile = () => {
   const authUser = getAuthUser();
   const username = authUser?.username;
   const profile = authUser?.profile;
+
+  const { handleSignOut } = useLogout();
+
+  const menus: ProfileMenu[] = [
+    {
+      title: "My Profile",
+      url: "/profile",
+      icon: User,
+    },
+    {
+      title: "Change Profile",
+      url: "/profile",
+      icon: ImageUp,
+    },
+    {
+      title: "Account Security",
+      url: "/profile",
+      icon: RotateCcwKey,
+    },
+    {
+      title: "Sign Out",
+      icon: LogOut,
+      action: handleSignOut,
+    },
+  ];
 
   return (
     <DropdownMenu>
@@ -70,9 +86,10 @@ export const UserProfile = () => {
           <DropdownMenuItem
             key={menu.title}
             className="group text-muted rounded-none px-4 py-2 font-medium"
+            onClick={menu.action}
           >
             <menu.icon className="text-muted group-hover:text-accent-foreground" />
-            <Link to={menu.url}>{menu.title}</Link>
+            {menu.url ? <Link to={menu.url}>{menu.title}</Link> : menu.title}
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>

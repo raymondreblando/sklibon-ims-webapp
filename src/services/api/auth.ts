@@ -22,3 +22,11 @@ export const register = async (data: RegisterField) => {
 
   return response;
 };
+
+export const logOut = async () => {
+  const { data: response } = await api.post<ApiResponse<null>>(
+    API_ENDPOINTS.AUTH.LOGOUT,
+  );
+
+  return response;
+};
