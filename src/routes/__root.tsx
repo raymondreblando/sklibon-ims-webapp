@@ -1,4 +1,4 @@
-import { NotFound } from "@/components/layouts/error-states";
+import { InternalError, NotFound } from "@/components/layouts/error-states";
 import { createRootRoute, Outlet } from "@tanstack/react-router";
 import { ToastContainer } from "react-toastify";
 
@@ -10,4 +10,5 @@ export const Route = createRootRoute({
     </main>
   ),
   notFoundComponent: NotFound,
+  errorComponent: InternalError,
 });
