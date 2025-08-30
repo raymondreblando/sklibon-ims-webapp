@@ -26,7 +26,7 @@ export const useLoginForm = () => {
         localStorage.setItem("user", JSON.stringify(data.user));
         localStorage.setItem("accessToken", data.accessToken);
 
-        navigate({ to: "/main", replace: true });
+        navigate({ to: "/dashboard", replace: true });
       } catch (error) {
         handleRequestError({ error, setError: form.setError });
       }
