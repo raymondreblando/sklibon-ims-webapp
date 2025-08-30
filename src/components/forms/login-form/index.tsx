@@ -1,10 +1,10 @@
 import { useLoginForm } from "./use-login-form";
-import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import { FormInput, FormPasswordInput } from "@/components/forms";
+import { FormButton, FormInput, FormPasswordInput } from "@/components/forms";
 
 export const LoginForm = () => {
   const { form, onSubmit } = useLoginForm();
+  const isSubmitting = form.formState.isSubmitting;
 
   return (
     <Form {...form}>
@@ -15,9 +15,14 @@ export const LoginForm = () => {
       >
         <FormInput variant="xl" name="username" label="Username" />
         <FormPasswordInput variant="xl" name="password" label="Password" />
-        <Button type="submit" size="xl" className="text-base">
-          Log In
-        </Button>
+        <FormButton
+          type="submit"
+          size="xl"
+          className="text-base"
+          isSubmitting={isSubmitting}
+        >
+          {isSubmitting ? "Logging in..." : "Log In"}
+        </FormButton>
       </form>
     </Form>
   );

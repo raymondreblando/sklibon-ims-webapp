@@ -1,11 +1,24 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, redirect } from "@tanstack/react-router";
 
 import { LoginForm } from "@/components/forms/login-form";
 import { AuthBranding } from "@/components/layouts/auth/auth-branding";
 import { Separator } from "@/components/ui/separator";
+import { isAuthenticated } from "@/lib/utils/auth";
 
 export const Route = createFileRoute("/(auth)/")({
+  validateSearch: (search: Record<string, unknown>) => {
+    return {
+      redirect: search.redirect ?? undefined,
+    };
+  },
   component: Index,
+  beforeLoad: async () => {
+    if (isAuthenticated()) {
+      throw redirect({
+        to: "/dashboard",
+      });
+    }
+  },
 });
 
 function Index() {

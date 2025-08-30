@@ -9,19 +9,24 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as MainIndexRouteImport } from './routes/main/index'
+import { Route as MainRouteImport } from './routes/_main'
 import { Route as authIndexRouteImport } from './routes/(auth)/index'
+import { Route as MainDashboardRouteImport } from './routes/_main/dashboard'
 import { Route as authRegisterRouteImport } from './routes/(auth)/register'
 
-const MainIndexRoute = MainIndexRouteImport.update({
-  id: '/main/',
-  path: '/main/',
+const MainRoute = MainRouteImport.update({
+  id: '/_main',
   getParentRoute: () => rootRouteImport,
 } as any)
 const authIndexRoute = authIndexRouteImport.update({
   id: '/(auth)/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const MainDashboardRoute = MainDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => MainRoute,
 } as any)
 const authRegisterRoute = authRegisterRouteImport.update({
   id: '/(auth)/register',
@@ -31,41 +36,47 @@ const authRegisterRoute = authRegisterRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/register': typeof authRegisterRoute
+  '/dashboard': typeof MainDashboardRoute
   '/': typeof authIndexRoute
-  '/main': typeof MainIndexRoute
 }
 export interface FileRoutesByTo {
   '/register': typeof authRegisterRoute
+  '/dashboard': typeof MainDashboardRoute
   '/': typeof authIndexRoute
-  '/main': typeof MainIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
+  '/_main': typeof MainRouteWithChildren
   '/(auth)/register': typeof authRegisterRoute
+  '/_main/dashboard': typeof MainDashboardRoute
   '/(auth)/': typeof authIndexRoute
-  '/main/': typeof MainIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/register' | '/' | '/main'
+  fullPaths: '/register' | '/dashboard' | '/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/register' | '/' | '/main'
-  id: '__root__' | '/(auth)/register' | '/(auth)/' | '/main/'
+  to: '/register' | '/dashboard' | '/'
+  id:
+    | '__root__'
+    | '/_main'
+    | '/(auth)/register'
+    | '/_main/dashboard'
+    | '/(auth)/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
+  MainRoute: typeof MainRouteWithChildren
   authRegisterRoute: typeof authRegisterRoute
   authIndexRoute: typeof authIndexRoute
-  MainIndexRoute: typeof MainIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/main/': {
-      id: '/main/'
-      path: '/main'
-      fullPath: '/main'
-      preLoaderRoute: typeof MainIndexRouteImport
+    '/_main': {
+      id: '/_main'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof MainRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/(auth)/': {
@@ -74,6 +85,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof authIndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_main/dashboard': {
+      id: '/_main/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof MainDashboardRouteImport
+      parentRoute: typeof MainRoute
     }
     '/(auth)/register': {
       id: '/(auth)/register'
@@ -85,10 +103,20 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface MainRouteChildren {
+  MainDashboardRoute: typeof MainDashboardRoute
+}
+
+const MainRouteChildren: MainRouteChildren = {
+  MainDashboardRoute: MainDashboardRoute,
+}
+
+const MainRouteWithChildren = MainRoute._addFileChildren(MainRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
+  MainRoute: MainRouteWithChildren,
   authRegisterRoute: authRegisterRoute,
   authIndexRoute: authIndexRoute,
-  MainIndexRoute: MainIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

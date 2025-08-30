@@ -1,4 +1,4 @@
-import { genders } from "@/constants";
+import { genders } from "@/lib/constants";
 import { getBarangays } from "@/services/api/location";
 import { getPositions } from "@/services/api/position";
 

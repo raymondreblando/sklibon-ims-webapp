@@ -2,7 +2,7 @@ import { api } from "@/lib/axios";
 import type { ApiResponse } from "@/types";
 import type { AuthResponse } from "@/types/schema";
 
-import { API_ENDPOINTS } from "@/lib/api-constants";
+import { API_ENDPOINTS } from "@/lib/constants/api-constants";
 import type { LoginField } from "@/lib/schemas/login";
 import type { RegisterField } from "@/lib/schemas/register";
 
@@ -19,6 +19,14 @@ export const register = async (data: RegisterField) => {
   const { data: response } = await api.post<
     ApiResponse<Omit<AuthResponse, "accessToken">>
   >(API_ENDPOINTS.AUTH.REGISTER, data);
+
+  return response;
+};
+
+export const logOut = async () => {
+  const { data: response } = await api.post<ApiResponse<null>>(
+    API_ENDPOINTS.AUTH.LOGOUT,
+  );
 
   return response;
 };

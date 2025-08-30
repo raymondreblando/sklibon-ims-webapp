@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { register } from "@/services/api/auth";
-import { handleRequestError } from "@/lib/error-handler";
+import { handleRequestError } from "@/lib/utils/error-handler";
 import { registerSchema, type RegisterField } from "@/lib/schemas/register";
 
 export const useRegisterForm = () => {

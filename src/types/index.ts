@@ -1,3 +1,4 @@
+import type { LucideIcon } from "lucide-react";
 import type { FieldValues, Path } from "react-hook-form";
 
 export type ApiResponse<T> = {
@@ -6,20 +7,44 @@ export type ApiResponse<T> = {
   data: T;
 };
 
-export type FormField<T extends FieldValues> = {
+export interface FormField<T extends FieldValues> {
   name: Path<T>;
   label: string;
-  type?: "text" | "password" | "select" | "async-select" | "textarea" | "date" | "datetime";
   placeholder?: string;
   className?: string;
-  options?: Option[];
-  queryKey?: unknown[];
-  queryFn?: () => Promise<ApiResponse<T[]>>;
-  optionValueKey?: string;
-  optionLabelKey?: string;
-};
+}
 
 export type Option = {
   key: string;
   value: string;
+};
+
+export type InputType =
+  | "text"
+  | "number"
+  | "email"
+  | "url"
+  | "tel"
+  | "search"
+  | "color"
+  | "file"
+  | "hidden"
+  | "range";
+
+export interface SidebarItemProps {
+  title: string;
+  url: string;
+  authorize: string[];
+  icon?: LucideIcon;
+  isActive?: boolean;
+  items?: {
+    title: string;
+    url: string;
+    icon?: LucideIcon;
+  }[];
+}
+
+export interface BreadcrumbItem {
+  title: string;
+  url?: string;
 }

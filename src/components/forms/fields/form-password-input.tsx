@@ -1,8 +1,11 @@
+import { cn } from "@/lib/utils/utils";
 import { useFormContext, type FieldValues } from "react-hook-form";
-import type { FormInputProps } from "./form-input";
 import { usePasswordInput } from "@/hooks/use-password-input";
 
-import { Input } from "@/components/ui/input";
+import type { FormField as FormFieldType } from "@/types";
+import type { VariantProps } from "class-variance-authority";
+
+import { Input, inputVariants } from "@/components/ui/input";
 import { Eye, EyeClosed } from "lucide-react";
 import {
   FormField,
@@ -11,12 +14,10 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
-import { cn } from "@/lib/utils";
 
-type FormPasswordInputProps<T extends FieldValues> = Omit<
-  FormInputProps<T>,
-  "icon" | "type"
->;
+interface FormPasswordInputProps<T extends FieldValues>
+  extends FormFieldType<T>,
+    Pick<VariantProps<typeof inputVariants>, "variant"> {}
 
 export const FormPasswordInput = <T extends FieldValues>({
   variant,
@@ -33,7 +34,7 @@ export const FormPasswordInput = <T extends FieldValues>({
       control={control}
       name={name}
       render={({ field, fieldState }) => (
-        <FormItem className={className}>
+        <FormItem className={cn("flex flex-col justify-start", className)}>
           <FormLabel className="text-base">{label}</FormLabel>
           <div className="relative">
             {showPassword ? (

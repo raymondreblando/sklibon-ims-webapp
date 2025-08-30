@@ -1,11 +1,13 @@
 import { Form } from "@/components/ui/form";
+import { FormButton } from "@/components/forms";
 import { useRegisterForm } from "./use-register-form";
-import { Button } from "@/components/ui/button";
+
 import UserInfo from "./user-info";
 import AccountInfo from "./account-info";
 
 export const RegisterForm = () => {
   const { form, onSubmit } = useRegisterForm();
+  const isSubmitting = form.formState.isSubmitting;
 
   return (
     <Form {...form}>
@@ -17,9 +19,14 @@ export const RegisterForm = () => {
           <UserInfo />
           <AccountInfo />
         </div>
-        <Button type="submit" size="xl" className="text-base">
-          Create account
-        </Button>
+        <FormButton
+          type="submit"
+          size="xl"
+          className="text-base"
+          isSubmitting={isSubmitting}
+        >
+          {isSubmitting ? "Creating account..." : "Create account"}
+        </FormButton>
       </form>
     </Form>
   );
