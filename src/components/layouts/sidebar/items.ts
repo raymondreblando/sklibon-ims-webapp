@@ -17,7 +17,7 @@ export const items: SidebarItemProps[] = [
   {
     title: "Dashboard",
     url: "/dashboard",
-    authorize: [ROLES.SUPERADMIN, ROLES.ADMIN],
+    authorize: [ROLES.SUPERADMIN, ROLES.ADMIN, ROLES.USER],
     icon: LayoutGrid,
     isActive: true,
   },
