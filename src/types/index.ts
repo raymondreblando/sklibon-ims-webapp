@@ -43,3 +43,8 @@ export interface SidebarItemProps {
     icon?: LucideIcon;
   }[];
 }
+
+export interface BreadcrumbItem {
+  title: string;
+  url?: string;
+}

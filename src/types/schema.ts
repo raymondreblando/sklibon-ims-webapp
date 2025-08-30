@@ -11,6 +11,16 @@ export type AuthResponse = {
   accessToken: string;
 };
 
+export type UserWithRelation = Omit<User, "createdAt"> & {
+  role: Role;
+  info: UserInfo & {
+    position: Omit<Position, "status" | "createdAt">;
+    province: Province;
+    municipality: Municipality;
+    barangay: Barangay;
+  };
+};
+
 export type Role = {
   id: string;
   role: string;
