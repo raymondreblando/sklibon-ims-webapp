@@ -7,8 +7,11 @@ import { login } from "@/services/api/auth";
 import { loginSchema, type LoginField } from "@/lib/schemas/login";
 import { handleRequestError } from "@/lib/utils/error-handler";
 
+import { Route } from "@/routes/(auth)";
+
 export const useLoginForm = () => {
   const navigate = useNavigate();
+  const search = Route.useSearch();
 
   const form = useForm<LoginField>({
     resolver: zodResolver(loginSchema),
@@ -26,12 +29,15 @@ export const useLoginForm = () => {
         localStorage.setItem("user", JSON.stringify(data.user));
         localStorage.setItem("accessToken", data.accessToken);
 
-        navigate({ to: "/dashboard", replace: true });
+        navigate({
+          to: (search.redirect as string | undefined) ?? "/dashboard",
+          replace: true,
+        });
       } catch (error) {
         handleRequestError({ error, setError: form.setError });
       }
     },
-    [form.setError, navigate],
+    [form.setError, search, navigate],
   );
 
   return { form, onSubmit };
