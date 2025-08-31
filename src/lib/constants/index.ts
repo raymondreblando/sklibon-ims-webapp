@@ -16,3 +16,14 @@ export const genders: Option[] = [
     value: "Female",
   },
 ];
+
+export const STATUSES: Option[] = [
+  {
+    key: "active",
+    value: "Active",
+  },
+  {
+    key: "inactive",
+    value: "Inactive",
+  },
+];

@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as MainRouteImport } from './routes/_main'
 import { Route as authIndexRouteImport } from './routes/(auth)/index'
+import { Route as MainPositionsRouteImport } from './routes/_main/positions'
 import { Route as MainDashboardRouteImport } from './routes/_main/dashboard'
 import { Route as authRegisterRouteImport } from './routes/(auth)/register'
 
@@ -22,6 +23,11 @@ const authIndexRoute = authIndexRouteImport.update({
   id: '/(auth)/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const MainPositionsRoute = MainPositionsRouteImport.update({
+  id: '/positions',
+  path: '/positions',
+  getParentRoute: () => MainRoute,
 } as any)
 const MainDashboardRoute = MainDashboardRouteImport.update({
   id: '/dashboard',
@@ -37,11 +43,13 @@ const authRegisterRoute = authRegisterRouteImport.update({
 export interface FileRoutesByFullPath {
   '/register': typeof authRegisterRoute
   '/dashboard': typeof MainDashboardRoute
+  '/positions': typeof MainPositionsRoute
   '/': typeof authIndexRoute
 }
 export interface FileRoutesByTo {
   '/register': typeof authRegisterRoute
   '/dashboard': typeof MainDashboardRoute
+  '/positions': typeof MainPositionsRoute
   '/': typeof authIndexRoute
 }
 export interface FileRoutesById {
@@ -49,18 +57,20 @@ export interface FileRoutesById {
   '/_main': typeof MainRouteWithChildren
   '/(auth)/register': typeof authRegisterRoute
   '/_main/dashboard': typeof MainDashboardRoute
+  '/_main/positions': typeof MainPositionsRoute
   '/(auth)/': typeof authIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/register' | '/dashboard' | '/'
+  fullPaths: '/register' | '/dashboard' | '/positions' | '/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/register' | '/dashboard' | '/'
+  to: '/register' | '/dashboard' | '/positions' | '/'
   id:
     | '__root__'
     | '/_main'
     | '/(auth)/register'
     | '/_main/dashboard'
+    | '/_main/positions'
     | '/(auth)/'
   fileRoutesById: FileRoutesById
 }
@@ -86,6 +96,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_main/positions': {
+      id: '/_main/positions'
+      path: '/positions'
+      fullPath: '/positions'
+      preLoaderRoute: typeof MainPositionsRouteImport
+      parentRoute: typeof MainRoute
+    }
     '/_main/dashboard': {
       id: '/_main/dashboard'
       path: '/dashboard'
@@ -105,10 +122,12 @@ declare module '@tanstack/react-router' {
 
 interface MainRouteChildren {
   MainDashboardRoute: typeof MainDashboardRoute
+  MainPositionsRoute: typeof MainPositionsRoute
 }
 
 const MainRouteChildren: MainRouteChildren = {
   MainDashboardRoute: MainDashboardRoute,
+  MainPositionsRoute: MainPositionsRoute,
 }
 
 const MainRouteWithChildren = MainRoute._addFileChildren(MainRouteChildren)

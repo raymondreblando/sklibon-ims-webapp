@@ -6,3 +6,5 @@ export { FormButton } from "./fields/form-button";
 
 export { LoginForm } from "./login-form";
 export { RegisterForm } from "./register-form";
+export { CreatePositionForm } from "./create-position-form";
+export { UpdatePositionForm } from "./update-position-form";

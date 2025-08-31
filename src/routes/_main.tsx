@@ -26,9 +26,11 @@ function RouteComponent() {
     <SidebarProvider>
       <AppSidebar />
       <BreadcrumbProvider>
-        <main className="w-full">
+        <main className="bg-background w-full">
           <SecondaryNav />
-          <Outlet />
+          <div>
+            <Outlet />
+          </div>
         </main>
       </BreadcrumbProvider>
     </SidebarProvider>
