@@ -2,6 +2,8 @@ import type React from "react";
 import type { PropsWithChildren } from "react";
 import type { DialogProps, DialogTitleProps } from "@radix-ui/react-dialog";
 
+import { cn } from "@/lib/utils/utils";
+
 import { Separator } from "@/components/ui/separator";
 import {
   Dialog,
@@ -10,7 +12,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { cn } from "@/lib/utils/utils";
 
 interface MainDialogProps extends PropsWithChildren {
   title: string;
