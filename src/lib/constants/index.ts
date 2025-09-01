@@ -6,7 +6,7 @@ export const ROLES = {
   USER: "User",
 };
 
-export const genders: Option[] = [
+export const GENDERS: Option[] = [
   {
     key: "Male",
     value: "Male",

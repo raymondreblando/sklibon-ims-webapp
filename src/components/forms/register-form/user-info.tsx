@@ -1,4 +1,4 @@
-import { genders } from "@/lib/constants";
+import { GENDERS } from "@/lib/constants";
 import { getBarangays } from "@/services/api/location";
 import { getPositions } from "@/services/api/position";
 
@@ -14,7 +14,7 @@ const UserInfo = () => {
         size="xl"
         name="info.gender"
         label="Gender"
-        options={genders}
+        options={GENDERS}
         placeholder="Select gender"
       />
       <FormAsyncSelect
