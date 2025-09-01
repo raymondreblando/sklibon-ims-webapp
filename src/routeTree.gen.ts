@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as MainRouteImport } from './routes/_main'
 import { Route as authIndexRouteImport } from './routes/(auth)/index'
+import { Route as MainRequestTypesRouteImport } from './routes/_main/request-types'
 import { Route as MainPositionsRouteImport } from './routes/_main/positions'
 import { Route as MainDashboardRouteImport } from './routes/_main/dashboard'
 import { Route as authRegisterRouteImport } from './routes/(auth)/register'
@@ -23,6 +24,11 @@ const authIndexRoute = authIndexRouteImport.update({
   id: '/(auth)/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const MainRequestTypesRoute = MainRequestTypesRouteImport.update({
+  id: '/request-types',
+  path: '/request-types',
+  getParentRoute: () => MainRoute,
 } as any)
 const MainPositionsRoute = MainPositionsRouteImport.update({
   id: '/positions',
@@ -44,12 +50,14 @@ export interface FileRoutesByFullPath {
   '/register': typeof authRegisterRoute
   '/dashboard': typeof MainDashboardRoute
   '/positions': typeof MainPositionsRoute
+  '/request-types': typeof MainRequestTypesRoute
   '/': typeof authIndexRoute
 }
 export interface FileRoutesByTo {
   '/register': typeof authRegisterRoute
   '/dashboard': typeof MainDashboardRoute
   '/positions': typeof MainPositionsRoute
+  '/request-types': typeof MainRequestTypesRoute
   '/': typeof authIndexRoute
 }
 export interface FileRoutesById {
@@ -58,19 +66,21 @@ export interface FileRoutesById {
   '/(auth)/register': typeof authRegisterRoute
   '/_main/dashboard': typeof MainDashboardRoute
   '/_main/positions': typeof MainPositionsRoute
+  '/_main/request-types': typeof MainRequestTypesRoute
   '/(auth)/': typeof authIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/register' | '/dashboard' | '/positions' | '/'
+  fullPaths: '/register' | '/dashboard' | '/positions' | '/request-types' | '/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/register' | '/dashboard' | '/positions' | '/'
+  to: '/register' | '/dashboard' | '/positions' | '/request-types' | '/'
   id:
     | '__root__'
     | '/_main'
     | '/(auth)/register'
     | '/_main/dashboard'
     | '/_main/positions'
+    | '/_main/request-types'
     | '/(auth)/'
   fileRoutesById: FileRoutesById
 }
@@ -95,6 +105,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof authIndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_main/request-types': {
+      id: '/_main/request-types'
+      path: '/request-types'
+      fullPath: '/request-types'
+      preLoaderRoute: typeof MainRequestTypesRouteImport
+      parentRoute: typeof MainRoute
     }
     '/_main/positions': {
       id: '/_main/positions'
@@ -123,11 +140,13 @@ declare module '@tanstack/react-router' {
 interface MainRouteChildren {
   MainDashboardRoute: typeof MainDashboardRoute
   MainPositionsRoute: typeof MainPositionsRoute
+  MainRequestTypesRoute: typeof MainRequestTypesRoute
 }
 
 const MainRouteChildren: MainRouteChildren = {
   MainDashboardRoute: MainDashboardRoute,
   MainPositionsRoute: MainPositionsRoute,
+  MainRequestTypesRoute: MainRequestTypesRoute,
 }
 
 const MainRouteWithChildren = MainRoute._addFileChildren(MainRouteChildren)

@@ -8,3 +8,5 @@ export { LoginForm } from "./login-form";
 export { RegisterForm } from "./register-form";
 export { CreatePositionForm } from "./create-position-form";
 export { UpdatePositionForm } from "./update-position-form";
+export { CreateRequestTypeForm } from "./request-type/create";
+export { UpdateRequestTypeForm } from "./request-type/update";
