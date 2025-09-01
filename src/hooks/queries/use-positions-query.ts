@@ -1,6 +1,7 @@
-import { getPositions } from "@/services/api/position";
 import { useQuery } from "@tanstack/react-query";
+import { getPositions } from "@/services/api/position";
+import { QUERY_KEYS } from "@/lib/constants/api-constants";
 
 export const usePositionsQuery = () => {
-  return useQuery({ queryKey: ["positions"], queryFn: getPositions });
+  return useQuery({ queryKey: [QUERY_KEYS.POSITIONS], queryFn: getPositions });
 };

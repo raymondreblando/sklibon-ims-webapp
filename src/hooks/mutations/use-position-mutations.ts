@@ -1,12 +1,15 @@
+import { toast } from "react-toastify";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
+import type { Position } from "@/types/schema";
+import { QUERY_KEYS } from "@/lib/constants/api-constants";
 import type { UpdatePositionField } from "@/lib/schemas/position";
+
 import {
   createPosition,
   deletePosition,
   updatePosition,
 } from "@/services/api/position";
-import type { Position } from "@/types/schema";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { toast } from "react-toastify";
 
 export const useCreatePositionMutation = () => {
   const queryClient = useQueryClient();
@@ -16,7 +19,7 @@ export const useCreatePositionMutation = () => {
     onSuccess: ({ data, message }) => {
       const newPosition = { ...data, status: "active" as const };
 
-      queryClient.setQueryData<{ data: Position[] }>(["positions"], (old) =>
+      queryClient.setQueryData<{ data: Position[] }>([QUERY_KEYS.POSITIONS], (old) =>
         old
           ? { ...old, data: [newPosition, ...old.data] }
           : { data: [newPosition] },
@@ -39,7 +42,7 @@ export const useUpdatePositionMutation = () => {
       data: UpdatePositionField;
     }) => updatePosition(id, data),
     onSuccess: ({ message }) => {
-      queryClient.invalidateQueries({ queryKey: ["positions"] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.POSITIONS] });
       toast.success(message);
     },
   });
@@ -51,7 +54,7 @@ export const useDeletePositionMutation = () => {
   return useMutation({
     mutationFn: deletePosition,
     onSuccess: ({ message }) => {
-      queryClient.invalidateQueries({ queryKey: ["positions"] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.POSITIONS] });
       toast.success(message);
     },
   });

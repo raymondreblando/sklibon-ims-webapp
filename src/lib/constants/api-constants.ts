@@ -8,3 +8,8 @@ export const API_ENDPOINTS = {
   REQUEST_TYPES: "/request-types",
   BARANGAYS: "/locations/barangays/01k359bjsr69emkza8xgr4x00y",
 };
+
+export const QUERY_KEYS = {
+  POSITIONS: "positions",
+  REQUEST_TYPES: "request-types",
+};
