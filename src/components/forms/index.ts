@@ -6,7 +6,7 @@ export { FormButton } from "./fields/form-button";
 
 export { LoginForm } from "./login-form";
 export { RegisterForm } from "./register-form";
-export { CreatePositionForm } from "./create-position-form";
-export { UpdatePositionForm } from "./update-position-form";
+export { CreatePositionForm } from "./position/create";
+export { UpdatePositionForm } from "./position/update";
 export { CreateRequestTypeForm } from "./request-type/create";
 export { UpdateRequestTypeForm } from "./request-type/update";
