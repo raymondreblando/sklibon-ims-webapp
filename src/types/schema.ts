@@ -54,6 +54,8 @@ export type Position = {
   createdAt: Date;
 };
 
+export type RequestType = Position;
+
 export type Province = {
   id: string;
   name: string;
