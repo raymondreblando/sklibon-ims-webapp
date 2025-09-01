@@ -48,3 +48,14 @@ export interface BreadcrumbItem {
   title: string;
   url?: string;
 }
+
+export interface TableProps<TData> {
+  onUpdate?: (resource: TData) => void;
+  onDelete?: (reource: TData) => void;
+}
+
+export interface ModalProps<TData = undefined> {
+  isOpen: boolean;
+  onClose: () => void;
+  data?: TData;
+}

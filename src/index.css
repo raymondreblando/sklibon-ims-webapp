@@ -26,6 +26,7 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
+  --color-success: var(--success);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
@@ -48,13 +49,13 @@
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
-  --background-muted: oklch(0.9816 0.0086 264.52);
+  --background-muted: oklch(0.9782 0.0034 247.86);
   --foreground: oklch(0.2183 0.0121 270.81);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.2183 0.0121 270.81);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.2183 0.0121 270.81);
-  --primary: oklch(0.3922 0.1924 262.72);
+  --primary: oklch(39.222% 0.1925 262.737);
   --primary-foreground: oklch(1 0 0);
   --secondary: oklch(0.7045 0.1926 39.23);
   --secondary-foreground: oklch(0 0 0);
@@ -63,6 +64,7 @@
   --accent: oklch(0.6057 0.224 285.06);
   --accent-foreground: oklch(1 0 0);
   --destructive: oklch(0.5887 0.2145 26.93);
+  --success: oklch(69.6% 0.17 162.48);
   --border: oklch(0.8348 0.0314 265.3);
   --input: oklch(0.929 0.013 255.508);
   --ring: oklch(0.9303 0.0259 266.61);
@@ -81,8 +83,8 @@
   --sidebar-ring: oklch(0.704 0.04 256.788);
   --font-main: "DM Sans", sans-serif;
 
-  --toastify-color-success: var(--color-chart-2);
-  --toastify-color-warning: var(--color-chart-5);
+  --toastify-color-success: var(--success);
+  --toastify-color-warning: var(--secondary);
   --toastify-color-error: var(--destructive);
 }
 

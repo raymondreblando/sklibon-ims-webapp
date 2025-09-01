@@ -11,7 +11,7 @@ export const SecondaryNav = () => {
   return (
     <nav
       className={cn(
-        "border-input shadow-background-muted flex w-full items-center justify-between border-b px-4 py-6 shadow-sm",
+        "flex w-full items-center justify-between bg-white px-4 py-6 shadow-sm",
       )}
     >
       <div className="flex items-center gap-x-4">
