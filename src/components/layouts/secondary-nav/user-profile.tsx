@@ -7,6 +7,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
+import { useLogout } from "@/hooks/auth/use-logout";
 import { getAuthUser } from "@/lib/utils/auth";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -17,7 +18,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useLogout } from "@/hooks/auth/use-logout";
 
 interface ProfileMenu {
   title: string;
