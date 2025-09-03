@@ -12,7 +12,7 @@ interface FormWrapperProps<T extends FieldValues> {
   onSubmit: (values: T) => Promise<void>;
   children: React.ReactElement | React.ReactElement[];
   buttonText: { idle: string; submitting: string };
-  buttonProps?: FormButtonProps;
+  buttonProps?: Partial<FormButtonProps>;
   formProps?: ComponentProps<"form">;
 }
 

@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const loginSchema = z.object({
+export const LoginSchema = z.object({
   username: z.string().min(1, {
     message: "The username field is required.",
   }),
@@ -9,4 +9,4 @@ export const loginSchema = z.object({
   }),
 });
 
-export type LoginField = z.infer<typeof loginSchema>;
+export type LoginField = z.infer<typeof LoginSchema>;
