@@ -14,7 +14,7 @@ export const UserInfoSchema = z.object({
     .max(100, {
       message: "Lastname must not be greater than 100 characters.",
     }),
-  gender: z.string().min(1, { message: "Select a gender." }),
+  gender: z.string().min(1, { message: "Please select a valid gender." }),
   age: z.coerce.number().min(1, { message: "The age field is required." }),
   phone_number: z
     .string()
@@ -23,13 +23,21 @@ export const UserInfoSchema = z.object({
   birthdate: z.date().min(new Date("1900-01-01"), {
     message: "Please enter a birthdate after January 1, 1900.",
   }),
-  position_id: z.string().min(1, { message: "Select a position." }),
+  position_id: z
+    .string()
+    .min(1, { message: "Please select a valid position." }),
 });
 
 export const AddressSchema = z.object({
-  province_id: z.string().min(1, { message: "Select a province." }),
-  municipality_id: z.string().min(1, { message: "Select a municipality." }),
-  barangay_id: z.string().min(1, { message: "Select a barangay." }),
+  province_id: z
+    .string()
+    .min(1, { message: "Please select a valid province." }),
+  municipality_id: z
+    .string()
+    .min(1, { message: "Please select a valid municipality." }),
+  barangay_id: z
+    .string()
+    .min(1, { message: "Please select a valid barangay." }),
   additional_address: z.string().optional(),
 });
 

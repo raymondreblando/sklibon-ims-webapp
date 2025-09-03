@@ -5,11 +5,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { register } from "@/services/api/auth";
 import { handleRequestError } from "@/lib/utils/error-handler";
-import { registerSchema, type RegisterField } from "@/lib/schemas/register";
+import { RegisterSchema, type RegisterField } from "@/lib/schemas/register";
 
 export const useRegisterForm = () => {
   const form = useForm<RegisterField>({
-    resolver: zodResolver(registerSchema),
+    resolver: zodResolver(RegisterSchema),
     defaultValues: {
       account: {
         username: "",
