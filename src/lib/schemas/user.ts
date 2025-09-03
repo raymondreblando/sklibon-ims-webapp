@@ -15,7 +15,7 @@ export const UserInfoSchema = z.object({
       message: "Lastname must not be greater than 100 characters.",
     }),
   gender: z.string().min(1, { message: "Please select a valid gender." }),
-  age: z.coerce.number().min(1, { message: "The age field is required." }),
+  age: z.number().min(1, { message: "The age field is required." }),
   phone_number: z
     .string()
     .min(11, { message: "Please provide a valid phone number." })
@@ -70,21 +70,28 @@ export const AccountSchema = z
     path: ["password_confirmation"],
   });
 
+const InfoSchema = z.object({
+  ...AddressSchema.shape,
+  ...UserInfoSchema.shape,
+});
+
 export const CreateUserSchema = z.object({
-  info: {
-    ...AddressSchema.shape,
-    ...UserInfoSchema.shape,
-  },
+  info: InfoSchema,
   account: AccountSchema.omit({ status: true }),
 });
 
 export const UpdateUserSchema = z.object({
-  info: {
-    ...AddressSchema.shape,
-    ...UserInfoSchema.shape,
-  },
+  info: InfoSchema,
   account: AccountSchema,
+});
+
+export const UserProfileSchema = z.object({
+  info: InfoSchema,
+  account: z.object({
+    ...AccountSchema.pick({ username: true, email: true }).shape,
+  }),
 });
 
 export type CreateUserField = z.infer<typeof CreateUserSchema>;
 export type UpdateUserField = z.infer<typeof UpdateUserSchema>;
+export type UserProfileField = z.infer<typeof UserProfileSchema>;
