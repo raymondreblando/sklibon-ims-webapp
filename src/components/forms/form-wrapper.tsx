@@ -1,4 +1,5 @@
 import type React from "react";
+import type { ComponentProps } from "react";
 import type { FieldValues, UseFormReturn } from "react-hook-form";
 import type { FormButtonProps } from "@/components/forms/fields/form-button";
 
@@ -9,18 +10,18 @@ import { FormButton } from "@/components/forms";
 interface FormWrapperProps<T extends FieldValues> {
   form: UseFormReturn<T>;
   onSubmit: (values: T) => Promise<void>;
-  children: React.ReactNode;
-  resource: string;
-  actions?: [string, string];
+  children: React.ReactElement;
+  buttonText: { idle: string; submitting: string };
   buttonProps?: FormButtonProps;
+  formProps?: ComponentProps<"form">;
 }
 
 export const FormWrapper = <T extends FieldValues>({
   form,
   onSubmit,
   buttonProps,
-  resource,
-  actions = ["create", "creating"],
+  formProps,
+  buttonText,
   children,
 }: FormWrapperProps<T>) => {
   const isSubmitting = form.formState.isSubmitting;
@@ -29,19 +30,18 @@ export const FormWrapper = <T extends FieldValues>({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-y-3"
         autoComplete="off"
+        {...formProps}
+        className={cn("flex flex-col gap-y-3", formProps?.className)}
       >
         {children}
         <FormButton
           type="submit"
-          className={cn("text-base normal-case", buttonProps?.className)}
-          isSubmitting={isSubmitting}
           {...buttonProps}
+          isSubmitting={isSubmitting}
+          className={cn("text-base normal-case", buttonProps?.className)}
         >
-          {isSubmitting
-            ? `${actions[1]} ${resource}...`
-            : `${actions[0]} ${resource}`}
+          {isSubmitting ? buttonText.submitting : buttonText.idle}
         </FormButton>
       </form>
     </Form>
