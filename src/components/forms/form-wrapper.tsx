@@ -10,7 +10,7 @@ import { FormButton } from "@/components/forms";
 interface FormWrapperProps<T extends FieldValues> {
   form: UseFormReturn<T>;
   onSubmit: (values: T) => Promise<void>;
-  children: React.ReactElement;
+  children: React.ReactElement | React.ReactElement[];
   buttonText: { idle: string; submitting: string };
   buttonProps?: FormButtonProps;
   formProps?: ComponentProps<"form">;
