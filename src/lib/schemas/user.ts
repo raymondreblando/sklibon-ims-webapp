@@ -15,14 +15,18 @@ export const UserInfoSchema = z.object({
       message: "Lastname must not be greater than 100 characters.",
     }),
   gender: z.string().min(1, { message: "Please select a valid gender." }),
-  age: z.number().min(1, { message: "The age field is required." }),
+  age: z
+    .number({ error: "The age field is required." })
+    .min(1, { message: "The age field is required." }),
   phone_number: z
     .string()
     .min(11, { message: "Please provide a valid phone number." })
     .max(11, { message: "Please provide a valid phone number." }),
-  birthdate: z.date().min(new Date("1900-01-01"), {
-    message: "Please enter a birthdate after January 1, 1900.",
-  }),
+  birthdate: z
+    .date({ error: "The birthdate field is required." })
+    .min(new Date("1900-01-01"), {
+      message: "Please enter a birthdate after January 1, 1900.",
+    }),
   position_id: z
     .string()
     .min(1, { message: "Please select a valid position." }),

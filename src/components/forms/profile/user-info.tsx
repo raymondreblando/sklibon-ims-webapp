@@ -7,19 +7,19 @@ import {
   FormDatePicker,
   FormInput,
   FormSelect,
+  FormHeading,
+  FormSubheading,
 } from "@/components/forms";
 
 export const UserInfo = () => {
   return (
-    <div className="border-input rounded-md border p-8">
+    <div className="border-input flex flex-col gap-y-4 rounded-md md:border md:p-8">
       <div>
-        <h3 className="text-sm font-semibold md:text-base">
-          Personal Information
-        </h3>
-        <p className="text-muted text-xs md:text-sm">
+        <FormHeading>Personal Information</FormHeading>
+        <FormSubheading>
           Your basic details like name, date of birth, and contact number. Keep
           them accurate and up to date.
-        </p>
+        </FormSubheading>
       </div>
       <div className="grid gap-4 md:grid-cols-2">
         <FormInput name="info.firstname" label="Firstname" />

@@ -22,11 +22,11 @@ export const ProfileForm = () => {
         className: "max-w-[800px] flex flex-col gap-y-8 p-8 mx-auto",
       }}
     >
-      <div className="text-center">
-        <h1 className="text-3xl font-bold">
+      <div className="text-left md:text-center">
+        <h1 className="text-xl font-bold md:text-3xl">
           Welcome Back, {user?.info.firstname}
         </h1>
-        <p className="text-muted font-mdeium text-base">
+        <p className="text-muted font-mdeium text-sm md:text-base">
           Keep your profile up to date — edit your name, email, and address
           anytime.
         </p>
@@ -34,7 +34,6 @@ export const ProfileForm = () => {
       <UserInfo />
       <AddressInfo />
       <AccountInfo />
-      <div className="grid gap-4 md:grid-cols-2"></div>
     </FormWrapper>
   );
 };

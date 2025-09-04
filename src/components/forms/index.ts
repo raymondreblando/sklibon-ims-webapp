@@ -4,6 +4,8 @@ export { FormPasswordInput } from "./fields/form-password-input";
 export { FormSelect } from "./fields/form-select";
 export { FormButton } from "./fields/form-button";
 export { FormDatePicker } from "./fields/form-date-picker";
+export { FormHeading } from "./headings/form-heading";
+export { FormSubheading } from "./headings/subheading";
 export { FormWrapper } from "./form-wrapper";
 
 export { LoginForm } from "./login-form";

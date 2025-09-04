@@ -46,7 +46,7 @@ export const FormDatePicker = <T extends FieldValues>({
       name={name}
       render={({ field }) => (
         <FormItem className={cn("flex flex-col justify-start", className)}>
-          <FormLabel>{label}</FormLabel>
+          <FormLabel className="text-base">{label}</FormLabel>
           <Popover>
             <PopoverTrigger asChild>
               <FormControl>
@@ -54,7 +54,7 @@ export const FormDatePicker = <T extends FieldValues>({
                   variant={"outline"}
                   {...buttonProps}
                   className={cn(
-                    "w-[240px] pl-3 text-left font-normal",
+                    "hover:text-foreground w-full pl-3 text-left font-normal hover:bg-sidebar",
                     !field.value && "text-muted-foreground",
                     buttonProps?.className,
                   )}
@@ -62,7 +62,7 @@ export const FormDatePicker = <T extends FieldValues>({
                   {field.value ? (
                     format(field.value, dateFormat ?? "PPP")
                   ) : (
-                    <span>{placeholder}</span>
+                    <span>{placeholder ?? "Pick a date"}</span>
                   )}
                   <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                 </Button>
