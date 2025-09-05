@@ -4,11 +4,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { getAuthUser } from "@/lib/utils/auth";
 import { handleRequestError } from "@/lib/utils/error-handler";
-import { useUpdateUserMutation } from "@/hooks/mutations/use-users-mutations";
+import { useUpdateProfileMutation } from "@/hooks/mutations/use-account-mutation";
 import { UserProfileSchema, type UserProfileField } from "@/lib/schemas/user";
 
 export const useProfileForm = () => {
-  const mutation = useUpdateUserMutation();
+  const mutation = useUpdateProfileMutation();
   const user = getAuthUser();
 
   const form = useForm<UserProfileField>({
@@ -30,7 +30,7 @@ export const useProfileForm = () => {
         province_id: user?.info.province.id,
         municipality_id: user?.info.municipality.id,
         barangay_id: user?.info.barangay.id,
-        additional_address: user?.info.additionalAddress,
+        addtional_address: user?.info.additionalAddress ?? "",
       },
     },
   });
@@ -38,13 +38,14 @@ export const useProfileForm = () => {
   const onSubmit = useCallback(
     async (values: UserProfileField) => {
       try {
-        await mutation.mutateAsync({ id: user?.id, data: values });
-        form.reset();
+        const { data } = await mutation.mutateAsync(values);
+
+        localStorage.setItem("user", JSON.stringify(data));
       } catch (error) {
         handleRequestError({ error, setError: form.setError });
       }
     },
-    [form, mutation, user],
+    [form, mutation],
   );
 
   return { form, onSubmit };

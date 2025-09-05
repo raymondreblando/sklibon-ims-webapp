@@ -1,4 +1,4 @@
-import type { ComponentProps } from "react";
+import { useState, type ComponentProps } from "react";
 import type { VariantProps } from "class-variance-authority";
 import type { DayPickerProps } from "react-day-picker";
 import type { FormField as FormFieldType } from "@/types";
@@ -26,7 +26,7 @@ import {
 interface FormDatePicker<T extends FieldValues> extends FormFieldType<T> {
   dateFormat?: string;
   buttonProps?: ComponentProps<"button"> & VariantProps<typeof buttonVariants>;
-  calendarProps?: DayPickerProps;
+  calendarProps?: Omit<DayPickerProps, "mode">;
 }
 
 export const FormDatePicker = <T extends FieldValues>({
@@ -39,6 +39,7 @@ export const FormDatePicker = <T extends FieldValues>({
   calendarProps,
 }: FormDatePicker<T>) => {
   const { control } = useFormContext();
+  const [open, setOpen] = useState(false);
 
   return (
     <FormField
@@ -47,14 +48,14 @@ export const FormDatePicker = <T extends FieldValues>({
       render={({ field }) => (
         <FormItem className={cn("flex flex-col justify-start", className)}>
           <FormLabel className="text-base">{label}</FormLabel>
-          <Popover>
+          <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
               <FormControl>
                 <Button
                   variant={"outline"}
                   {...buttonProps}
                   className={cn(
-                    "hover:text-foreground w-full pl-3 text-left font-normal hover:bg-sidebar",
+                    "hover:text-foreground hover:bg-sidebar w-full pl-3 text-left font-normal",
                     !field.value && "text-muted-foreground",
                     buttonProps?.className,
                   )}
@@ -72,11 +73,16 @@ export const FormDatePicker = <T extends FieldValues>({
               <Calendar
                 mode="single"
                 selected={field.value}
-                onSelect={field.onChange}
+                onSelect={(date) => {
+                  field.onChange(date ? format(date, "yyyy-MM-dd") : undefined);
+                  setOpen(false);
+                }}
                 disabled={(date) =>
                   date > new Date() || date < new Date("1900-01-01")
                 }
                 captionLayout="dropdown"
+                defaultMonth={field.value ?? new Date()}
+                timeZone="Asia/Manila"
                 {...calendarProps}
               />
             </PopoverContent>

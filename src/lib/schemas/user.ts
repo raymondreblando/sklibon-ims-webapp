@@ -22,11 +22,7 @@ export const UserInfoSchema = z.object({
     .string()
     .min(11, { message: "Please provide a valid phone number." })
     .max(11, { message: "Please provide a valid phone number." }),
-  birthdate: z
-    .date({ error: "The birthdate field is required." })
-    .min(new Date("1900-01-01"), {
-      message: "Please enter a birthdate after January 1, 1900.",
-    }),
+  birthdate: z.string().min(1, { message: "The birthdate field is required." }),
   position_id: z
     .string()
     .min(1, { message: "Please select a valid position." }),
@@ -42,7 +38,7 @@ export const AddressSchema = z.object({
   barangay_id: z
     .string()
     .min(1, { message: "Please select a valid barangay." }),
-  additional_address: z.string().optional(),
+  addtional_address: z.string().optional(),
 });
 
 export const AccountSchema = z

@@ -4,6 +4,9 @@ export const API_ENDPOINTS = {
     REGISTER: "/auth/register",
     LOGOUT: "/auth/logout",
   },
+  ACCOUNT: {
+    PROFILE: "/account/update-profile"
+  },
   USERS: "/users",
   POSITIONS: "/positions",
   REQUEST_TYPES: "/request-types",

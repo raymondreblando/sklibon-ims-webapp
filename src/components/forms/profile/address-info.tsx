@@ -50,7 +50,7 @@ export const AddressInfo = () => {
           valueKey="id"
         />
         <FormInput
-          name="info.additional_address"
+          name="info.addtional_address"
           label="Additional"
           placeholder="Optional"
         />

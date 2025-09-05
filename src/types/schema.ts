@@ -43,7 +43,7 @@ export type UserInfo = {
   gender: "Male" | "Female";
   age: number;
   phoneNumber: string;
-  birthdate: Date;
+  birthdate: string;
   additionalAddress: string;
 };
 
