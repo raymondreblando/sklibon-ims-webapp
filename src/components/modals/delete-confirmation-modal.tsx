@@ -1,7 +1,5 @@
-import type React from "react";
-import type { SetStateAction } from "react";
-
 import { cn } from "@/lib/utils/utils";
+import { useModal } from "@/contexts/modal-context";
 
 import { Loader2Icon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -14,8 +12,6 @@ import {
 } from "@/components/ui/dialog";
 
 interface DeleteConfirmationDialogProps {
-  open: boolean;
-  onOpenChange: React.Dispatch<SetStateAction<boolean>>;
   onConfirm: () => void;
   isConfirming: boolean;
   message?: string;
@@ -23,16 +19,20 @@ interface DeleteConfirmationDialogProps {
 }
 
 export const DeleteConfirmationDialog = ({
-  open,
-  onOpenChange,
   onConfirm,
   isConfirming,
   title,
   message,
 }: DeleteConfirmationDialogProps) => {
+  const { hide } = useModal();
+
+  const handleConfirm = () => {
+    onConfirm();
+    hide();
+  };
+
   return (
     <MainDialog
-      dialogProps={{ open: open, onOpenChange: onOpenChange }}
       title={title ?? "Delete Confirmation"}
       titleProps={{ className: "text-destructive" }}
     >
@@ -54,7 +54,7 @@ export const DeleteConfirmationDialog = ({
         </DialogClose>
         <Button
           type="button"
-          onClick={onConfirm}
+          onClick={handleConfirm}
           className={cn(isConfirming ? "cursor-progress" : "cursor-auto")}
           {...(isConfirming && { disabled: true })}
         >

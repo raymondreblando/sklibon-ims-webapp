@@ -8,9 +8,11 @@ import {
   createPositionSchema,
   type CreatePositionField,
 } from "@/lib/schemas/position";
+import { useModal } from "@/contexts/modal-context";
 
 export const useCreatePositionForm = () => {
   const mutation = useCreatePositionMutation();
+  const { hide } = useModal();
 
   const form = useForm<CreatePositionField>({
     resolver: zodResolver(createPositionSchema),
@@ -23,12 +25,12 @@ export const useCreatePositionForm = () => {
     async (values: CreatePositionField) => {
       try {
         await mutation.mutateAsync(values);
-        form.reset();
+        hide();
       } catch (error) {
         handleRequestError({ error, setError: form.setError });
       }
     },
-    [form, mutation],
+    [hide, mutation],
   );
 
   return { form, onSubmit };

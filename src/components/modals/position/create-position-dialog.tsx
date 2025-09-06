@@ -1,16 +1,20 @@
+import { useModal } from "@/contexts/modal-context";
+
 import { Button } from "@/components/ui/button";
-import { DialogTrigger } from "@/components/ui/dialog";
 import { MainDialog } from "@/components/modals/main-dialog";
 import { CreatePositionForm } from "@/components/forms";
 
 export const CreatePositionDialog = () => {
+  const { show } = useModal();
+
+  return (
+    <Button onClick={() => show(<Content />)}>Create Position</Button>
+  );
+};
+
+const Content = () => {
   return (
     <MainDialog
-      triggerComp={
-        <DialogTrigger asChild>
-          <Button>Create Position</Button>
-        </DialogTrigger>
-      }
       title="Create Position"
       description="Fill up the form below."
     >
