@@ -4,7 +4,7 @@ import type { VariantProps } from "class-variance-authority";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils/utils";
 
-interface FormButtonProps
+export interface FormButtonProps
   extends ComponentProps<"button">,
     VariantProps<typeof buttonVariants> {
   isSubmitting: boolean;

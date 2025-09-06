@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "@tanstack/react-router";
 
 import { login } from "@/services/api/auth";
-import { loginSchema, type LoginField } from "@/lib/schemas/login";
+import { LoginSchema, type LoginField } from "@/lib/schemas/login";
 import { handleRequestError } from "@/lib/utils/error-handler";
 
 import { Route } from "@/routes/(auth)";
@@ -14,7 +14,7 @@ export const useLoginForm = () => {
   const search = Route.useSearch();
 
   const form = useForm<LoginField>({
-    resolver: zodResolver(loginSchema),
+    resolver: zodResolver(LoginSchema),
     defaultValues: {
       username: "",
       password: "",

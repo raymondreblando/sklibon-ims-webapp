@@ -1,10 +1,18 @@
 import { api } from "@/lib/axios";
 import type { ApiResponse } from "@/types";
-import type { AuthResponse } from "@/types/schema";
+import type { AuthResponse, ImagekitAuthParams } from "@/types/schema";
 
 import { API_ENDPOINTS } from "@/lib/constants/api-constants";
 import type { LoginField } from "@/lib/schemas/login";
 import type { RegisterField } from "@/lib/schemas/register";
+
+export const imagekitAuth = async () => {
+  const { data: response } = await api.get<ApiResponse<ImagekitAuthParams>>(
+    API_ENDPOINTS.AUTH.IMAGEKIT,
+  );
+
+  return response;
+};
 
 export const login = async (data: LoginField) => {
   const { data: response } = await api.post<ApiResponse<AuthResponse>>(

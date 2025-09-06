@@ -3,6 +3,7 @@ import type { PropsWithChildren } from "react";
 import type { DialogProps, DialogTitleProps } from "@radix-ui/react-dialog";
 
 import { cn } from "@/lib/utils/utils";
+import { useDialogContext } from "@/contexts/dialog-context";
 
 import { Separator } from "@/components/ui/separator";
 import {
@@ -29,8 +30,10 @@ export const MainDialog = ({
   titleProps,
   children,
 }: MainDialogProps) => {
+  const { open, setOpen } = useDialogContext();
+
   return (
-    <Dialog {...dialogProps}>
+    <Dialog open={open} onOpenChange={setOpen} {...dialogProps}>
       {triggerComp}
       <DialogContent>
         <DialogHeader>
