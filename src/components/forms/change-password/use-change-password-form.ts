@@ -8,9 +8,11 @@ import {
   ChangePasswordSchema,
   type ChangePasswordField,
 } from "@/lib/schemas/user";
+import { useDialogContext } from "@/contexts/dialog-context";
 
 export const useChangePasswordForm = () => {
   const mutation = useChangePasswordMutation();
+  const { setOpen } = useDialogContext();
 
   const form = useForm<ChangePasswordField>({
     resolver: zodResolver(ChangePasswordSchema),
@@ -26,11 +28,12 @@ export const useChangePasswordForm = () => {
       try {
         await mutation.mutateAsync(values);
         form.reset();
+        setOpen(false);
       } catch (error) {
         handleRequestError({ error, setError: form.setError });
       }
     },
-    [mutation, form],
+    [mutation, form, setOpen],
   );
 
   return { form, onSubmit };
