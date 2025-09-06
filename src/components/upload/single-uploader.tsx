@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { FileTextIcon, ImageIcon } from "lucide-react";
-import { useImageKitAuth } from "@/hooks/auth/use-imagekit-auth";
 
 import { Progress } from "@/components/ui/progress";
 import { Uploader } from "./uploader";
