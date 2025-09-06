@@ -3,10 +3,12 @@ export const API_ENDPOINTS = {
     LOGIN: "/auth/login",
     REGISTER: "/auth/register",
     LOGOUT: "/auth/logout",
+    IMAGEKIT: "/auth/imagekit",
   },
   ACCOUNT: {
     PROFILE: "/account/update-profile",
     CHANGE_PASSWORD: "/account/change-password",
+    CHANGE_PROFILE: "/account/change-profile-picture",
   },
   USERS: "/users",
   POSITIONS: "/positions",

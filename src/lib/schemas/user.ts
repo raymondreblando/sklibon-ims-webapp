@@ -107,7 +107,12 @@ export const ChangePasswordSchema = z
     path: ["new_password_confirmation"],
   });
 
+export const ChangeProfilePicSchema = z.object({
+  profile: z.string().min(1, { message: "Please upload a profile picture." }),
+});
+
 export type CreateUserField = z.infer<typeof CreateUserSchema>;
 export type UpdateUserField = z.infer<typeof UpdateUserSchema>;
 export type UserProfileField = z.infer<typeof UserProfileSchema>;
 export type ChangePasswordField = z.infer<typeof ChangePasswordSchema>;
+export type ChangeProfilePicField = z.infer<typeof ChangeProfilePicSchema>;

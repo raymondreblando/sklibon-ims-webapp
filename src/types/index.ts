@@ -59,3 +59,15 @@ export type InputType =
   | "file"
   | "hidden"
   | "range";
+
+export type ImagekitAuthParams = {
+  token: string;
+  expire: number;
+  signature: string;
+};
+
+export type UploadProgress = {
+  name: string;
+  file: File;
+  progress: number;
+};

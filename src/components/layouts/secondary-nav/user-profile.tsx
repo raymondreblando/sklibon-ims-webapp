@@ -1,11 +1,11 @@
 import type { JSX } from "react";
 import { Link } from "@tanstack/react-router";
-import { ImageUp, LogOut, User, type LucideIcon } from "lucide-react";
+import { LogOut, User, type LucideIcon } from "lucide-react";
 
 import { useLogout } from "@/hooks/auth/use-logout";
 import { getAuthUser } from "@/lib/utils/auth";
 
-import { ChangePasswordDialog } from "@/components/modals";
+import { ChangePasswordDialog, ChangeProfileDialog } from "@/components/modals";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -37,9 +37,8 @@ export const UserProfile = () => {
       icon: User,
     },
     {
-      title: "Change Profile",
-      url: "/profile",
-      icon: ImageUp,
+      title: "Change Profile Picture",
+      modal: ChangeProfileDialog,
     },
     {
       title: "Account Security",
@@ -80,7 +79,7 @@ export const UserProfile = () => {
         <DropdownMenuSeparator />
         {menus.map((menu) =>
           menu.modal ? (
-            <menu.modal />
+            <menu.modal key={menu.title} />
           ) : (
             <DropdownMenuItem
               key={menu.title}
