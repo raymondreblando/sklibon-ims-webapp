@@ -4,15 +4,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { handleRequestError } from "@/lib/utils/error-handler";
 import { useChangePasswordMutation } from "@/hooks/mutations/use-account-mutation";
+import { useModal } from "@/contexts/modal-context";
 import {
   ChangePasswordSchema,
   type ChangePasswordField,
 } from "@/lib/schemas/user";
-import { useDialogContext } from "@/contexts/dialog-context";
 
 export const useChangePasswordForm = () => {
+  const { hide } = useModal();
   const mutation = useChangePasswordMutation();
-  const { setOpen } = useDialogContext();
 
   const form = useForm<ChangePasswordField>({
     resolver: zodResolver(ChangePasswordSchema),
@@ -27,13 +27,12 @@ export const useChangePasswordForm = () => {
     async (values: ChangePasswordField) => {
       try {
         await mutation.mutateAsync(values);
-        form.reset();
-        setOpen(false);
+        hide();
       } catch (error) {
         handleRequestError({ error, setError: form.setError });
       }
     },
-    [mutation, form, setOpen],
+    [mutation, form, hide],
   );
 
   return { form, onSubmit };

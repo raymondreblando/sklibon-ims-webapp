@@ -1,4 +1,3 @@
-import type { JSX } from "react";
 import { Link } from "@tanstack/react-router";
 import { LogOut, User, type LucideIcon } from "lucide-react";
 
@@ -20,7 +19,7 @@ interface ProfileMenu {
   icon?: LucideIcon;
   url?: string;
   action?: () => void;
-  modal?: () => JSX.Element;
+  modal?: React.ReactElement;
 }
 
 export const UserProfile = () => {
@@ -38,11 +37,11 @@ export const UserProfile = () => {
     },
     {
       title: "Change Profile Picture",
-      modal: ChangeProfileDialog,
+      modal: <ChangeProfileDialog />,
     },
     {
       title: "Account Security",
-      modal: ChangePasswordDialog,
+      modal: <ChangePasswordDialog />,
     },
     {
       title: "Sign Out",
@@ -79,7 +78,7 @@ export const UserProfile = () => {
         <DropdownMenuSeparator />
         {menus.map((menu) =>
           menu.modal ? (
-            <menu.modal key={menu.title} />
+            menu.modal
           ) : (
             <DropdownMenuItem
               key={menu.title}
