@@ -2,13 +2,14 @@ import { useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import { useModal } from "@/contexts/modal-context";
+
 import { handleRequestError } from "@/lib/utils/error-handler";
 import { useCreatePositionMutation } from "@/hooks/mutations/use-position-mutations";
 import {
   createPositionSchema,
   type CreatePositionField,
 } from "@/lib/schemas/position";
-import { useModal } from "@/contexts/modal-context";
 
 export const useCreatePositionForm = () => {
   const mutation = useCreatePositionMutation();
@@ -30,7 +31,7 @@ export const useCreatePositionForm = () => {
         handleRequestError({ error, setError: form.setError });
       }
     },
-    [hide, mutation],
+    [hide, mutation, form],
   );
 
   return { form, onSubmit };
