@@ -7,17 +7,12 @@ import { CreatePositionForm } from "@/components/forms";
 export const CreatePositionDialog = () => {
   const { show } = useModal();
 
-  return (
-    <Button onClick={() => show(<Content />)}>Create Position</Button>
-  );
+  return <Button onClick={() => show(<Content />)}>Create Position</Button>;
 };
 
 const Content = () => {
   return (
-    <MainDialog
-      title="Create Position"
-      description="Fill up the form below."
-    >
+    <MainDialog title="Create Position" description="Fill up the form below.">
       <CreatePositionForm />
     </MainDialog>
   );
