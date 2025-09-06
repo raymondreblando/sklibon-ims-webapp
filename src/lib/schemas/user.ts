@@ -92,6 +92,22 @@ export const UserProfileSchema = z.object({
   }),
 });
 
+export const ChangePasswordSchema = z
+  .object({
+    current_password: z
+      .string()
+      .min(1, { message: "Please provide your current account password." }),
+    new_password: z
+      .string()
+      .min(8, { message: "New password must be at least 8 characters." }),
+    new_password_confirmation: z.string(),
+  })
+  .refine((data) => data.new_password === data.new_password_confirmation, {
+    message: "Password not matched.",
+    path: ["new_password_confirmation"],
+  });
+
 export type CreateUserField = z.infer<typeof CreateUserSchema>;
 export type UpdateUserField = z.infer<typeof UpdateUserSchema>;
 export type UserProfileField = z.infer<typeof UserProfileSchema>;
+export type ChangePasswordField = z.infer<typeof ChangePasswordSchema>;

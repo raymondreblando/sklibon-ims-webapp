@@ -1,15 +1,11 @@
+import type { JSX } from "react";
 import { Link } from "@tanstack/react-router";
-import {
-  ImageUp,
-  LogOut,
-  RotateCcwKey,
-  User,
-  type LucideIcon,
-} from "lucide-react";
+import { ImageUp, LogOut, User, type LucideIcon } from "lucide-react";
 
 import { useLogout } from "@/hooks/auth/use-logout";
 import { getAuthUser } from "@/lib/utils/auth";
 
+import { ChangePasswordDialog } from "@/components/modals";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -20,10 +16,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 interface ProfileMenu {
-  title: string;
-  icon: LucideIcon;
+  title?: string;
+  icon?: LucideIcon;
   url?: string;
   action?: () => void;
+  modal?: () => JSX.Element;
 }
 
 export const UserProfile = () => {
@@ -46,8 +43,7 @@ export const UserProfile = () => {
     },
     {
       title: "Account Security",
-      url: "/profile",
-      icon: RotateCcwKey,
+      modal: ChangePasswordDialog,
     },
     {
       title: "Sign Out",
@@ -82,16 +78,22 @@ export const UserProfile = () => {
           </div>
         </div>
         <DropdownMenuSeparator />
-        {menus.map((menu) => (
-          <DropdownMenuItem
-            key={menu.title}
-            className="group text-muted rounded-none px-4 py-2 font-medium"
-            onClick={menu.action}
-          >
-            <menu.icon className="text-muted group-hover:text-accent-foreground" />
-            {menu.url ? <Link to={menu.url}>{menu.title}</Link> : menu.title}
-          </DropdownMenuItem>
-        ))}
+        {menus.map((menu) =>
+          menu.modal ? (
+            <menu.modal />
+          ) : (
+            <DropdownMenuItem
+              key={menu.title}
+              className="group text-muted rounded-none px-4 py-2 font-medium"
+              onClick={menu.action}
+            >
+              {menu.icon && (
+                <menu.icon className="text-muted group-hover:text-accent-foreground" />
+              )}
+              {menu.url ? <Link to={menu.url}>{menu.title}</Link> : menu.title}
+            </DropdownMenuItem>
+          ),
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );

@@ -2,7 +2,7 @@ import { toast } from "react-toastify";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { QUERY_KEYS } from "@/lib/constants/api-constants";
-import { updateProfile } from "@/services/api/accounts";
+import { changePassword, updateProfile } from "@/services/api/accounts";
 
 export const useUpdateProfileMutation = () => {
   const queryClient = useQueryClient();
@@ -13,6 +13,15 @@ export const useUpdateProfileMutation = () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.USER_PROFILE],
       });
+      toast.success(message);
+    },
+  });
+};
+
+export const useChangePasswordMutation = () => {
+  return useMutation({
+    mutationFn: changePassword,
+    onSuccess: ({ message }) => {
       toast.success(message);
     },
   });
