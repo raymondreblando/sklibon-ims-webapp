@@ -1,6 +1,9 @@
 import type React from "react";
 import type { PropsWithChildren } from "react";
-import type { DialogTitleProps } from "@radix-ui/react-dialog";
+import type {
+  DialogContentProps,
+  DialogTitleProps,
+} from "@radix-ui/react-dialog";
 
 import { cn } from "@/lib/utils/utils";
 import { useModal } from "@/contexts/modal-context";
@@ -16,6 +19,10 @@ import {
 
 interface MainDialogProps extends PropsWithChildren {
   title: string;
+  contentProps?: DialogContentProps &
+    React.RefAttributes<HTMLDivElement> & {
+      showCloseButton?: boolean;
+    };
   titleProps?: DialogTitleProps & React.RefAttributes<HTMLHeadingElement>;
   description?: string;
 }
@@ -23,6 +30,7 @@ interface MainDialogProps extends PropsWithChildren {
 export const MainDialog = ({
   title,
   description,
+  contentProps,
   titleProps,
   children,
 }: MainDialogProps) => {
@@ -30,7 +38,7 @@ export const MainDialog = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={hide}>
-      <DialogContent>
+      <DialogContent {...contentProps}>
         <DialogHeader>
           <DialogTitle
             className={cn("font-bold", titleProps?.className)}
