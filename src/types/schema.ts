@@ -56,6 +56,11 @@ export type Position = {
 
 export type RequestType = Position;
 
+export type Hotline = Pick<Position, "id" | "name" | "status"> & {
+  abbreviation: string;
+  hotline: string;
+};
+
 export type Province = {
   id: string;
   name: string;

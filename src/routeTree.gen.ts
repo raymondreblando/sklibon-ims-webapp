@@ -14,7 +14,9 @@ import { Route as authIndexRouteImport } from './routes/(auth)/index'
 import { Route as MainRequestTypesRouteImport } from './routes/_main/request-types'
 import { Route as MainProfileRouteImport } from './routes/_main/profile'
 import { Route as MainPositionsRouteImport } from './routes/_main/positions'
+import { Route as MainHotlinesRouteImport } from './routes/_main/hotlines'
 import { Route as MainDashboardRouteImport } from './routes/_main/dashboard'
+import { Route as guestLibonHotlinesRouteImport } from './routes/(guest)/libon-hotlines'
 import { Route as authRegisterRouteImport } from './routes/(auth)/register'
 
 const MainRoute = MainRouteImport.update({
@@ -41,10 +43,20 @@ const MainPositionsRoute = MainPositionsRouteImport.update({
   path: '/positions',
   getParentRoute: () => MainRoute,
 } as any)
+const MainHotlinesRoute = MainHotlinesRouteImport.update({
+  id: '/hotlines',
+  path: '/hotlines',
+  getParentRoute: () => MainRoute,
+} as any)
 const MainDashboardRoute = MainDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
   getParentRoute: () => MainRoute,
+} as any)
+const guestLibonHotlinesRoute = guestLibonHotlinesRouteImport.update({
+  id: '/(guest)/libon-hotlines',
+  path: '/libon-hotlines',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const authRegisterRoute = authRegisterRouteImport.update({
   id: '/(auth)/register',
@@ -54,7 +66,9 @@ const authRegisterRoute = authRegisterRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/register': typeof authRegisterRoute
+  '/libon-hotlines': typeof guestLibonHotlinesRoute
   '/dashboard': typeof MainDashboardRoute
+  '/hotlines': typeof MainHotlinesRoute
   '/positions': typeof MainPositionsRoute
   '/profile': typeof MainProfileRoute
   '/request-types': typeof MainRequestTypesRoute
@@ -62,7 +76,9 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/register': typeof authRegisterRoute
+  '/libon-hotlines': typeof guestLibonHotlinesRoute
   '/dashboard': typeof MainDashboardRoute
+  '/hotlines': typeof MainHotlinesRoute
   '/positions': typeof MainPositionsRoute
   '/profile': typeof MainProfileRoute
   '/request-types': typeof MainRequestTypesRoute
@@ -72,7 +88,9 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_main': typeof MainRouteWithChildren
   '/(auth)/register': typeof authRegisterRoute
+  '/(guest)/libon-hotlines': typeof guestLibonHotlinesRoute
   '/_main/dashboard': typeof MainDashboardRoute
+  '/_main/hotlines': typeof MainHotlinesRoute
   '/_main/positions': typeof MainPositionsRoute
   '/_main/profile': typeof MainProfileRoute
   '/_main/request-types': typeof MainRequestTypesRoute
@@ -82,7 +100,9 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/register'
+    | '/libon-hotlines'
     | '/dashboard'
+    | '/hotlines'
     | '/positions'
     | '/profile'
     | '/request-types'
@@ -90,7 +110,9 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/register'
+    | '/libon-hotlines'
     | '/dashboard'
+    | '/hotlines'
     | '/positions'
     | '/profile'
     | '/request-types'
@@ -99,7 +121,9 @@ export interface FileRouteTypes {
     | '__root__'
     | '/_main'
     | '/(auth)/register'
+    | '/(guest)/libon-hotlines'
     | '/_main/dashboard'
+    | '/_main/hotlines'
     | '/_main/positions'
     | '/_main/profile'
     | '/_main/request-types'
@@ -109,6 +133,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   MainRoute: typeof MainRouteWithChildren
   authRegisterRoute: typeof authRegisterRoute
+  guestLibonHotlinesRoute: typeof guestLibonHotlinesRoute
   authIndexRoute: typeof authIndexRoute
 }
 
@@ -149,12 +174,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainPositionsRouteImport
       parentRoute: typeof MainRoute
     }
+    '/_main/hotlines': {
+      id: '/_main/hotlines'
+      path: '/hotlines'
+      fullPath: '/hotlines'
+      preLoaderRoute: typeof MainHotlinesRouteImport
+      parentRoute: typeof MainRoute
+    }
     '/_main/dashboard': {
       id: '/_main/dashboard'
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof MainDashboardRouteImport
       parentRoute: typeof MainRoute
+    }
+    '/(guest)/libon-hotlines': {
+      id: '/(guest)/libon-hotlines'
+      path: '/libon-hotlines'
+      fullPath: '/libon-hotlines'
+      preLoaderRoute: typeof guestLibonHotlinesRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/(auth)/register': {
       id: '/(auth)/register'
@@ -168,6 +207,7 @@ declare module '@tanstack/react-router' {
 
 interface MainRouteChildren {
   MainDashboardRoute: typeof MainDashboardRoute
+  MainHotlinesRoute: typeof MainHotlinesRoute
   MainPositionsRoute: typeof MainPositionsRoute
   MainProfileRoute: typeof MainProfileRoute
   MainRequestTypesRoute: typeof MainRequestTypesRoute
@@ -175,6 +215,7 @@ interface MainRouteChildren {
 
 const MainRouteChildren: MainRouteChildren = {
   MainDashboardRoute: MainDashboardRoute,
+  MainHotlinesRoute: MainHotlinesRoute,
   MainPositionsRoute: MainPositionsRoute,
   MainProfileRoute: MainProfileRoute,
   MainRequestTypesRoute: MainRequestTypesRoute,
@@ -185,6 +226,7 @@ const MainRouteWithChildren = MainRoute._addFileChildren(MainRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   MainRoute: MainRouteWithChildren,
   authRegisterRoute: authRegisterRoute,
+  guestLibonHotlinesRoute: guestLibonHotlinesRoute,
   authIndexRoute: authIndexRoute,
 }
 export const routeTree = rootRouteImport
