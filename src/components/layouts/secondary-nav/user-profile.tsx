@@ -13,6 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useUserProfilePicQuery } from "@/hooks/queries/use-users-query";
 
 interface ProfileMenu {
   title?: string;
@@ -23,9 +24,9 @@ interface ProfileMenu {
 }
 
 export const UserProfile = () => {
+  const { data: profile } = useUserProfilePicQuery();
   const authUser = getAuthUser();
   const username = authUser?.username;
-  const profile = authUser?.profile;
 
   const { handleSignOut } = useLogout();
 
@@ -54,7 +55,7 @@ export const UserProfile = () => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Avatar className="h-7 w-7">
-          <AvatarImage src={profile as string} />
+          <AvatarImage src={profile ?? ""} />
           <AvatarFallback className="bg-primary text-primary-foreground">
             {username?.charAt(0).toUpperCase()}
           </AvatarFallback>
@@ -63,7 +64,7 @@ export const UserProfile = () => {
       <DropdownMenuContent align="end" className="p-0 pb-1">
         <div className="flex items-center gap-x-3 p-4">
           <Avatar className="h-10 w-10">
-            <AvatarImage src={profile as string} />
+            <AvatarImage src={profile ?? ""} />
             <AvatarFallback className="bg-primary text-primary-foreground">
               {username?.charAt(0).toUpperCase()}
             </AvatarFallback>

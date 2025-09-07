@@ -1,6 +1,5 @@
 import { toast } from "react-toastify";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { getAuthUser } from "@/lib/utils/auth";
 
 import { QUERY_KEYS } from "@/lib/constants/api-constants";
 import {
@@ -33,13 +32,12 @@ export const useChangePasswordMutation = () => {
 };
 
 export const useChangeProfilePicMutation = () => {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: changeProfilePicture,
     onSuccess: ({ message, data }) => {
-      const user = getAuthUser();
-      const newUser = { ...user, profile: data.profile };
-      localStorage.setItem("user", JSON.stringify(newUser));
-      
+      queryClient.setQueryData([QUERY_KEYS.PROFILE_PIC], data.profile);
       toast.success(message);
     },
   });
