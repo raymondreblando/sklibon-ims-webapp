@@ -30,9 +30,16 @@ export const useChangeProfilePicForm = () => {
 
   const onSubmit = useCallback(async () => {
     try {
+      if (!files?.length) {
+        form.setError("profile", {
+          message: "Please select a profile picture to upload.",
+        });
+        return;
+      }
+
       const abortController = new AbortController();
 
-      const url = await uploadFile(files?.[0] as File, abortController.signal);
+      const url = await uploadFile(files[0], abortController.signal);
       await mutation.mutateAsync({ profile: url });
       hide();
     } catch (error) {

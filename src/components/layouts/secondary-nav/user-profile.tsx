@@ -3,6 +3,7 @@ import { LogOut, User, type LucideIcon } from "lucide-react";
 
 import { useLogout } from "@/hooks/auth/use-logout";
 import { getAuthUser } from "@/lib/utils/auth";
+import { useUserProfilePicQuery } from "@/hooks/queries/use-users-query";
 
 import { ChangePasswordDialog, ChangeProfileDialog } from "@/components/modals";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -13,7 +14,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useUserProfilePicQuery } from "@/hooks/queries/use-users-query";
 
 interface ProfileMenu {
   title?: string;
