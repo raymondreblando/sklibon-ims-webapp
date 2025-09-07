@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import type { UploadProgress } from "@/types";
-import { useUpload } from "./use-upload";
+import { useUpload } from "./use-upload-file";
 
 import type {
   FieldValues,
@@ -13,14 +13,12 @@ interface UseUploadProps<T extends FieldValues> {
   folder: string;
   field: Path<T>;
   setValue: UseFormSetValue<T>;
-  defaultFilename?: string;
 }
 
 export const useSingleUpload = <T extends FieldValues>({
   folder,
   field,
   setValue,
-  defaultFilename,
 }: UseUploadProps<T>) => {
   const [upload, setUpload] = useState<UploadProgress | null>(null);
   const { uploadFile, ...uploadState } = useUpload({ folder });
@@ -29,24 +27,7 @@ export const useSingleUpload = <T extends FieldValues>({
     (file: File) => {
       const abortController = new AbortController();
 
-      const newUploads: UploadProgress = {
-        name: file.name,
-        file: file,
-        progress: 0,
-      };
-      setUpload(newUploads);
-
-      const onProgress = (progress: number) => {
-        setUpload((prevUpload) => {
-          if (!prevUpload) return null;
-          return {
-            ...prevUpload,
-            progress: progress === 100 ? 99 : progress,
-          };
-        });
-      };
-
-      uploadFile(file, onProgress, abortController.signal, defaultFilename)
+      uploadFile(file, onProgress, abortController.signal)
         .then((fileUrl) => {
           setValue(field, fileUrl as PathValue<T, Path<T>>, {
             shouldValidate: true,
@@ -65,7 +46,7 @@ export const useSingleUpload = <T extends FieldValues>({
           }),
         );
     },
-    [field, setValue, uploadFile, defaultFilename],
+    [field, setValue, uploadFile],
   );
 
   return { upload, handleUpload, ...uploadState };

@@ -107,9 +107,20 @@ export const ChangePasswordSchema = z
     path: ["new_password_confirmation"],
   });
 
-export const ChangeProfilePicSchema = z.object({
-  profile: z.string().min(1, { message: "Please upload a profile picture." }),
-});
+export const ChangeProfilePicSchema = z
+  .object({
+    profile: z.string().optional(),
+    hasSelectedFile: z.boolean().optional(),
+  })
+  .superRefine((data, ctx) => {
+    if (!data.profile && !data.hasSelectedFile) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["profile"],
+        message: "Please select a profile picture to upload.",
+      });
+    }
+  });
 
 export type CreateUserField = z.infer<typeof CreateUserSchema>;
 export type UpdateUserField = z.infer<typeof UpdateUserSchema>;

@@ -1,5 +1,6 @@
 import { ImageUpIcon } from "lucide-react";
 import { useModal } from "@/contexts/modal-context";
+import { UploadProvider } from "@/contexts/upload-context";
 
 import { Button } from "@/components/ui/button";
 import { MainDialog } from "@/components/modals/main-dialog";
@@ -23,10 +24,13 @@ export const ChangeProfileDialog = () => {
 const Content = () => {
   return (
     <MainDialog
+      contentProps={{ className: "w-[min(100%,360px)]" }}
       title="Change Account Profile"
       description="Upload a new photo to personalize your profile."
     >
-      <ChangeProfilePicForm />
+      <UploadProvider uploadFolder="/sklibon-ims/profiles/">
+        <ChangeProfilePicForm />
+      </UploadProvider>
     </MainDialog>
   );
 };
