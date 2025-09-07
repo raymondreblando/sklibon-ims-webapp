@@ -1,6 +1,6 @@
 import { GENDERS } from "@/lib/constants";
-import { getBarangays } from "@/services/api/location";
-import { getPositions } from "@/services/api/position";
+import { getBarangays } from "@/services/api/locations";
+import { getPositions } from "@/services/api/positions";
 
 import { FormAsyncSelect, FormInput, FormSelect } from "@/components/forms";
 

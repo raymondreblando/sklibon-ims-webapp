@@ -9,7 +9,7 @@ import {
   createPosition,
   deletePosition,
   updatePosition,
-} from "@/services/api/position";
+} from "@/services/api/positions";
 
 export const useCreatePositionMutation = () => {
   const queryClient = useQueryClient();
@@ -19,10 +19,12 @@ export const useCreatePositionMutation = () => {
     onSuccess: ({ data, message }) => {
       const newPosition = { ...data, status: "active" as const };
 
-      queryClient.setQueryData<{ data: Position[] }>([QUERY_KEYS.POSITIONS], (old) =>
-        old
-          ? { ...old, data: [newPosition, ...old.data] }
-          : { data: [newPosition] },
+      queryClient.setQueryData<{ data: Position[] }>(
+        [QUERY_KEYS.POSITIONS],
+        (old) =>
+          old
+            ? { ...old, data: [newPosition, ...old.data] }
+            : { data: [newPosition] },
       );
 
       toast.success(message);

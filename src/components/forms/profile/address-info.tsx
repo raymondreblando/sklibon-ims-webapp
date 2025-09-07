@@ -3,7 +3,7 @@ import {
   getBarangays,
   getMunicipalities,
   getProvinces,
-} from "@/services/api/location";
+} from "@/services/api/locations";
 
 import {
   FormAsyncSelect,
