@@ -26,4 +26,5 @@ export const QUERY_KEYS = {
   REQUEST_TYPES: "request-types",
   USERS: "users",
   USER_PROFILE: "user-profile",
+  PROFILE_PIC: "profile-pic",
 };

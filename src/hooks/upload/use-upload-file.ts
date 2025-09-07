@@ -3,6 +3,7 @@ import { useCallback } from "react";
 import { v4 as uuidV4 } from "uuid";
 
 import { imagekitAuth } from "@/services/api/auth";
+import { useUpload } from "@/contexts/upload-context";
 
 import {
   ImageKitAbortError,
@@ -12,24 +13,17 @@ import {
   upload,
 } from "@imagekit/react";
 
-interface UseUploadProps {
-  folder: string;
-}
+export const useUploadFile = () => {
+  const { folder } = useUpload();
 
-export const useUpload = ({ folder }: UseUploadProps) => {
   const uploadFile = useCallback(
-    async (
-      file: File,
-      onProgress: (progress: number) => void,
-      abortSignal: AbortSignal,
-      defaultFilename?: string,
-    ) => {
+    async (file: File, abortSignal: AbortSignal) => {
       const uuid = uuidV4();
 
       try {
         const { data: authParams } = await imagekitAuth();
 
-        const filename = defaultFilename ?? `${uuid}-${file.name}`;
+        const filename = `${uuid}-${file.name}`;
 
         const response = await upload({
           ...authParams,
@@ -38,10 +32,6 @@ export const useUpload = ({ folder }: UseUploadProps) => {
           fileName: filename,
           folder: folder,
           useUniqueFileName: false,
-          onProgress: (progress) => {
-            const percentage = (progress.loaded / progress.total) * 100;
-            onProgress(percentage);
-          },
           abortSignal: abortSignal,
         });
 

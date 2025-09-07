@@ -1,9 +1,12 @@
 import type React from "react";
 import type { PropsWithChildren } from "react";
-import type { DialogProps, DialogTitleProps } from "@radix-ui/react-dialog";
+import type {
+  DialogContentProps,
+  DialogTitleProps,
+} from "@radix-ui/react-dialog";
 
 import { cn } from "@/lib/utils/utils";
-import { useDialogContext } from "@/contexts/dialog-context";
+import { useModal } from "@/contexts/modal-context";
 
 import { Separator } from "@/components/ui/separator";
 import {
@@ -16,8 +19,10 @@ import {
 
 interface MainDialogProps extends PropsWithChildren {
   title: string;
-  triggerComp?: React.ReactElement;
-  dialogProps?: DialogProps;
+  contentProps?: DialogContentProps &
+    React.RefAttributes<HTMLDivElement> & {
+      showCloseButton?: boolean;
+    };
   titleProps?: DialogTitleProps & React.RefAttributes<HTMLHeadingElement>;
   description?: string;
 }
@@ -25,17 +30,15 @@ interface MainDialogProps extends PropsWithChildren {
 export const MainDialog = ({
   title,
   description,
-  triggerComp,
-  dialogProps,
+  contentProps,
   titleProps,
   children,
 }: MainDialogProps) => {
-  const { open, setOpen } = useDialogContext();
+  const { isOpen, hide } = useModal();
 
   return (
-    <Dialog open={open} onOpenChange={setOpen} {...dialogProps}>
-      {triggerComp}
-      <DialogContent>
+    <Dialog open={isOpen} onOpenChange={hide}>
+      <DialogContent {...contentProps}>
         <DialogHeader>
           <DialogTitle
             className={cn("font-bold", titleProps?.className)}

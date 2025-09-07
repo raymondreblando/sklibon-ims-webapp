@@ -1,9 +1,9 @@
-import type { JSX } from "react";
 import { Link } from "@tanstack/react-router";
 import { LogOut, User, type LucideIcon } from "lucide-react";
 
 import { useLogout } from "@/hooks/auth/use-logout";
 import { getAuthUser } from "@/lib/utils/auth";
+import { useUserProfilePicQuery } from "@/hooks/queries/use-users-query";
 
 import { ChangePasswordDialog, ChangeProfileDialog } from "@/components/modals";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -20,13 +20,13 @@ interface ProfileMenu {
   icon?: LucideIcon;
   url?: string;
   action?: () => void;
-  modal?: () => JSX.Element;
+  modal?: React.ReactElement;
 }
 
 export const UserProfile = () => {
+  const { data: profile } = useUserProfilePicQuery();
   const authUser = getAuthUser();
   const username = authUser?.username;
-  const profile = authUser?.profile;
 
   const { handleSignOut } = useLogout();
 
@@ -38,11 +38,11 @@ export const UserProfile = () => {
     },
     {
       title: "Change Profile Picture",
-      modal: ChangeProfileDialog,
+      modal: <ChangeProfileDialog />,
     },
     {
       title: "Account Security",
-      modal: ChangePasswordDialog,
+      modal: <ChangePasswordDialog />,
     },
     {
       title: "Sign Out",
@@ -55,7 +55,7 @@ export const UserProfile = () => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Avatar className="h-7 w-7">
-          <AvatarImage src={profile as string} />
+          <AvatarImage src={profile ?? ""} />
           <AvatarFallback className="bg-primary text-primary-foreground">
             {username?.charAt(0).toUpperCase()}
           </AvatarFallback>
@@ -64,7 +64,7 @@ export const UserProfile = () => {
       <DropdownMenuContent align="end" className="p-0 pb-1">
         <div className="flex items-center gap-x-3 p-4">
           <Avatar className="h-10 w-10">
-            <AvatarImage src={profile as string} />
+            <AvatarImage src={profile ?? ""} />
             <AvatarFallback className="bg-primary text-primary-foreground">
               {username?.charAt(0).toUpperCase()}
             </AvatarFallback>
@@ -79,7 +79,7 @@ export const UserProfile = () => {
         <DropdownMenuSeparator />
         {menus.map((menu) =>
           menu.modal ? (
-            <menu.modal key={menu.title} />
+            menu.modal
           ) : (
             <DropdownMenuItem
               key={menu.title}

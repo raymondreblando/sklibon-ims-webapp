@@ -9,7 +9,7 @@ import {
   createRequestType,
   deleteRequestType,
   updateRequestType,
-} from "@/services/api/request-type";
+} from "@/services/api/request-types";
 
 export const useCreateRequestTypeMutation = () => {
   const queryClient = useQueryClient();

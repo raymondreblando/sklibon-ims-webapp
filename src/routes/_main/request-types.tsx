@@ -2,8 +2,7 @@ import { useEffect } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import type { RequestType } from "@/types/schema";
 
-import { useDialog } from "@/hooks/use-dialog";
-import { ModalContext } from "@/components/modals/modal-context";
+import { useModal } from "@/contexts/modal-context";
 import { useDeleteRequestTypeMutation } from "@/hooks/mutations/use-request-type-mutation";
 
 import { useBreadcrumb } from "@/components/ui/breadcrumb";
@@ -20,35 +19,28 @@ export const Route = createFileRoute("/_main/request-types")({
 function RouteComponent() {
   const { setItems } = useBreadcrumb();
   const deleteRequestType = useDeleteRequestTypeMutation();
-  const updateDialog = useDialog<RequestType>();
-  const confirmDialog = useDialog<RequestType>((requestType) =>
-    deleteRequestType.mutate(requestType.id),
-  );
+  const { show } = useModal();
 
   useEffect(() => {
     setItems([{ title: "Request Types" }]);
   }, [setItems]);
 
+  const onDelete = (position: RequestType) => {
+    show(
+      <DeleteConfirmationDialog
+        onConfirm={() => deleteRequestType.mutate(position.id)}
+        isConfirming={deleteRequestType.isPending}
+      />,
+    );
+  };
+
   return (
     <>
       <RequestTypeTable
-        onUpdate={updateDialog.onOpen}
-        onDelete={confirmDialog.onOpen}
-      />
-      <ModalContext.Provider
-        value={{
-          data: updateDialog.resource,
-          isOpen: updateDialog.isOpen,
-          onClose: updateDialog.onClose,
-        }}
-      >
-        <UpdateRequestTypeDialog />
-      </ModalContext.Provider>
-      <DeleteConfirmationDialog
-        open={confirmDialog.isOpen}
-        onOpenChange={confirmDialog.onClose}
-        onConfirm={confirmDialog.handleConfirm}
-        isConfirming={deleteRequestType.isPending}
+        onUpdate={(requestType) =>
+          show(<UpdateRequestTypeDialog />, { data: requestType })
+        }
+        onDelete={onDelete}
       />
     </>
   );

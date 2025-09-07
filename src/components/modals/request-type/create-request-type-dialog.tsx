@@ -1,16 +1,18 @@
+import { useModal } from "@/contexts/modal-context";
+
 import { Button } from "@/components/ui/button";
-import { DialogTrigger } from "@/components/ui/dialog";
 import { MainDialog } from "@/components/modals/main-dialog";
 import { CreateRequestTypeForm } from "@/components/forms";
 
 export const CreateRequestTypeDialog = () => {
+  const { show } = useModal();
+
+  return <Button onClick={() => show(<Content />)}>Create Request Type</Button>;
+};
+
+const Content = () => {
   return (
     <MainDialog
-      triggerComp={
-        <DialogTrigger asChild>
-          <Button>Create Request Type</Button>
-        </DialogTrigger>
-      }
       title="Create Request Type"
       description="Fill up the form below."
     >

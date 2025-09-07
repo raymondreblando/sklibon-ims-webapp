@@ -1,6 +1,6 @@
 import { GENDERS } from "@/lib/constants";
 import { QUERY_KEYS } from "@/lib/constants/api-constants";
-import { getPositions } from "@/services/api/position";
+import { getPositions } from "@/services/api/positions";
 
 import {
   FormAsyncSelect,

@@ -2,6 +2,8 @@ import { useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import { useModal } from "@/contexts/modal-context";
+
 import { handleRequestError } from "@/lib/utils/error-handler";
 import { useCreatePositionMutation } from "@/hooks/mutations/use-position-mutations";
 import {
@@ -11,6 +13,7 @@ import {
 
 export const useCreatePositionForm = () => {
   const mutation = useCreatePositionMutation();
+  const { hide } = useModal();
 
   const form = useForm<CreatePositionField>({
     resolver: zodResolver(createPositionSchema),
@@ -23,12 +26,12 @@ export const useCreatePositionForm = () => {
     async (values: CreatePositionField) => {
       try {
         await mutation.mutateAsync(values);
-        form.reset();
+        hide();
       } catch (error) {
         handleRequestError({ error, setError: form.setError });
       }
     },
-    [form, mutation],
+    [hide, mutation, form],
   );
 
   return { form, onSubmit };

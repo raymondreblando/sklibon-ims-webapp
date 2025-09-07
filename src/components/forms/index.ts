@@ -10,7 +10,7 @@ export { FormWrapper } from "./form-wrapper";
 
 export { LoginForm } from "./login-form";
 export { RegisterForm } from "./register-form";
-export { ChangePasswordForm } from "./change-password";
+export { ChangePasswordForm } from "./account/change-password";
 export { ChangeProfilePicForm } from "./account/change-profile";
 export { CreatePositionForm } from "./position/create";
 export { UpdatePositionForm } from "./position/update";

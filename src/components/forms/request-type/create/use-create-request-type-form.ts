@@ -2,6 +2,8 @@ import { useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import { useModal } from "@/contexts/modal-context";
+
 import { handleRequestError } from "@/lib/utils/error-handler";
 import { useCreateRequestTypeMutation } from "@/hooks/mutations/use-request-type-mutation";
 import {
@@ -11,6 +13,7 @@ import {
 
 export const useCreateRequestTypeForm = () => {
   const mutation = useCreateRequestTypeMutation();
+  const { hide } = useModal();
 
   const form = useForm<CreateRequestTypeField>({
     resolver: zodResolver(createRequestTypeSchema),
@@ -23,12 +26,12 @@ export const useCreateRequestTypeForm = () => {
     async (values: CreateRequestTypeField) => {
       try {
         await mutation.mutateAsync(values);
-        form.reset();
+        hide();
       } catch (error) {
         handleRequestError({ error, setError: form.setError });
       }
     },
-    [form, mutation],
+    [form, mutation, hide],
   );
 
   return { form, onSubmit };

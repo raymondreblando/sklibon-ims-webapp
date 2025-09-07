@@ -4,22 +4,26 @@ import { UploadIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils/utils";
 import { Input } from "@/components/ui/input";
+import { useFormContext } from "react-hook-form";
+import { useUpload } from "@/contexts/upload-context";
 
 interface UploaderProps {
-  handleUpload: ((files: FileList) => void) | ((file: File) => void);
   acceptedExtensions: string[];
+  maxSize?: number;
   handlePreview?: (file: File | null) => void;
   uploaderProps?: ComponentProps<"div">;
   inputProps?: ComponentProps<"input">;
 }
 
 export const Uploader = ({
-  handleUpload,
   acceptedExtensions,
+  maxSize = 2 * 1024 * 1024,
   handlePreview,
   uploaderProps,
   inputProps,
 }: UploaderProps) => {
+  const { setValue } = useFormContext();
+  const { handleFiles } = useUpload();
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,15 +45,20 @@ export const Uploader = ({
       return;
     }
 
+    const tooLarge = Array.from(files).find((file) => file.size > maxSize);
+    if (tooLarge) {
+      toast.error(
+        `File selected exceeds ${(maxSize / 1024 / 1024).toFixed(0)} MB limit.`,
+      );
+      return;
+    }
+
     if (handlePreview) {
       handlePreview(files[0]);
     }
 
-    if (inputProps?.multiple) {
-      (handleUpload as (files: FileList) => void)(files);
-    } else {
-      (handleUpload as (file: File) => void)(files[0]);
-    }
+    setValue("hasSelectedFile", true);
+    handleFiles(files);
   };
 
   return (

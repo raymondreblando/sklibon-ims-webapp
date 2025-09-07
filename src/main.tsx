@@ -6,6 +6,7 @@ import "./index.css";
 import { router } from "@/lib/router";
 import { queryClient } from "@/lib/query-client";
 import { QueryClientProvider } from "@tanstack/react-query";
+import { ModalProvider } from "./contexts/modal-context";
 
 // Render the app
 const rootElement = document.getElementById("root")!;
@@ -14,7 +15,9 @@ if (!rootElement.innerHTML) {
   root.render(
     <StrictMode>
       <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
+        <ModalProvider>
+          <RouterProvider router={router} />
+        </ModalProvider>
       </QueryClientProvider>
     </StrictMode>,
   );
