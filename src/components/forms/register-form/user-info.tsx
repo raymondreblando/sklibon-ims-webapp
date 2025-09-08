@@ -1,4 +1,6 @@
 import { GENDERS } from "@/lib/constants";
+import { QUERY_KEYS } from "@/lib/constants/api-constants";
+
 import { getBarangays } from "@/services/api/locations";
 import { getPositions } from "@/services/api/positions";
 
@@ -22,7 +24,7 @@ const UserInfo = () => {
         name="info.barangay_id"
         label="Barangay"
         placeholder="Select barangay"
-        queryKey={["barangays"]}
+        queryKey={[QUERY_KEYS.BARANGAYS]}
         queryFn={getBarangays}
         labelKey="name"
         valueKey="id"
@@ -32,7 +34,7 @@ const UserInfo = () => {
         name="info.position_id"
         label="Position"
         placeholder="Select position"
-        queryKey={["positions"]}
+        queryKey={[QUERY_KEYS.POSITIONS]}
         queryFn={getPositions}
         labelKey="name"
         valueKey="id"
