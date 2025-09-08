@@ -16,6 +16,7 @@ import { Route as MainProfileRouteImport } from './routes/_main/profile'
 import { Route as MainPositionsRouteImport } from './routes/_main/positions'
 import { Route as MainHotlinesRouteImport } from './routes/_main/hotlines'
 import { Route as MainDashboardRouteImport } from './routes/_main/dashboard'
+import { Route as MainContactsRouteImport } from './routes/_main/contacts'
 import { Route as guestLibonHotlinesRouteImport } from './routes/(guest)/libon-hotlines'
 import { Route as authRegisterRouteImport } from './routes/(auth)/register'
 
@@ -53,6 +54,11 @@ const MainDashboardRoute = MainDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => MainRoute,
 } as any)
+const MainContactsRoute = MainContactsRouteImport.update({
+  id: '/contacts',
+  path: '/contacts',
+  getParentRoute: () => MainRoute,
+} as any)
 const guestLibonHotlinesRoute = guestLibonHotlinesRouteImport.update({
   id: '/(guest)/libon-hotlines',
   path: '/libon-hotlines',
@@ -67,6 +73,7 @@ const authRegisterRoute = authRegisterRouteImport.update({
 export interface FileRoutesByFullPath {
   '/register': typeof authRegisterRoute
   '/libon-hotlines': typeof guestLibonHotlinesRoute
+  '/contacts': typeof MainContactsRoute
   '/dashboard': typeof MainDashboardRoute
   '/hotlines': typeof MainHotlinesRoute
   '/positions': typeof MainPositionsRoute
@@ -77,6 +84,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/register': typeof authRegisterRoute
   '/libon-hotlines': typeof guestLibonHotlinesRoute
+  '/contacts': typeof MainContactsRoute
   '/dashboard': typeof MainDashboardRoute
   '/hotlines': typeof MainHotlinesRoute
   '/positions': typeof MainPositionsRoute
@@ -89,6 +97,7 @@ export interface FileRoutesById {
   '/_main': typeof MainRouteWithChildren
   '/(auth)/register': typeof authRegisterRoute
   '/(guest)/libon-hotlines': typeof guestLibonHotlinesRoute
+  '/_main/contacts': typeof MainContactsRoute
   '/_main/dashboard': typeof MainDashboardRoute
   '/_main/hotlines': typeof MainHotlinesRoute
   '/_main/positions': typeof MainPositionsRoute
@@ -101,6 +110,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/register'
     | '/libon-hotlines'
+    | '/contacts'
     | '/dashboard'
     | '/hotlines'
     | '/positions'
@@ -111,6 +121,7 @@ export interface FileRouteTypes {
   to:
     | '/register'
     | '/libon-hotlines'
+    | '/contacts'
     | '/dashboard'
     | '/hotlines'
     | '/positions'
@@ -122,6 +133,7 @@ export interface FileRouteTypes {
     | '/_main'
     | '/(auth)/register'
     | '/(guest)/libon-hotlines'
+    | '/_main/contacts'
     | '/_main/dashboard'
     | '/_main/hotlines'
     | '/_main/positions'
@@ -188,6 +200,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainDashboardRouteImport
       parentRoute: typeof MainRoute
     }
+    '/_main/contacts': {
+      id: '/_main/contacts'
+      path: '/contacts'
+      fullPath: '/contacts'
+      preLoaderRoute: typeof MainContactsRouteImport
+      parentRoute: typeof MainRoute
+    }
     '/(guest)/libon-hotlines': {
       id: '/(guest)/libon-hotlines'
       path: '/libon-hotlines'
@@ -206,6 +225,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface MainRouteChildren {
+  MainContactsRoute: typeof MainContactsRoute
   MainDashboardRoute: typeof MainDashboardRoute
   MainHotlinesRoute: typeof MainHotlinesRoute
   MainPositionsRoute: typeof MainPositionsRoute
@@ -214,6 +234,7 @@ interface MainRouteChildren {
 }
 
 const MainRouteChildren: MainRouteChildren = {
+  MainContactsRoute: MainContactsRoute,
   MainDashboardRoute: MainDashboardRoute,
   MainHotlinesRoute: MainHotlinesRoute,
   MainPositionsRoute: MainPositionsRoute,

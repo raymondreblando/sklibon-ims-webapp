@@ -4,6 +4,7 @@ import {
   AlbumIcon,
   AlignEndHorizontalIcon,
   CalendarIcon,
+  CardSimIcon,
   FileChartColumnIcon,
   HeadsetIcon,
   ImageIcon,
@@ -82,6 +83,13 @@ export const items: SidebarItemProps[] = [
     url: "/hotlines",
     authorize: [ROLES.SUPERADMIN, ROLES.ADMIN],
     icon: HeadsetIcon,
+    isActive: false,
+  },
+  {
+    title: "Contacts",
+    url: "/contacts",
+    authorize: [ROLES.SUPERADMIN, ROLES.ADMIN],
+    icon: CardSimIcon,
     isActive: false,
   },
 ];

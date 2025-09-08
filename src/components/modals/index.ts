@@ -2,6 +2,8 @@ export { DeleteConfirmationDialog } from "./delete-confirmation-modal";
 
 export { ChangePasswordDialog } from "./account/change-password-dialog";
 export { ChangeProfileDialog } from "./account/change-profile-dialog";
+export { CreateContactDialog } from "./contact/create-contact-dialog";
+export { UpdateContactDialog } from "./contact/update-contact-dialog";
 export { CreateHotlineDialog } from "./hotline/create-hotline-dialog";
 export { UpdateHotlineDialog } from "./hotline/update-hotline-dialog";
 export { CreatePositionDialog } from "./position/create-position-dialog";

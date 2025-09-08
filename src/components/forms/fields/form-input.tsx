@@ -1,4 +1,4 @@
-import type { ReactElement } from "react";
+import type { ComponentProps, ReactElement } from "react";
 import type { VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils/utils";
@@ -19,6 +19,7 @@ interface FormInputProps<T extends FieldValues>
     Pick<VariantProps<typeof inputVariants>, "variant"> {
   type?: InputType;
   icon?: ReactElement;
+  props?: ComponentProps<"input">;
 }
 
 export const FormInput = <T extends FieldValues>({
@@ -29,6 +30,7 @@ export const FormInput = <T extends FieldValues>({
   className,
   type = "text",
   icon,
+  props,
 }: FormInputProps<T>) => {
   const { control } = useFormContext();
   const Icon = icon;
@@ -48,6 +50,7 @@ export const FormInput = <T extends FieldValues>({
                 {...field}
                 placeholder={placeholder}
                 type={type}
+                {...props}
               />
             </FormControl>
           </div>

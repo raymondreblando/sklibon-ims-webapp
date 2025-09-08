@@ -29,6 +29,7 @@ export type Role = {
 export type User = {
   id: string;
   username: string;
+  fullname: string;
   email: string;
   profile: string;
   status: "active" | "deactivated" | "blocked";
@@ -59,6 +60,15 @@ export type RequestType = Position;
 export type Hotline = Pick<Position, "id" | "name" | "status"> & {
   abbreviation: string;
   hotline: string;
+};
+
+export type ContactWithRelation = Contact & {
+  user: UserWithRelation;
+};
+
+export type Contact = {
+  id: string;
+  contactNumber: string;
 };
 
 export type Province = {
