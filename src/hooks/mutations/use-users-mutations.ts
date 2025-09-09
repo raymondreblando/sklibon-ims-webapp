@@ -2,10 +2,22 @@ import { toast } from "react-toastify";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { QUERY_KEYS } from "@/lib/constants/api-constants";
-import type { UpdateUserField, UserProfileField } from "@/lib/schemas/user";
-import { updateUser } from "@/services/api/users";
+import type { UpdateUserField } from "@/lib/schemas/user";
+import { createUser, deleteUser, updateUser } from "@/services/api/users";
 
-export const useUpdateUserMutation = (querykey?: string) => {
+export const useCreateUserMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: createUser,
+    onSuccess: ({ message }) => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.USERS] });
+      toast.success(message);
+    },
+  });
+};
+
+export const useUpdateUserMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -14,12 +26,24 @@ export const useUpdateUserMutation = (querykey?: string) => {
       data,
     }: {
       id: string | undefined;
-      data: UserProfileField | UpdateUserField;
+      data: UpdateUserField;
     }) => updateUser(id, data),
     onSuccess: ({ message }) => {
       queryClient.invalidateQueries({
-        queryKey: [querykey ?? QUERY_KEYS.USERS],
+        queryKey: [QUERY_KEYS.USERS],
       });
+      toast.success(message);
+    },
+  });
+};
+
+export const useDeleteUserMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: deleteUser,
+    onSuccess: ({ message }) => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.USERS] });
       toast.success(message);
     },
   });

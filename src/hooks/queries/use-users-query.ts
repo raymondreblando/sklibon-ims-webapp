@@ -1,10 +1,19 @@
-import { QUERY_KEYS } from "@/lib/constants/api-constants";
-import { getAuthUser } from "@/lib/utils/auth";
 import { useQuery } from "@tanstack/react-query";
+
+import { getUsers } from "@/services/api/users";
+import { getAuthUser } from "@/lib/utils/auth";
+import { QUERY_KEYS } from "@/lib/constants/api-constants";
 
 export const useUserProfilePicQuery = () => {
   return useQuery({
     queryKey: [QUERY_KEYS.PROFILE_PIC],
     queryFn: async () => getAuthUser()?.profile,
+  });
+};
+
+export const useUsersQuery = () => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.USERS],
+    queryFn: getUsers,
   });
 };
