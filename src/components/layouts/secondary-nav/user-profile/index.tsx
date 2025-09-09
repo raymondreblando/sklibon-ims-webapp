@@ -1,36 +1,29 @@
-import { Link } from "@tanstack/react-router";
-import { LogOut, User, type LucideIcon } from "lucide-react";
+import { useState } from "react";
+import { LogOut, User } from "lucide-react";
 
 import { useLogout } from "@/hooks/auth/use-logout";
 import { getAuthUser } from "@/lib/utils/auth";
 import { useUserProfilePicQuery } from "@/hooks/queries/use-users-query";
 
+import { ProfileMenuItem } from "./profile-menu-item";
 import { ChangePasswordDialog, ChangeProfileDialog } from "@/components/modals";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-interface ProfileMenu {
-  title?: string;
-  icon?: LucideIcon;
-  url?: string;
-  action?: () => void;
-  modal?: React.ReactElement;
-}
-
 export const UserProfile = () => {
   const { data: profile } = useUserProfilePicQuery();
+  const [open, setOpen] = useState(false);
   const authUser = getAuthUser();
   const username = authUser?.username;
 
   const { handleSignOut } = useLogout();
 
-  const menus: ProfileMenu[] = [
+  const menus: ProfileMenuItem[] = [
     {
       title: "My Profile",
       url: "/profile",
@@ -38,11 +31,11 @@ export const UserProfile = () => {
     },
     {
       title: "Change Profile Picture",
-      modal: <ChangeProfileDialog />,
+      modal: ChangeProfileDialog,
     },
     {
       title: "Account Security",
-      modal: <ChangePasswordDialog />,
+      modal: ChangePasswordDialog,
     },
     {
       title: "Sign Out",
@@ -52,7 +45,7 @@ export const UserProfile = () => {
   ];
 
   return (
-    <DropdownMenu>
+    <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
         <Avatar className="h-7 w-7">
           <AvatarImage src={profile ?? ""} />
@@ -79,18 +72,16 @@ export const UserProfile = () => {
         <DropdownMenuSeparator />
         {menus.map((menu) =>
           menu.modal ? (
-            menu.modal
+            <menu.modal key={menu.title} setDropdownOpen={setOpen} />
           ) : (
-            <DropdownMenuItem
+            <ProfileMenuItem
               key={menu.title}
-              className="group text-muted rounded-none px-4 py-2 font-medium"
-              onClick={menu.action}
-            >
-              {menu.icon && (
-                <menu.icon className="text-muted group-hover:text-accent-foreground" />
-              )}
-              {menu.url ? <Link to={menu.url}>{menu.title}</Link> : menu.title}
-            </DropdownMenuItem>
+              title={menu.title}
+              icon={menu.icon}
+              url={menu.url}
+              action={menu.action}
+              onClose={() => setOpen(false)}
+            />
           ),
         )}
       </DropdownMenuContent>

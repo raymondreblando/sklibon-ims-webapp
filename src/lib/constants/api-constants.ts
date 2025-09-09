@@ -12,6 +12,8 @@ export const API_ENDPOINTS = {
   },
   USERS: "/users",
   POSITIONS: "/positions",
+  CONTACTS: "/contacts",
+  HOTLINES: "/hotlines",
   REQUEST_TYPES: "/request-types",
   PROVINCES: "/locations/provinces",
   MUNICIPALITIES: "/locations/municipalities",
@@ -20,6 +22,8 @@ export const API_ENDPOINTS = {
 
 export const QUERY_KEYS = {
   POSITIONS: "positions",
+  CONTACTS: "contacts",
+  HOTLINES: "hotlines",
   PROVINCES: "provinces",
   MUNICIPALITIES: "municipalities",
   BARANGAYS: "barangays",

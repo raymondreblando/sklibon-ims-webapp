@@ -22,6 +22,14 @@ export const createUser = async (data: CreateUserField) => {
   return response;
 };
 
+export const getUsers = async () => {
+  const { data: response } = await api.get<ApiResponse<UserWithRelation[]>>(
+    API_ENDPOINTS.USERS,
+  );
+
+  return response;
+};
+
 export const updateUser = async (
   id: string | undefined,
   data: UpdateUserField,

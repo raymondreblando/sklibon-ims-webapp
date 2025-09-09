@@ -18,7 +18,7 @@ const links = [
   },
   {
     name: "Hotlines",
-    path: "/",
+    path: "/libon-hotlines",
   },
 ];
 
