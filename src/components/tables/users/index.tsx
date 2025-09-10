@@ -6,7 +6,6 @@ import { DataTable } from "@/components/data-table";
 import { CreatePositionDialog } from "@/components/modals";
 import { DataTableSkeleton } from "@/components/skeletons";
 import { QueryStatusWrapper } from "@/components/hocs/query-status-wrapper";
-import { QueryError } from "@/components/layouts/error-states";
 
 export const PositionTable = () => {
   const { isPending, isError, data, refetch } = useUsersQuery();
@@ -17,7 +16,6 @@ export const PositionTable = () => {
       isPending={isPending}
       isError={isError}
       loadingComp={<DataTableSkeleton columnLength={columns.length} />}
-      errorComp={<QueryError />}
       onRetry={refetch}
     >
       {data && (
