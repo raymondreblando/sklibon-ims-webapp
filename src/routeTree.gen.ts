@@ -19,6 +19,10 @@ import { Route as MainDashboardRouteImport } from './routes/_main/dashboard'
 import { Route as MainContactsRouteImport } from './routes/_main/contacts'
 import { Route as guestLibonHotlinesRouteImport } from './routes/(guest)/libon-hotlines'
 import { Route as authRegisterRouteImport } from './routes/(auth)/register'
+import { Route as MainUsersIndexRouteImport } from './routes/_main/users/index'
+import { Route as MainUsersAddRouteImport } from './routes/_main/users/add'
+import { Route as MainUsersUserIdViewRouteImport } from './routes/_main/users/$userId.view'
+import { Route as MainUsersUserIdEditRouteImport } from './routes/_main/users/$userId.edit'
 
 const MainRoute = MainRouteImport.update({
   id: '/_main',
@@ -69,6 +73,26 @@ const authRegisterRoute = authRegisterRouteImport.update({
   path: '/register',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MainUsersIndexRoute = MainUsersIndexRouteImport.update({
+  id: '/users/',
+  path: '/users/',
+  getParentRoute: () => MainRoute,
+} as any)
+const MainUsersAddRoute = MainUsersAddRouteImport.update({
+  id: '/users/add',
+  path: '/users/add',
+  getParentRoute: () => MainRoute,
+} as any)
+const MainUsersUserIdViewRoute = MainUsersUserIdViewRouteImport.update({
+  id: '/users/$userId/view',
+  path: '/users/$userId/view',
+  getParentRoute: () => MainRoute,
+} as any)
+const MainUsersUserIdEditRoute = MainUsersUserIdEditRouteImport.update({
+  id: '/users/$userId/edit',
+  path: '/users/$userId/edit',
+  getParentRoute: () => MainRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/register': typeof authRegisterRoute
@@ -80,6 +104,10 @@ export interface FileRoutesByFullPath {
   '/profile': typeof MainProfileRoute
   '/request-types': typeof MainRequestTypesRoute
   '/': typeof authIndexRoute
+  '/users/add': typeof MainUsersAddRoute
+  '/users': typeof MainUsersIndexRoute
+  '/users/$userId/edit': typeof MainUsersUserIdEditRoute
+  '/users/$userId/view': typeof MainUsersUserIdViewRoute
 }
 export interface FileRoutesByTo {
   '/register': typeof authRegisterRoute
@@ -91,6 +119,10 @@ export interface FileRoutesByTo {
   '/profile': typeof MainProfileRoute
   '/request-types': typeof MainRequestTypesRoute
   '/': typeof authIndexRoute
+  '/users/add': typeof MainUsersAddRoute
+  '/users': typeof MainUsersIndexRoute
+  '/users/$userId/edit': typeof MainUsersUserIdEditRoute
+  '/users/$userId/view': typeof MainUsersUserIdViewRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -104,6 +136,10 @@ export interface FileRoutesById {
   '/_main/profile': typeof MainProfileRoute
   '/_main/request-types': typeof MainRequestTypesRoute
   '/(auth)/': typeof authIndexRoute
+  '/_main/users/add': typeof MainUsersAddRoute
+  '/_main/users/': typeof MainUsersIndexRoute
+  '/_main/users/$userId/edit': typeof MainUsersUserIdEditRoute
+  '/_main/users/$userId/view': typeof MainUsersUserIdViewRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -117,6 +153,10 @@ export interface FileRouteTypes {
     | '/profile'
     | '/request-types'
     | '/'
+    | '/users/add'
+    | '/users'
+    | '/users/$userId/edit'
+    | '/users/$userId/view'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/register'
@@ -128,6 +168,10 @@ export interface FileRouteTypes {
     | '/profile'
     | '/request-types'
     | '/'
+    | '/users/add'
+    | '/users'
+    | '/users/$userId/edit'
+    | '/users/$userId/view'
   id:
     | '__root__'
     | '/_main'
@@ -140,6 +184,10 @@ export interface FileRouteTypes {
     | '/_main/profile'
     | '/_main/request-types'
     | '/(auth)/'
+    | '/_main/users/add'
+    | '/_main/users/'
+    | '/_main/users/$userId/edit'
+    | '/_main/users/$userId/view'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -221,6 +269,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authRegisterRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_main/users/': {
+      id: '/_main/users/'
+      path: '/users'
+      fullPath: '/users'
+      preLoaderRoute: typeof MainUsersIndexRouteImport
+      parentRoute: typeof MainRoute
+    }
+    '/_main/users/add': {
+      id: '/_main/users/add'
+      path: '/users/add'
+      fullPath: '/users/add'
+      preLoaderRoute: typeof MainUsersAddRouteImport
+      parentRoute: typeof MainRoute
+    }
+    '/_main/users/$userId/view': {
+      id: '/_main/users/$userId/view'
+      path: '/users/$userId/view'
+      fullPath: '/users/$userId/view'
+      preLoaderRoute: typeof MainUsersUserIdViewRouteImport
+      parentRoute: typeof MainRoute
+    }
+    '/_main/users/$userId/edit': {
+      id: '/_main/users/$userId/edit'
+      path: '/users/$userId/edit'
+      fullPath: '/users/$userId/edit'
+      preLoaderRoute: typeof MainUsersUserIdEditRouteImport
+      parentRoute: typeof MainRoute
+    }
   }
 }
 
@@ -231,6 +307,10 @@ interface MainRouteChildren {
   MainPositionsRoute: typeof MainPositionsRoute
   MainProfileRoute: typeof MainProfileRoute
   MainRequestTypesRoute: typeof MainRequestTypesRoute
+  MainUsersAddRoute: typeof MainUsersAddRoute
+  MainUsersIndexRoute: typeof MainUsersIndexRoute
+  MainUsersUserIdEditRoute: typeof MainUsersUserIdEditRoute
+  MainUsersUserIdViewRoute: typeof MainUsersUserIdViewRoute
 }
 
 const MainRouteChildren: MainRouteChildren = {
@@ -240,6 +320,10 @@ const MainRouteChildren: MainRouteChildren = {
   MainPositionsRoute: MainPositionsRoute,
   MainProfileRoute: MainProfileRoute,
   MainRequestTypesRoute: MainRequestTypesRoute,
+  MainUsersAddRoute: MainUsersAddRoute,
+  MainUsersIndexRoute: MainUsersIndexRoute,
+  MainUsersUserIdEditRoute: MainUsersUserIdEditRoute,
+  MainUsersUserIdViewRoute: MainUsersUserIdViewRoute,
 }
 
 const MainRouteWithChildren = MainRoute._addFileChildren(MainRouteChildren)

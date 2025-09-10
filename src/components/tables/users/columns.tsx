@@ -1,11 +1,11 @@
-import { format } from "date-fns";
+import { Link } from "@tanstack/react-router";
 import type { ColumnDef } from "@tanstack/react-table";
 import { formatTableCount } from "@/lib/utils/utils";
 import type { UserWithRelation } from "@/types/schema";
 
-import { MoreHorizontal, PencilIcon, TrashIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { MoreHorizontal, PencilIcon, TrashIcon, UserIcon } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -26,26 +26,46 @@ export const getColumns = (): ColumnDef<UserWithRelation>[] => [
     },
   },
   {
-    id: "user",
     header: "Name",
-    accessorFn: (props) => `${props.info.firstname} ${props.info.lastname}`,
+    accessorKey: "fullname",
     cell: (props) => {
       const row = props.row.original;
 
       return (
         <div className="flex items-center gap-x-4">
-          <Avatar className="h-10 w-10">
+          <Avatar className="h-11 w-11">
             <AvatarImage src={row.profile} />
             <AvatarFallback className="bg-primary text-primary-foreground">
-              {row.info.firstname?.charAt(0).toUpperCase()}
+              {row.fullname?.charAt(0).toUpperCase()}
             </AvatarFallback>
           </Avatar>
           <div className="text-left">
-            
+            <p className="text-foreground text-base font-semibold">
+              {row.fullname}
+            </p>
+            <p className="text-muted text-sm font-medium">@{row.username}</p>
           </div>
         </div>
       );
     },
+  },
+  {
+    id: "position",
+    accessorFn: (props) => `${props.info.position.name}`,
+    header: "Position",
+    cell: (props) => props.getValue(),
+  },
+  {
+    id: "barangay",
+    accessorFn: (props) => `${props.info.barangay.name}`,
+    header: "Barangay",
+    cell: (props) => props.getValue(),
+  },
+  {
+    id: "contactNumber",
+    accessorFn: (props) => `${props.info.phoneNumber}`,
+    header: "Contact No.",
+    cell: (props) => (props.getValue() === "null" ? "Not Set" : props.getValue()),
   },
   {
     accessorKey: "status",
@@ -53,13 +73,13 @@ export const getColumns = (): ColumnDef<UserWithRelation>[] => [
     cell: (props) => {
       const status = props.getValue();
       const variant = status === "active" ? "success" : "destructive";
-      return <Badge variant={variant}>{status as string}</Badge>;
+      return (
+        <Badge variant={variant}>
+          <div className="h-2 w-2 rounded-full bg-white"></div>
+          {status as string}
+        </Badge>
+      );
     },
-  },
-  {
-    accessorKey: "createdAt",
-    header: "Date Created",
-    cell: (props) => format(props.getValue() as Date, "LLLL dd, yyyy"),
   },
   {
     id: "actions",
@@ -78,9 +98,25 @@ export const getColumns = (): ColumnDef<UserWithRelation>[] => [
           <DropdownMenuContent>
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => {}}>
-              <PencilIcon className="group-focus:text-accent-foreground" />
-              <span>Edit</span>
+            <DropdownMenuItem asChild>
+              <Link
+                to="/users/$userId/view"
+                params={{ userId: row.id }}
+                className="hover:bg-accent hover:text-accent-foreground"
+              >
+                <UserIcon />
+                <span>View Profile</span>
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link
+                to="/users/$userId/edit"
+                params={{ userId: row.id }}
+                className="hover:bg-accent hover:text-accent-foreground"
+              >
+                <PencilIcon />
+                <span>Edit</span>
+              </Link>
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => {}}>
               <TrashIcon className="group-focus:text-accent-foreground" />
