@@ -3,12 +3,12 @@ import { QUERY_KEYS } from "@/lib/constants/api-constants";
 import { getPositions } from "@/services/api/positions";
 
 import {
-  FormAsyncSelect,
   FormDatePicker,
   FormInput,
   FormSelect,
   FormHeading,
   FormSubheading,
+  FormCombobox,
 } from "@/components/forms";
 
 export const UserInfo = () => {
@@ -34,10 +34,13 @@ export const UserInfo = () => {
         <FormInput name="info.age" label="Age" />
         <FormInput name="info.phone_number" label="Phone number" />
         <FormDatePicker name="info.birthdate" label="Birthdate" />
-        <FormAsyncSelect
+        <FormCombobox
+          popoverContentClassname="w-[350px] p-0 md:w-[325px]"
           name="info.position_id"
           label="Position"
-          placeholder="Select position"
+          placeholder="Select a position"
+          resource="positions"
+          commandPlaceholder="Search positions..."
           queryKey={[QUERY_KEYS.POSITIONS]}
           queryFn={getPositions}
           labelKey="name"
