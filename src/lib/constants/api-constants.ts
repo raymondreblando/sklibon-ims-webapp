@@ -17,7 +17,7 @@ export const API_ENDPOINTS = {
   REQUEST_TYPES: "/request-types",
   PROVINCES: "/locations/provinces",
   MUNICIPALITIES: "/locations/municipalities",
-  BARANGAYS: "/locations/barangays/01k359bjsr69emkza8xgr4x00y",
+  BARANGAYS: `/locations/barangays/${import.meta.env.VITE_MUNICIPALITY_ID}`,
 };
 
 export const QUERY_KEYS = {
