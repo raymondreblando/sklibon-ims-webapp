@@ -1,5 +1,6 @@
 import { getUsers } from "@/services/api/users";
 import { QUERY_KEYS } from "@/lib/constants/api-constants";
+import { preventNumericInput } from "@/lib/utils/utils";
 
 import { FormCombobox, FormInput, FormWrapper } from "@/components/forms";
 import { useUpdateContactForm } from "./use-update-contact-form";
@@ -27,7 +28,14 @@ export const UpdateContactForm = () => {
         labelKey="fullname"
         valueKey="id"
       />
-      <FormInput name="contact_number" label="Contact number" />
+      <FormInput
+        name="contact_number"
+        label="Contact number"
+        props={{
+          onKeyDown: (event) => preventNumericInput(event),
+          maxLength: 11,
+        }}
+      />
     </FormWrapper>
   );
 };

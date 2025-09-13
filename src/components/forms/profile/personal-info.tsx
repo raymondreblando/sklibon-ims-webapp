@@ -1,5 +1,7 @@
 import { GENDERS } from "@/lib/constants";
 import { QUERY_KEYS } from "@/lib/constants/api-constants";
+import { preventNumericInput } from "@/lib/utils/utils";
+
 import { getPositions } from "@/services/api/positions";
 
 import { HeadingWithWrapper } from "@/components/headings";
@@ -29,8 +31,19 @@ export const UserInfo = () => {
           options={GENDERS}
           placeholder="Select gender"
         />
-        <FormInput name="info.age" label="Age" />
-        <FormInput name="info.phone_number" label="Phone number" />
+        <FormInput
+          name="info.age"
+          label="Age"
+          props={{ onKeyDown: (event) => preventNumericInput(event) }}
+        />
+        <FormInput
+          name="info.phone_number"
+          label="Phone number"
+          props={{
+            onKeyDown: (event) => preventNumericInput(event),
+            maxLength: 11,
+          }}
+        />
         <FormDatePicker name="info.birthdate" label="Birthdate" />
         <FormCombobox
           popoverContentClassname="w-[350px] p-0 md:w-[325px]"
