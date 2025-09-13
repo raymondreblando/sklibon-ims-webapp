@@ -2,7 +2,7 @@ import { useEffect, useState, type ComponentProps } from "react";
 import type { VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils/utils";
-import { CheckIcon, ClipboardIcon } from "lucide-react";
+import { CheckIcon, ClipboardIcon, type LucideProps } from "lucide-react";
 import { Button, type buttonVariants } from "@/components/ui/button";
 import {
   Tooltip,
@@ -14,9 +14,15 @@ interface CopyButtonProps
   extends ComponentProps<"button">,
     VariantProps<typeof buttonVariants> {
   value: string;
+  iconProps?: LucideProps;
 }
 
-export const CopyButton = ({ value, className, ...props }: CopyButtonProps) => {
+export const CopyButton = ({
+  value,
+  className,
+  iconProps,
+  ...props
+}: CopyButtonProps) => {
   const [hasCopied, setHasCopied] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -41,7 +47,11 @@ export const CopyButton = ({ value, className, ...props }: CopyButtonProps) => {
           onMouseOver={() => setOpen(true)}
         >
           <span className="sr-only">Copy</span>
-          {hasCopied ? <CheckIcon /> : <ClipboardIcon />}
+          {hasCopied ? (
+            <CheckIcon {...iconProps} />
+          ) : (
+            <ClipboardIcon {...iconProps} />
+          )}
         </Button>
       </TooltipTrigger>
       <TooltipContent>

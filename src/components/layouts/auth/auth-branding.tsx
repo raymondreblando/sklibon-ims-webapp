@@ -14,7 +14,7 @@ const links = [
   },
   {
     name: "Contacts",
-    path: "/",
+    path: "/sk-contacts",
   },
   {
     name: "Hotlines",
