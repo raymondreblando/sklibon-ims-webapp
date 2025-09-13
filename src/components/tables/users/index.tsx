@@ -1,4 +1,5 @@
 import { getColumns } from "./columns";
+import type { TableProps } from "@/types";
 
 import { useUsersQuery } from "@/hooks/queries/use-users-query";
 
@@ -6,10 +7,11 @@ import { ButtonLink } from "@/components/buttons";
 import { DataTable } from "@/components/data-table";
 import { DataTableSkeleton } from "@/components/skeletons";
 import { QueryStatusWrapper } from "@/components/hocs/query-status-wrapper";
+import type { UserWithRelation } from "@/types/schema";
 
-export const UserTable = () => {
+export const UserTable = ({ onDelete }: TableProps<UserWithRelation>) => {
   const { isPending, isError, data, refetch } = useUsersQuery();
-  const columns = getColumns();
+  const columns = getColumns({ onDelete });
 
   return (
     <QueryStatusWrapper

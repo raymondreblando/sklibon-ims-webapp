@@ -16,7 +16,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export const getColumns = (): ColumnDef<UserWithRelation>[] => [
+export const getColumns = ({
+  onDelete,
+}: {
+  onDelete?: (resource: UserWithRelation) => void;
+}): ColumnDef<UserWithRelation>[] => [
   {
     id: "count",
     header: "#",
@@ -126,7 +130,7 @@ export const getColumns = (): ColumnDef<UserWithRelation>[] => [
                 <span>Edit</span>
               </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => {}}>
+            <DropdownMenuItem onClick={() => onDelete?.(row)}>
               <TrashIcon className="group-focus:text-accent-foreground" />
               <span>Delete</span>
             </DropdownMenuItem>
