@@ -55,7 +55,7 @@ export const FormDatePicker = <T extends FieldValues>({
                   variant={"outline"}
                   {...buttonProps}
                   className={cn(
-                    "hover:text-foreground hover:bg-sidebar w-full pl-3 text-left font-normal",
+                    "hover:text-foreground hover:bg-sidebar w-full pl-3 text-left text-base font-normal",
                     !field.value && "text-muted-foreground",
                     buttonProps?.className,
                   )}
