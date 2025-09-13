@@ -3,8 +3,8 @@ import { formatTableCount } from "@/lib/utils/utils";
 import type { ContactWithRelation } from "@/types/schema";
 
 import { Button } from "@/components/ui/button";
+import { TableUserProfile } from "@/components/layouts/table";
 import { MoreHorizontal, PencilIcon, TrashIcon } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -37,22 +37,13 @@ export const getColumns = ({
       const row = props.row.original;
 
       return (
-        <div className="flex items-center gap-x-4">
-          <Avatar className="h-8 w-8">
-            <AvatarImage src={row.user.profile} />
-            <AvatarFallback className="bg-primary text-primary-foreground">
-              {row.user.fullname?.charAt(0).toUpperCase()}
-            </AvatarFallback>
-          </Avatar>
-          <div>
-            <p className="text-foreground text-sm font-semibold">
-              {row.user.fullname}
-            </p>
-            <p className="text-muted text-xs font-medium">
-              @{row.user.username}
-            </p>
-          </div>
-        </div>
+        <TableUserProfile
+          user={{
+            name: row.user.fullname,
+            subtitle: row.user.username,
+            profile: row.user.profile,
+          }}
+        />
       );
     },
   },
