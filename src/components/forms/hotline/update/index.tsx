@@ -1,4 +1,6 @@
 import { STATUSES } from "@/lib/constants";
+import { preventNumericInput } from "@/lib/utils/utils";
+
 import { FormInput, FormSelect, FormWrapper } from "@/components/forms";
 import { useUpdateHotlineForm } from "./use-update-hotline-form";
 
@@ -16,7 +18,13 @@ export const UpdateHotlineForm = () => {
     >
       <FormInput name="name" label="Hotline name" />
       <FormInput name="abbreviation" label="Abbreviation" />
-      <FormInput name="hotline" label="Hotline number" />
+      <FormInput
+        name="hotline"
+        label="Hotline number"
+        props={{
+          onKeyDown: (event) => preventNumericInput(event),
+        }}
+      />
       <FormSelect
         name="status"
         label="Status"

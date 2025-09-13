@@ -1,3 +1,5 @@
+import { preventNumericInput } from "@/lib/utils/utils";
+
 import { FormInput, FormWrapper } from "@/components/forms";
 import { useCreateHotlineForm } from "./use-create-hotline-form";
 
@@ -15,7 +17,13 @@ export const CreateHotlineForm = () => {
     >
       <FormInput name="name" label="Hotline name" />
       <FormInput name="abbreviation" label="Abbreviation" />
-      <FormInput name="hotline" label="Hotline number" />
+      <FormInput
+        name="hotline"
+        label="Hotline number"
+        props={{
+          onKeyDown: (event) => preventNumericInput(event),
+        }}
+      />
     </FormWrapper>
   );
 };

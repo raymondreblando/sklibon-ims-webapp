@@ -5,8 +5,6 @@ export { FormSelect } from "./fields/form-select";
 export { FormButton } from "./fields/form-button";
 export { FormDatePicker } from "./fields/form-date-picker";
 export { FormCombobox } from "./fields/form-combobox";
-export { FormHeading } from "./headings/form-heading";
-export { FormSubheading } from "./headings/subheading";
 export { FormWrapper } from "./form-wrapper";
 
 export { LoginForm } from "./login-form";

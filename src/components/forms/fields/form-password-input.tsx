@@ -33,24 +33,18 @@ export const FormPasswordInput = <T extends FieldValues>({
     <FormField
       control={control}
       name={name}
-      render={({ field, fieldState }) => (
+      render={({ field }) => (
         <FormItem className={cn("flex flex-col justify-start", className)}>
           <FormLabel className="text-base">{label}</FormLabel>
           <div className="relative">
             {showPassword ? (
               <EyeClosed
-                className={cn(
-                  "input-icon action-icon",
-                  fieldState.error && "text-destructive",
-                )}
+                className={cn("input-icon action-icon")}
                 onClick={handleToggle}
               />
             ) : (
               <Eye
-                className={cn(
-                  "input-icon action-icon",
-                  fieldState.error && "text-destructive",
-                )}
+                className={cn("input-icon action-icon")}
                 onClick={handleToggle}
               />
             )}

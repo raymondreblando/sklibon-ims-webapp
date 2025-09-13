@@ -4,7 +4,7 @@ import { QUERY_KEYS } from "@/lib/constants/api-constants";
 import { getBarangays } from "@/services/api/locations";
 import { getPositions } from "@/services/api/positions";
 
-import { FormAsyncSelect, FormInput, FormSelect } from "@/components/forms";
+import { FormCombobox, FormInput, FormSelect } from "@/components/forms";
 
 const UserInfo = () => {
   return (
@@ -19,21 +19,27 @@ const UserInfo = () => {
         options={GENDERS}
         placeholder="Select gender"
       />
-      <FormAsyncSelect
-        size="xl"
+      <FormCombobox
+        buttonProps={{ size: "xl" }}
+        popoverContentClassname="w-[350px] p-0 md:w-[350px]"
         name="info.barangay_id"
         label="Barangay"
-        placeholder="Select barangay"
+        placeholder="Select a barangay"
+        resource="barangays"
+        commandPlaceholder="Search barangays..."
         queryKey={[QUERY_KEYS.BARANGAYS]}
         queryFn={getBarangays}
         labelKey="name"
         valueKey="id"
       />
-      <FormAsyncSelect
-        size="xl"
+      <FormCombobox
+        buttonProps={{ size: "xl" }}
+        popoverContentClassname="w-[350px] p-0 md:w-[350px]"
         name="info.position_id"
         label="Position"
-        placeholder="Select position"
+        placeholder="Select a position"
+        resource="positions"
+        commandPlaceholder="Search positions..."
         queryKey={[QUERY_KEYS.POSITIONS]}
         queryFn={getPositions}
         labelKey="name"

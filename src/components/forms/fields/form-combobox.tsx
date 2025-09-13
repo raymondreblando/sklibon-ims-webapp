@@ -83,7 +83,7 @@ export function FormCombobox<T extends FieldValues, TData>({
                   {...buttonProps}
                   role="combobox"
                   className={cn(
-                    "hover:bg-background hover:text-foreground w-full justify-between font-medium",
+                    "hover:bg-background hover:text-foreground w-full justify-between text-base font-normal",
                     !field.value && "text-muted-foreground",
                     buttonProps?.className,
                   )}

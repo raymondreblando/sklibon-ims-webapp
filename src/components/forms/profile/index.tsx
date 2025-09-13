@@ -4,7 +4,7 @@ import { useProfileForm } from "./use-profile-form";
 import { FormWrapper } from "@/components/forms";
 import { AccountInfo } from "./account-info";
 import { AddressInfo } from "./address-info";
-import { UserInfo } from "./user-info";
+import { UserInfo } from "./personal-info";
 
 export const ProfileForm = () => {
   const { form, onSubmit } = useProfileForm();

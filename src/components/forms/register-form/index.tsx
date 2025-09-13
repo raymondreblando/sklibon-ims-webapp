@@ -1,7 +1,7 @@
 import { FormWrapper } from "@/components/forms";
 import { useRegisterForm } from "./use-register-form";
 
-import UserInfo from "./user-info";
+import UserInfo from "./personal-info";
 import AccountInfo from "./account-info";
 
 export const RegisterForm = () => {
