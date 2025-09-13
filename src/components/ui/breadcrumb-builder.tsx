@@ -21,11 +21,16 @@ export const BreadcrumbBuilder = () => {
             {index !== 0 && <BreadcrumbSeparator />}
             <BreadcrumbItem>
               {crumb.url ? (
-                <BreadcrumbLink asChild>
-                  <Link to={crumb.url} className="font-medium">{crumb.title}</Link>
+                <BreadcrumbLink
+                  className="text-primary hover:text-accent font-semibold"
+                  asChild
+                >
+                  <Link to={crumb.url}>{crumb.title}</Link>
                 </BreadcrumbLink>
               ) : (
-                <BreadcrumbPage className="font-medium">{crumb.title}</BreadcrumbPage>
+                <BreadcrumbPage className="font-medium">
+                  {crumb.title}
+                </BreadcrumbPage>
               )}
             </BreadcrumbItem>
           </React.Fragment>
