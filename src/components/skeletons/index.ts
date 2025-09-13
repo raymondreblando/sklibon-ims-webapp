@@ -1,4 +1,6 @@
 export { DataTableSkeleton } from "./data-table-skeleton";
+export { FormSkeleton } from "./form-skeleton";
 export { HotlineCardSkeleton } from "./hotline-card-skeleton";
 export { ProfileUploaderSkeleton } from "./profile-uploader-skeleton";
+export { ProfileCardUserSkeleton } from "./profile-card-user-skeleton";
 export { UserProfileCardSkeleton } from "./user-profile-card-skeleton";

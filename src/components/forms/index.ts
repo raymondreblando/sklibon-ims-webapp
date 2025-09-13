@@ -20,4 +20,5 @@ export { UpdatePositionForm } from "./position/update";
 export { CreateRequestTypeForm } from "./request-type/create";
 export { UpdateRequestTypeForm } from "./request-type/update";
 export { CreateUserForm } from "./user/create";
+export { UpdateUserForm } from "./user/update";
 export { ProfileForm } from "./profile";

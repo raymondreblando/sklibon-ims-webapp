@@ -15,8 +15,7 @@ export const UserInfoSchema = z.object({
       message: "Lastname must not be greater than 100 characters.",
     }),
   gender: z.string().min(1, { message: "Please select a valid gender." }),
-  age: z
-    .coerce
+  age: z.coerce
     .number<number>({ error: "The age field is required." })
     .min(1, { message: "The age field is required." }),
   phone_number: z
@@ -92,8 +91,14 @@ export const CreateUserSchema = z.object({
 });
 
 export const UpdateUserSchema = z.object({
+  action: z.enum(["update", "deactivated", "blocked"]),
   info: InfoSchema,
-  account: AccountSchema,
+  account: z.object({
+    ...AccountSchema.omit({ password: true, password_confirmation: true })
+      .shape,
+    password: z.string().optional(),
+    password_confirmation: z.string().optional(),
+  }),
 });
 
 export const UserProfileSchema = z.object({
