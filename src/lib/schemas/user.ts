@@ -16,27 +16,38 @@ export const UserInfoSchema = z.object({
     }),
   gender: z.string().min(1, { message: "Please select a valid gender." }),
   age: z
-    .number({ error: "The age field is required." })
+    .coerce
+    .number<number>({ error: "The age field is required." })
     .min(1, { message: "The age field is required." }),
   phone_number: z
-    .string()
+    .string({ error: "The phone number field is required." })
     .min(11, { message: "Please provide a valid phone number." })
     .max(11, { message: "Please provide a valid phone number." }),
-  birthdate: z.string().min(1, { message: "The birthdate field is required." }),
+  birthdate: z
+    .string({ error: "The birthdate field is required." })
+    .min(1, { message: "The birthdate field is required." }),
   position_id: z
-    .string()
+    .string({
+      error: "Please select a valid position.",
+    })
     .min(1, { message: "Please select a valid position." }),
 });
 
 export const AddressSchema = z.object({
   province_id: z
-    .string()
+    .string({
+      error: "Please select a valid province.",
+    })
     .min(1, { message: "Please select a valid province." }),
   municipality_id: z
-    .string()
+    .string({
+      error: "Please select a valid municipality.",
+    })
     .min(1, { message: "Please select a valid municipality." }),
   barangay_id: z
-    .string()
+    .string({
+      error: "Please select a valid barangay.",
+    })
     .min(1, { message: "Please select a valid barangay." }),
   addtional_address: z.string().optional(),
 });
