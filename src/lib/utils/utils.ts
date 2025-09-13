@@ -1,7 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
+import type React from "react";
 import { twMerge } from "tailwind-merge";
-import { FILE_TYPES } from "../constants";
-import { FileTextIcon, ImageIcon } from "lucide-react";
 
 export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 
@@ -34,4 +33,22 @@ export const getFilename = (url: string | undefined | null) => {
   const urlObj = new URL(url);
   const parts = urlObj.pathname.split("/");
   return parts.pop();
+};
+
+export const preventNumericInput = (
+  event: React.KeyboardEvent<HTMLInputElement>,
+) => {
+  const allowedKeys = [
+    "Backspace",
+    "Delete",
+    "ArrowLeft",
+    "ArrowRight",
+    "Tab",
+    ".",
+    "-",
+  ];
+
+  if (!/\d/.test(event.key) && !allowedKeys.includes(event.key)) {
+    event.preventDefault();
+  }
 };

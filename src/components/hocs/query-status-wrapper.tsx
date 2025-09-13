@@ -1,12 +1,11 @@
-import React, { cloneElement, isValidElement } from "react";
+import React from "react";
 import type { PropsWithChildren } from "react";
-import type { QueryErrorProps } from "../layouts/error-states/query-error";
+import { QueryError } from "@/components/layouts/error-states";
 
 interface QueryStatusWrapperProps extends PropsWithChildren {
   isPending: boolean;
   isError: boolean;
   loadingComp: React.ReactNode;
-  errorComp: React.ReactElement<QueryErrorProps>;
   onRetry?: () => void;
 }
 
@@ -14,7 +13,6 @@ export const QueryStatusWrapper = ({
   isPending,
   isError,
   loadingComp,
-  errorComp,
   children,
   onRetry,
 }: QueryStatusWrapperProps) => {
@@ -23,10 +21,7 @@ export const QueryStatusWrapper = ({
   }
 
   if (isError) {
-    if (isValidElement(errorComp)) {
-      return cloneElement(errorComp, { onRetry });
-    }
-    return errorComp;
+    return <QueryError onRetry={onRetry} />;
   }
 
   return children;

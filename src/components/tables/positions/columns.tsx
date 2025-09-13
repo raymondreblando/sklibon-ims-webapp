@@ -40,7 +40,13 @@ export const getColumns = ({
     cell: (props) => {
       const status = props.getValue();
       const variant = status === "active" ? "success" : "destructive";
-      return <Badge variant={variant}>{status as string}</Badge>;
+      
+      return (
+        <Badge variant={variant}>
+          <div className="h-2 w-2 rounded-full bg-white"></div>
+          {status as string}
+        </Badge>
+      );
     },
   },
   {

@@ -2,6 +2,7 @@ import { createFileRoute, Link, redirect } from "@tanstack/react-router";
 
 import { LoginForm } from "@/components/forms/login-form";
 import { AuthBranding } from "@/components/layouts/auth/auth-branding";
+import { HeadingWithWrapper } from "@/components/headings";
 import { Separator } from "@/components/ui/separator";
 import { isAuthenticated } from "@/lib/utils/auth";
 
@@ -29,10 +30,10 @@ function Index() {
         <Separator className="my-8" />
         <div className="flex flex-1 flex-col gap-y-8">
           <div className="text-center">
-            <h1 className="mb-2 text-2xl font-extrabold">Sign In</h1>
-            <p className="text-muted text-sm md:text-base">
-              Please sign in to continue to your account
-            </p>
+            <HeadingWithWrapper
+              heading="Sign In"
+              subheading="Please sign in to continue to your account"
+            />
           </div>
           <LoginForm />
           <p className="text-muted text-center text-sm font-medium md:text-base">

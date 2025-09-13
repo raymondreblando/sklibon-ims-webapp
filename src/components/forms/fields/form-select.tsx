@@ -41,17 +41,12 @@ export const FormSelect = <T extends FieldValues>({
     <FormField
       control={control}
       name={name}
-      render={({ field, fieldState }) => (
+      render={({ field }) => (
         <FormItem className={cn("flex flex-col justify-start", className)}>
           <FormLabel className="text-base">{label}</FormLabel>
           <Select onValueChange={field.onChange} defaultValue={field.value}>
             <FormControl>
-              <SelectTrigger
-                className={cn(
-                  fieldState.error ? "data-[placeholder]:text-destructive" : "",
-                )}
-                size={size}
-              >
+              <SelectTrigger size={size}>
                 <SelectValue placeholder={placeholder} />
               </SelectTrigger>
             </FormControl>

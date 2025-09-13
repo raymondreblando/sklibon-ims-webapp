@@ -7,7 +7,6 @@ import { HotlineCard } from "@/components/cards";
 import { useHotlinesQuery } from "@/hooks/queries/use-hotlines-query";
 import { QueryStatusWrapper } from "@/components/hocs/query-status-wrapper";
 import { HotlineCardSkeleton } from "@/components/skeletons";
-import { QueryError } from "@/components/layouts/error-states";
 
 export const Route = createFileRoute("/(guest)/libon-hotlines")({
   component: RouteComponent,
@@ -30,7 +29,6 @@ function RouteComponent() {
             isPending={isPending}
             isError={isError}
             loadingComp={<HotlineCardSkeleton count={3} />}
-            errorComp={<QueryError />}
             onRetry={refetch}
           >
             {data &&
