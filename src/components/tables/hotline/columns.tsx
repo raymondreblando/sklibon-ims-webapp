@@ -28,6 +28,10 @@ export const getColumns = ({
     header: "Abbreviation",
   },
   {
+    accessorKey: "hotline",
+    header: "Hotline number",
+  },
+  {
     accessorKey: "status",
     header: "Status",
     cell: (props) => {
