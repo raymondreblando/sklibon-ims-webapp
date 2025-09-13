@@ -2,25 +2,23 @@ import { GENDERS } from "@/lib/constants";
 import { QUERY_KEYS } from "@/lib/constants/api-constants";
 import { getPositions } from "@/services/api/positions";
 
+import { HeadingWithWrapper } from "@/components/headings";
 import {
   FormDatePicker,
   FormInput,
   FormSelect,
-  FormHeading,
-  FormSubheading,
   FormCombobox,
 } from "@/components/forms";
 
 export const UserInfo = () => {
   return (
     <div className="border-input flex flex-col gap-y-4 rounded-md md:border md:p-8">
-      <div>
-        <FormHeading>Personal Information</FormHeading>
-        <FormSubheading>
-          Your basic details like name, date of birth, and contact number. Keep
-          them accurate and up to date.
-        </FormSubheading>
-      </div>
+      <HeadingWithWrapper
+        className="text-left"
+        headingProps={{ variant: "default" }}
+        heading="Personal Information"
+        subheading="Your basic details like name, date of birth, and contact number. Keep them accurate and up to date."
+      />
       <div className="grid gap-4 md:grid-cols-2">
         <FormInput name="info.firstname" label="Firstname" />
         <FormInput name="info.middlename" label="Middlename" />

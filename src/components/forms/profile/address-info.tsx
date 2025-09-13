@@ -5,24 +5,20 @@ import {
   getProvinces,
 } from "@/services/api/locations";
 
-import {
-  FormCombobox,
-  FormHeading,
-  FormInput,
-  FormSubheading,
-} from "@/components/forms";
+import { FormCombobox, FormInput } from "@/components/forms";
+import { HeadingWithWrapper } from "@/components/headings";
 
 const comboBoxClassName = "w-[350px] p-0 md:w-[325px]";
 
 export const AddressInfo = () => {
   return (
     <div className="border-input flex flex-col gap-y-4 rounded-md md:border md:p-8">
-      <div>
-        <FormHeading>Address Information</FormHeading>
-        <FormSubheading>
-          Manage your barangay, municipality, and province details.
-        </FormSubheading>
-      </div>
+      <HeadingWithWrapper
+        className="text-left"
+        headingProps={{ variant: "default" }}
+        heading="Address Information"
+        subheading="Manage your barangay, municipality, and province details."
+      />
       <div className="grid gap-4 md:grid-cols-2">
         <FormCombobox
           popoverContentClassname={comboBoxClassName}
