@@ -5,8 +5,8 @@ import type { UserWithRelation } from "@/types/schema";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { TableUserProfile } from "@/components/layouts/table";
 import { MoreHorizontal, PencilIcon, TrashIcon, UserIcon } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -32,20 +32,27 @@ export const getColumns = (): ColumnDef<UserWithRelation>[] => [
       const row = props.row.original;
 
       return (
-        <div className="flex items-center gap-x-4">
-          <Avatar className="h-11 w-11">
-            <AvatarImage src={row.profile} />
-            <AvatarFallback className="bg-primary text-primary-foreground">
-              {row.fullname?.charAt(0).toUpperCase()}
-            </AvatarFallback>
-          </Avatar>
-          <div className="text-left">
-            <p className="text-foreground text-base font-semibold">
-              {row.fullname}
-            </p>
-            <p className="text-muted text-sm font-medium">@{row.username}</p>
-          </div>
-        </div>
+        <TableUserProfile
+          user={{
+            name: row.fullname,
+            subtitle: row.username,
+            profile: row.profile,
+          }}
+        />
+      );
+    },
+  },
+  {
+    accessorFn: (props) => props.role.role,
+    header: "Role",
+    cell: (props) => {
+      const role = props.getValue();
+
+      return (
+        <Badge variant="outline">
+          <div className="h-2 w-2 rounded-full bg-primary"></div>
+          {role as string}
+        </Badge>
       );
     },
   },
@@ -65,7 +72,8 @@ export const getColumns = (): ColumnDef<UserWithRelation>[] => [
     id: "contactNumber",
     accessorFn: (props) => `${props.info.phoneNumber}`,
     header: "Contact No.",
-    cell: (props) => (props.getValue() === "null" ? "Not Set" : props.getValue()),
+    cell: (props) =>
+      props.getValue() === "null" ? "Not Set" : props.getValue(),
   },
   {
     accessorKey: "status",
