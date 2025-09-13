@@ -1,9 +1,19 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { useEffect } from "react";
+import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute('/_main/users/add')({
+import { CreateUserForm } from "@/components/forms";
+import { useBreadcrumb } from "@/components/ui/breadcrumb";
+
+export const Route = createFileRoute("/_main/users/add")({
   component: RouteComponent,
-})
+});
 
 function RouteComponent() {
-  return <div>Hello "/_main/users/add"!</div>
+  const { setItems } = useBreadcrumb();
+
+  useEffect(() => {
+    setItems([{ title: "Users", url: "/users" }, { title: "Add User" }]);
+  }, [setItems]);
+
+  return <CreateUserForm />;
 }

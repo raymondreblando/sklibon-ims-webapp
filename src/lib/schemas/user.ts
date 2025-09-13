@@ -49,7 +49,7 @@ export const AddressSchema = z.object({
       error: "Please select a valid barangay.",
     })
     .min(1, { message: "Please select a valid barangay." }),
-  addtional_address: z.string().optional(),
+  additional_address: z.string().optional(),
 });
 
 export const AccountSchema = z

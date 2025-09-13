@@ -11,6 +11,7 @@ export const API_ENDPOINTS = {
     CHANGE_PROFILE: "/account/change-profile-picture",
   },
   USERS: "/users",
+  ROLES: "/roles",
   POSITIONS: "/positions",
   CONTACTS: "/contacts",
   HOTLINES: "/hotlines",
@@ -21,6 +22,7 @@ export const API_ENDPOINTS = {
 };
 
 export const QUERY_KEYS = {
+  ROLES: "roles",
   POSITIONS: "positions",
   CONTACTS: "contacts",
   HOTLINES: "hotlines",
