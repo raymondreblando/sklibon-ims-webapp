@@ -1,12 +1,12 @@
-import { format } from "date-fns";
+import { Link } from "@tanstack/react-router";
 import type { ColumnDef } from "@tanstack/react-table";
 import { formatTableCount } from "@/lib/utils/utils";
 import type { UserWithRelation } from "@/types/schema";
 
-import { MoreHorizontal, PencilIcon, TrashIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { TableUserProfile } from "@/components/layouts/table";
+import { MoreHorizontal, PencilIcon, TrashIcon, UserIcon } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,7 +16,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export const getColumns = (): ColumnDef<UserWithRelation>[] => [
+export const getColumns = ({
+  onDelete,
+}: {
+  onDelete?: (resource: UserWithRelation) => void;
+}): ColumnDef<UserWithRelation>[] => [
   {
     id: "count",
     header: "#",
@@ -26,26 +30,54 @@ export const getColumns = (): ColumnDef<UserWithRelation>[] => [
     },
   },
   {
-    id: "user",
     header: "Name",
-    accessorFn: (props) => `${props.info.firstname} ${props.info.lastname}`,
+    accessorKey: "fullname",
     cell: (props) => {
       const row = props.row.original;
 
       return (
-        <div className="flex items-center gap-x-4">
-          <Avatar className="h-10 w-10">
-            <AvatarImage src={row.profile} />
-            <AvatarFallback className="bg-primary text-primary-foreground">
-              {row.info.firstname?.charAt(0).toUpperCase()}
-            </AvatarFallback>
-          </Avatar>
-          <div className="text-left">
-            
-          </div>
-        </div>
+        <TableUserProfile
+          user={{
+            name: row.fullname,
+            subtitle: row.username,
+            profile: row.profile,
+          }}
+        />
       );
     },
+  },
+  {
+    accessorFn: (props) => props.role.role,
+    header: "Role",
+    cell: (props) => {
+      const role = props.getValue();
+
+      return (
+        <Badge variant="outline">
+          <div className="bg-primary h-2 w-2 rounded-full"></div>
+          {role as string}
+        </Badge>
+      );
+    },
+  },
+  {
+    id: "position",
+    accessorFn: (props) => `${props.info.position.name}`,
+    header: "Position",
+    cell: (props) => props.getValue(),
+  },
+  {
+    id: "barangay",
+    accessorFn: (props) => `${props.info.barangay.name}`,
+    header: "Barangay",
+    cell: (props) => props.getValue(),
+  },
+  {
+    id: "contactNumber",
+    accessorFn: (props) => `${props.info.phoneNumber}`,
+    header: "Contact No.",
+    cell: (props) =>
+      props.getValue() === "null" ? "Not Set" : props.getValue(),
   },
   {
     accessorKey: "status",
@@ -53,13 +85,13 @@ export const getColumns = (): ColumnDef<UserWithRelation>[] => [
     cell: (props) => {
       const status = props.getValue();
       const variant = status === "active" ? "success" : "destructive";
-      return <Badge variant={variant}>{status as string}</Badge>;
+      return (
+        <Badge variant={variant}>
+          <div className="h-2 w-2 rounded-full bg-white"></div>
+          {status as string}
+        </Badge>
+      );
     },
-  },
-  {
-    accessorKey: "createdAt",
-    header: "Date Created",
-    cell: (props) => format(props.getValue() as Date, "LLLL dd, yyyy"),
   },
   {
     id: "actions",
@@ -78,11 +110,27 @@ export const getColumns = (): ColumnDef<UserWithRelation>[] => [
           <DropdownMenuContent>
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => {}}>
-              <PencilIcon className="group-focus:text-accent-foreground" />
-              <span>Edit</span>
+            <DropdownMenuItem asChild>
+              <Link
+                to="/users/$userId/view"
+                params={{ userId: row.id }}
+                className="group hover:bg-accent hover:text-accent-foreground"
+              >
+                <UserIcon className="group-hover:text-accent-foreground" />
+                <span>View Profile</span>
+              </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => {}}>
+            <DropdownMenuItem asChild>
+              <Link
+                to="/users/$userId/edit"
+                params={{ userId: row.id }}
+                className="group hover:bg-accent hover:text-accent-foreground"
+              >
+                <PencilIcon className="group-hover:text-accent-foreground" />
+                <span>Edit</span>
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => onDelete?.(row)}>
               <TrashIcon className="group-focus:text-accent-foreground" />
               <span>Delete</span>
             </DropdownMenuItem>

@@ -22,6 +22,14 @@ export const createUser = async (data: CreateUserField) => {
   return response;
 };
 
+export const getUserById = async (id: string | undefined) => {
+  const { data: response } = await api.get<ApiResponse<UserWithRelation>>(
+    `${API_ENDPOINTS.USERS}/${id}`,
+  );
+
+  return response;
+};
+
 export const updateUser = async (
   id: string | undefined,
   data: UpdateUserField,

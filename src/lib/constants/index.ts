@@ -28,6 +28,21 @@ export const STATUSES: Option[] = [
   },
 ];
 
+export const ACCOUNT_STATUSES: Option[] = [
+  {
+    key: "active",
+    value: "Active",
+  },
+  {
+    key: "deactivated",
+    value: "Deactivated",
+  },
+  {
+    key: "blocked",
+    value: "Blocked",
+  },
+];
+
 export const FILE_TYPES = {
   IMAGES: ["image/jpg", "image/jpeg", "image/gif", "image/png", "image/webp"],
   DOCUMENTS: [

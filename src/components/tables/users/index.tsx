@@ -1,15 +1,17 @@
 import { getColumns } from "./columns";
+import type { TableProps } from "@/types";
 
 import { useUsersQuery } from "@/hooks/queries/use-users-query";
 
+import { ButtonLink } from "@/components/buttons";
 import { DataTable } from "@/components/data-table";
-import { CreatePositionDialog } from "@/components/modals";
 import { DataTableSkeleton } from "@/components/skeletons";
 import { QueryStatusWrapper } from "@/components/hocs/query-status-wrapper";
+import type { UserWithRelation } from "@/types/schema";
 
-export const PositionTable = () => {
+export const UserTable = ({ onDelete }: TableProps<UserWithRelation>) => {
   const { isPending, isError, data, refetch } = useUsersQuery();
-  const columns = getColumns();
+  const columns = getColumns({ onDelete });
 
   return (
     <QueryStatusWrapper
@@ -22,7 +24,7 @@ export const PositionTable = () => {
         <DataTable
           data={data.data}
           columns={columns}
-          actionComp={<CreatePositionDialog />}
+          actionComp={<ButtonLink to="/users/add">Add User</ButtonLink>}
         />
       )}
     </QueryStatusWrapper>
