@@ -50,7 +50,7 @@ export const getColumns = (): ColumnDef<UserWithRelation>[] => [
 
       return (
         <Badge variant="outline">
-          <div className="h-2 w-2 rounded-full bg-primary"></div>
+          <div className="bg-primary h-2 w-2 rounded-full"></div>
           {role as string}
         </Badge>
       );
@@ -110,9 +110,9 @@ export const getColumns = (): ColumnDef<UserWithRelation>[] => [
               <Link
                 to="/users/$userId/view"
                 params={{ userId: row.id }}
-                className="hover:bg-accent hover:text-accent-foreground"
+                className="group hover:bg-accent hover:text-accent-foreground"
               >
-                <UserIcon />
+                <UserIcon className="group-hover:text-accent-foreground" />
                 <span>View Profile</span>
               </Link>
             </DropdownMenuItem>
@@ -120,9 +120,9 @@ export const getColumns = (): ColumnDef<UserWithRelation>[] => [
               <Link
                 to="/users/$userId/edit"
                 params={{ userId: row.id }}
-                className="hover:bg-accent hover:text-accent-foreground"
+                className="group hover:bg-accent hover:text-accent-foreground"
               >
-                <PencilIcon />
+                <PencilIcon className="group-hover:text-accent-foreground" />
                 <span>Edit</span>
               </Link>
             </DropdownMenuItem>
