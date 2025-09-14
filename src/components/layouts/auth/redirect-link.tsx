@@ -4,8 +4,8 @@ import { cn } from "@/lib/utils/utils";
 
 interface RedirectLinkProps {
   children: React.ReactNode;
+  linkProps: LinkProps;
   message?: string;
-  linkProps?: LinkProps;
 }
 
 export const RedirectLink = ({
