@@ -1,26 +1,30 @@
-import { Link } from "@tanstack/react-router";
+import { Link, linkOptions } from "@tanstack/react-router";
 
 import LibonLogo from "@/assets/libon-logo.webp";
 import SKLogo from "@/assets/logo.webp";
 
-const links = [
+const links = linkOptions([
   {
-    name: "Galleries",
-    path: "/",
+    to: "/dashboard",
+    label: "Galleries",
+    activeOptions: { exact: true },
   },
   {
-    name: "Announcements",
-    path: "/",
+    to: "/contacts",
+    label: "Annoucements",
+    activeOptions: { exact: true },
   },
   {
-    name: "Contacts",
-    path: "/",
+    to: "/sk-contacts",
+    label: "Contacts",
+    activeOptions: { exact: true },
   },
   {
-    name: "Hotlines",
-    path: "/libon-hotlines",
+    to: "/libon-hotlines",
+    label: "Hotlines",
+    activeOptions: { exact: true },
   },
-];
+]);
 
 export const AuthBranding = () => {
   return (
@@ -38,12 +42,13 @@ export const AuthBranding = () => {
       </h2>
       <nav className="flex items-center justify-center gap-x-4">
         {links.map((link) => (
-          <li key={link.name} className="list-none">
+          <li key={link.label} className="list-none">
             <Link
-              to={link.path}
+              {...link}
+              activeProps={{ className: "font-bold text-primary" }}
               className="text-muted hover:text-primary text-sm md:text-base"
             >
-              {link.name}
+              {link.label}
             </Link>
           </li>
         ))}
