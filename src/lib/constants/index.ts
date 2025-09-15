@@ -44,9 +44,15 @@ export const ACCOUNT_STATUSES: Option[] = [
 ];
 
 export const FILE_TYPES = {
-  IMAGES: ["image/jpg", "image/jpeg", "image/gif", "image/png", "image/webp"],
-  DOCUMENTS: [
-    "application/pdf",
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-  ],
+  IMAGES: {
+    jpg: "image/jpg",
+    jpeg: "image/jpeg",
+    gif: "image/gif",
+    png: "image/png",
+    webp: "image/webp",
+  },
+  DOCUMENTS: {
+    pdf: "application/pdf",
+    docx: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  },
 };

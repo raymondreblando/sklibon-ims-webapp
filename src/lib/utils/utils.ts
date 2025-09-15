@@ -1,4 +1,13 @@
 import { clsx, type ClassValue } from "clsx";
+import {
+  FileArchiveIcon,
+  FileIcon,
+  FileSpreadsheetIcon,
+  FileTextIcon,
+  HeadphonesIcon,
+  ImageIcon,
+  VideoIcon,
+} from "lucide-react";
 import type React from "react";
 import { twMerge } from "tailwind-merge";
 

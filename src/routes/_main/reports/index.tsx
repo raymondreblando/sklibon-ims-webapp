@@ -17,7 +17,7 @@ function RouteComponent() {
           }}
         />
         <div className="flex items-center space-x-4">
-          <ButtonLink to="/users/add">Create new</ButtonLink>
+          <ButtonLink to="/reports/add">Create new</ButtonLink>
         </div>
       </div>
       <div className="grid gap-4 px-6 py-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">

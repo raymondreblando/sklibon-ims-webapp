@@ -66,9 +66,30 @@ export type ContactWithRelation = Contact & {
   user: UserWithRelation;
 };
 
+export type Report = {
+  id: string;
+  subject: string;
+  description: string;
+};
+
+export type ReportWithRelation = Report & {
+  barangay: Barangay;
+  uploader: Pick<User, "id" | "profile"> & {
+    info: Pick<UserInfo, "firstname" | "lastname"> & {
+      position: Pick<Position, "name">;
+    };
+  };
+  attachments: Array<Attachment>;
+};
+
 export type Contact = {
   id: string;
   contactNumber: string;
+};
+
+export type Attachment = {
+  id: string;
+  attachment: string;
 };
 
 export type Province = {
