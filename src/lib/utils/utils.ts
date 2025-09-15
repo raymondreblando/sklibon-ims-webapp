@@ -1,17 +1,12 @@
 import { clsx, type ClassValue } from "clsx";
-import {
-  FileArchiveIcon,
-  FileIcon,
-  FileSpreadsheetIcon,
-  FileTextIcon,
-  HeadphonesIcon,
-  ImageIcon,
-  VideoIcon,
-} from "lucide-react";
 import type React from "react";
 import { twMerge } from "tailwind-merge";
 
 export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
+
+export const textElipsis = (text: string, maxLength = 20) => {
+  return text.length > maxLength ? `${text.substring(0, maxLength)}...` : text;
+};
 
 export const formatTableCount = (count: number) =>
   count.toString().padStart(2, "0");
