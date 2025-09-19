@@ -1,11 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useDataTable } from "@/hooks/use-data-table";
+import { useReportsQuery } from "@/hooks/queries/use-reports-query";
+
 import { ButtonLink } from "@/components/buttons";
 import { ReportCard } from "@/components/cards";
 import { Searchbar } from "@/components/ui/searchbar";
-import { useDataTable } from "@/hooks/use-data-table";
 import { getColumns } from "@/components/cards/report/columns";
-import { useReportsQuery } from "@/hooks/queries/use-reports-query";
-import { QueryStatusWrapper } from "@/components/hocs/query-status-wrapper";
+import { EmptyStateWrapper, QueryStatusWrapper } from "@/components/hocs";
 import { ReportCardSkeleton } from "@/components/skeletons";
 
 export const Route = createFileRoute("/_main/reports/")({
@@ -26,6 +27,7 @@ function RouteComponent() {
         <Searchbar
           inputProps={{
             placeholder: "Search here...",
+            onInput: (event) => setGlobalFilter(event.currentTarget.value),
           }}
         />
         <div className="flex items-center space-x-4">
@@ -39,19 +41,27 @@ function RouteComponent() {
           loadingComp={<ReportCardSkeleton count={15} />}
           onRetry={refetch}
         >
-          {table.getCoreRowModel().rows.map((row) => (
-            <ReportCard
-              key={row.original.id}
-              id={row.original.id}
-              title={row.original.subject}
-              dateCreated="2025-09-16"
-              attachments={row.original.attachments}
-              uploader={{
-                firstname: row.original.uploader.info.firstname,
-                profile: row.original.uploader.profile,
-              }}
-            />
-          ))}
+          <EmptyStateWrapper
+            length={table.getCoreRowModel().rows.length}
+            props={{
+              className:
+                "min-h-[240px] md:col-span-2 lg:col-span-3 xl:col-span-5 border-b border-input",
+            }}
+          >
+            {table.getCoreRowModel().rows.map((row) => (
+              <ReportCard
+                key={row.original.id}
+                id={row.original.id}
+                title={row.original.subject}
+                dateCreated="2025-09-16"
+                attachments={row.original.attachments}
+                uploader={{
+                  firstname: row.original.uploader.info.firstname,
+                  profile: row.original.uploader.profile,
+                }}
+              />
+            ))}
+          </EmptyStateWrapper>
         </QueryStatusWrapper>
       </div>
     </>
