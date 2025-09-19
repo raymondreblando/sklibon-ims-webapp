@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils/utils";
 import type { ComponentProps } from "react";
 import EmptyIcon from "@/assets/empty.svg";
 
-interface NoRecordProps {
+export interface NoRecordProps {
   props?: ComponentProps<"div">;
 }
 
