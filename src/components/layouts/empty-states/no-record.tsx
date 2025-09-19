@@ -9,11 +9,11 @@ interface NoRecordProps {
 export const NoRecord = ({ props }: NoRecordProps) => {
   return (
     <div
+      {...props}
       className={cn(
         "flex flex-col items-center justify-center",
         props?.className,
       )}
-      {...props}
     >
       <img src={EmptyIcon} alt="empty" className="w-36" />
       No record found.
