@@ -1,13 +1,13 @@
+import { useMemo } from "react";
 import { format } from "date-fns";
+import { Link } from "@tanstack/react-router";
 import { textElipsis } from "@/lib/utils/utils";
-import type { Attachment } from "@/types/schema";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import {
   ExternalLinkIcon,
-  FileDownIcon,
   Paperclip,
   PencilIcon,
   TrashIcon,
@@ -21,21 +21,41 @@ import {
 interface ReportCardProps {
   id: string;
   title: string;
-  dateCreated: string;
-  attachments: Array<Attachment>;
+  dateCreated: Date;
   uploader: {
     firstname: string;
     profile?: string;
   };
+  onDelete: (id: string) => void;
 }
 
 export const ReportCard = ({
   id,
   title,
   dateCreated,
-  attachments,
   uploader,
+  onDelete,
 }: ReportCardProps) => {
+  const actions = useMemo(() => {
+    return [
+      {
+        Icon: ExternalLinkIcon,
+        label: "View Report",
+        href: `/reports/${id}/view`,
+      },
+      {
+        Icon: PencilIcon,
+        label: "Edit Report",
+        href: `/reports/${id}/edit`,
+      },
+      {
+        Icon: TrashIcon,
+        label: "Delete Report",
+        onDelete: onDelete,
+      },
+    ];
+  }, [onDelete, id]);
+
   return (
     <Card className="border-input rounded-md border shadow-none">
       <Tooltip>
@@ -71,38 +91,25 @@ export const ReportCard = ({
           </div>
         </div>
         <div className="text-muted flex items-center gap-x-2">
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <FileDownIcon size={16} />
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Download Attachments</p>
-            </TooltipContent>
-          </Tooltip>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <ExternalLinkIcon size={16} />
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>View Report</p>
-            </TooltipContent>
-          </Tooltip>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <PencilIcon size={16} />
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Edit Report</p>
-            </TooltipContent>
-          </Tooltip>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <TrashIcon size={16} />
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Delete Report</p>
-            </TooltipContent>
-          </Tooltip>
+          {actions.map((action) => (
+            <Tooltip key={`${action.label}-${id}`}>
+              <TooltipTrigger asChild>
+                {action.href ? (
+                  <Link to={action.href}>
+                    <action.Icon size={16} />
+                  </Link>
+                ) : (
+                  <action.Icon
+                    onClick={() => action.onDelete?.(id)}
+                    size={16}
+                  />
+                )}
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{action.label}</p>
+              </TooltipContent>
+            </Tooltip>
+          ))}
         </div>
       </CardFooter>
     </Card>

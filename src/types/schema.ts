@@ -70,6 +70,7 @@ export type Report = {
   id: string;
   subject: string;
   description: string;
+  createdAt: Date;
 };
 
 export type ReportWithRelation = Report & {

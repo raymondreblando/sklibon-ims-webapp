@@ -3,11 +3,9 @@ import { useDataTable } from "@/hooks/use-data-table";
 import { useReportsQuery } from "@/hooks/queries/use-reports-query";
 
 import { ButtonLink } from "@/components/buttons";
-import { ReportCard } from "@/components/cards";
 import { Searchbar } from "@/components/ui/searchbar";
-import { getColumns } from "@/components/cards/report/columns";
-import { EmptyStateWrapper, QueryStatusWrapper } from "@/components/hocs";
-import { ReportCardSkeleton } from "@/components/skeletons";
+import { fallback, getColumns } from "@/components/cards/report/columns";
+import { ReportGrid } from "./-report-grid";
 
 export const Route = createFileRoute("/_main/reports/")({
   component: RouteComponent,
@@ -18,7 +16,7 @@ function RouteComponent() {
   const columns = getColumns();
   const { table, setGlobalFilter } = useDataTable({
     columns,
-    data: data ? data?.data : [],
+    data: data ? data?.data : fallback,
   });
 
   return (
@@ -34,36 +32,12 @@ function RouteComponent() {
           <ButtonLink to="/reports/add">Create new</ButtonLink>
         </div>
       </div>
-      <div className="grid gap-4 px-6 py-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-        <QueryStatusWrapper
-          isPending={isPending}
-          isError={isError}
-          loadingComp={<ReportCardSkeleton count={15} />}
-          onRetry={refetch}
-        >
-          <EmptyStateWrapper
-            length={table.getCoreRowModel().rows.length}
-            props={{
-              className:
-                "min-h-[240px] md:col-span-2 lg:col-span-3 xl:col-span-5 border-b border-input",
-            }}
-          >
-            {table.getCoreRowModel().rows.map((row) => (
-              <ReportCard
-                key={row.original.id}
-                id={row.original.id}
-                title={row.original.subject}
-                dateCreated="2025-09-16"
-                attachments={row.original.attachments}
-                uploader={{
-                  firstname: row.original.uploader.info.firstname,
-                  profile: row.original.uploader.profile,
-                }}
-              />
-            ))}
-          </EmptyStateWrapper>
-        </QueryStatusWrapper>
-      </div>
+      <ReportGrid
+        isPending={isPending}
+        isError={isError}
+        onRetry={refetch}
+        table={table}
+      />
     </>
   );
 }

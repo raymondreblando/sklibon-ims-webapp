@@ -1,6 +1,8 @@
 import type { ReportWithRelation } from "@/types/schema";
 import type { ColumnDef } from "@tanstack/react-table";
 
+export const fallback: Array<ReportWithRelation> = [];
+
 export const getColumns = (): ColumnDef<ReportWithRelation>[] => [
   {
     accessorKey: "subject",
