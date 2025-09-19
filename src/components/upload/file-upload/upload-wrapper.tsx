@@ -6,7 +6,8 @@ import { FileUpIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 
 export const UploadWrapper = () => {
-  const { maxSize, inputRef, addError, addFile, accepted } = useFileUpload();
+  const { maxSize, inputRef, addError, addFile, accepted, inputProps } =
+    useFileUpload();
   const { setValue } = useFormContext();
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,12 +49,12 @@ export const UploadWrapper = () => {
       onClick={() => inputRef.current?.click()}
     >
       <Input
+        {...inputProps}
         type="file"
         className="sr-only hidden"
         aria-label="Upload files"
         ref={inputRef}
         onChange={(event) => handleOnChange(event)}
-        multiple
       />
       <div className="flex flex-col items-center justify-center text-center">
         <div

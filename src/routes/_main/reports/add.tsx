@@ -34,6 +34,7 @@ function RouteComponent() {
       <FileUploadProvider
         folder="/sklibon-ims/reports/"
         accepted={FILE_TYPES.DOCUMENTS}
+        fileInputProps={{ multiple: true }}
       >
         <CreateReportForm />
       </FileUploadProvider>

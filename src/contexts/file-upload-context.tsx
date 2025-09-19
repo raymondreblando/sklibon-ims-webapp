@@ -7,6 +7,7 @@ import React, {
   useMemo,
   useRef,
   useState,
+  type ComponentProps,
   type JSX,
 } from "react";
 import {
@@ -21,9 +22,6 @@ import {
 
 export type FileUpload = {
   id: string;
-  name: string;
-  size: number;
-  type: string;
   file: File;
   preview?: string;
 };
@@ -35,6 +33,7 @@ interface FileUploadContextProps {
   accepted: { [key: string]: string };
   files: Array<FileUpload>;
   errors: Array<string>;
+  inputProps: ComponentProps<"input">;
   addError: (error: string) => void;
   addFile: (file: File) => void;
   removeFile: (fileId: string) => void;
@@ -65,6 +64,7 @@ interface FileUploadProviderProps {
   folder: string;
   accepted: { [key: string]: string };
   children: React.ReactNode;
+  fileInputProps: ComponentProps<"input">;
   maxFileSize?: number;
 }
 
@@ -72,6 +72,7 @@ export const FileUploadProvider = ({
   folder,
   maxFileSize = 2 * 1024 * 1024,
   accepted,
+  fileInputProps,
   children,
 }: FileUploadProviderProps) => {
   const [uploadFolder] = useState(folder);
@@ -79,6 +80,7 @@ export const FileUploadProvider = ({
   const [acceptedExtensions] = useState(accepted);
   const [fileUploads, setFileUploads] = useState<Array<FileUpload>>([]);
   const [errors, setErrors] = useState<Array<string>>([]);
+  const [inputProps] = useState(fileInputProps);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -134,9 +136,6 @@ export const FileUploadProvider = ({
 
       const newFile: FileUpload = {
         id: uuidV4(),
-        name: file.name,
-        size: file.size,
-        type: file.type,
         file: file,
         preview: file.type.startsWith("image/")
           ? URL.createObjectURL(file)
@@ -183,6 +182,7 @@ export const FileUploadProvider = ({
       resetUploads,
       getFileIcon,
       inputRef,
+      inputProps,
     }),
     [
       uploadFolder,
@@ -195,6 +195,7 @@ export const FileUploadProvider = ({
       removeFile,
       resetUploads,
       getFileIcon,
+      inputProps,
     ],
   );
 
