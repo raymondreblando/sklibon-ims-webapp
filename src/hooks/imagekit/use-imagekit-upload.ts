@@ -31,7 +31,7 @@ export const useImagekitUpload = (folder: string) => {
           abortSignal: abortSignal,
         });
 
-        return response.url;
+        return response;
       } catch (error) {
         if (error instanceof ImageKitAbortError) {
           toast.error(`Upload aborted: ${error.reason}`);
