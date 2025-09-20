@@ -23,7 +23,7 @@ export const CreateGallerySchema = BaseSchema.refine(
   (data) => data.hasSelectedFile === true,
   {
     path: ["hasSelectedFile"],
-    error: "No image was uploaded. Kindly upload the gallery image.",
+    error: "A gallery image is required. Please upload one to continue.",
   },
 );
 

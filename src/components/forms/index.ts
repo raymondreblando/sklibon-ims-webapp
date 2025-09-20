@@ -16,6 +16,7 @@ export { CreateHotlineForm } from "./hotline/create";
 export { CreateContactForm } from "./contact/create";
 export { UpdateContactForm } from "./contact/update";
 export { UpdateHotlineForm } from "./hotline/update";
+export { CreateGalleryForm } from "./gallery/create";
 export { CreatePositionForm } from "./position/create";
 export { UpdatePositionForm } from "./position/update";
 export { CreateReportForm } from "./report/create";
