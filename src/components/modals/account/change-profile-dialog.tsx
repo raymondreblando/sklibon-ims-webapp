@@ -7,6 +7,8 @@ import { MainDialog } from "@/components/modals/main-dialog";
 import { ChangeProfilePicForm } from "@/components/forms";
 import type React from "react";
 import type { SetStateAction } from "react";
+import { FileUploadProvider } from "@/contexts/file-upload-context";
+import { FILE_TYPES } from "@/lib/constants";
 
 export const ChangeProfileDialog = ({
   setDropdownOpen,
@@ -37,9 +39,12 @@ const Content = () => {
       title="Change Account Profile"
       description="Upload a new photo to personalize your profile."
     >
-      <UploadProvider uploadFolder="/sklibon-ims/profiles/">
+      <FileUploadProvider
+        folder="/sklibon-ims/profiles/"
+        accepted={FILE_TYPES.IMAGES}
+      >
         <ChangeProfilePicForm />
-      </UploadProvider>
+      </FileUploadProvider>
     </MainDialog>
   );
 };

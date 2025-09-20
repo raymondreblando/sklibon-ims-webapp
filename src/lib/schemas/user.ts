@@ -128,14 +128,9 @@ export const ChangeProfilePicSchema = z
     profile: z.string().optional(),
     hasSelectedFile: z.boolean().optional(),
   })
-  .superRefine((data, ctx) => {
-    if (!data.profile && !data.hasSelectedFile) {
-      ctx.addIssue({
-        code: "custom",
-        path: ["profile"],
-        message: "Please select a profile picture to upload.",
-      });
-    }
+  .refine((data) => data.hasSelectedFile === true, {
+    path: ["hasSelectedFile"],
+    error: "No account profile uploaded. Kindly upload one.",
   });
 
 export type CreateUserField = z.infer<typeof CreateUserSchema>;

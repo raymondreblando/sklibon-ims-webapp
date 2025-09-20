@@ -1,9 +1,8 @@
 import { useChangeProfilePicForm } from "./use-change-profilepic-form";
-import { cn } from "@/lib/utils/utils";
 
 import { FormWrapper } from "@/components/forms";
-import { FormField, FormMessage } from "@/components/ui/form";
-import { ProfileUploader } from "@/components/upload";
+import { FormField } from "@/components/ui/form";
+import { ProfileUpload } from "@/components/upload";
 
 export const ChangeProfilePicForm = () => {
   const { form, onSubmit } = useChangeProfilePicForm();
@@ -18,16 +17,9 @@ export const ChangeProfilePicForm = () => {
       }}
     >
       <FormField
-        name="profile"
+        name="hasSelectedFile"
         render={({ fieldState }) => (
-          <>
-            <ProfileUploader
-              className={cn(
-                fieldState.error ? "border-destructive text-destructive" : "",
-              )}
-            />
-            <FormMessage />
-          </>
+          <ProfileUpload formError={fieldState.error} />
         )}
       ></FormField>
     </FormWrapper>
