@@ -33,7 +33,7 @@ function RouteComponent() {
         </Subheading>
       </div>
       <FileUploadProvider
-        folder="/sklibon-ims/reports/"
+        folder="/sklibon-ims/galleries/"
         accepted={FILE_TYPES.IMAGES}
         fileInputProps={{ multiple: true }}
       >

@@ -8,7 +8,7 @@ interface ImageGridProps {
 
 export const ImageGrid = ({ title, images }: ImageGridProps) => {
   return (
-    <div className="grid min-h-40 grid-cols-3 grid-rows-2 gap-2">
+    <div className="grid h-40 grid-cols-3 grid-rows-2 gap-2">
       {Array.from({ length: 3 }).map((_, index) =>
         images[index] ? (
           <div
