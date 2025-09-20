@@ -1,5 +1,5 @@
 import { XIcon } from "lucide-react";
-import { formatFileSize } from "@/lib/utils/utils";
+import { formatFileSize, getFileIcon } from "@/lib/utils/file";
 import { Button } from "@/components/ui/button";
 import { useFileUpload, type FileUpload } from "@/contexts/file-upload-context";
 import {
@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/tooltip";
 
 export const UploadedFile = ({ file }: { file: FileUpload }) => {
-  const { getFileIcon, removeFile } = useFileUpload();
+  const { removeFile } = useFileUpload();
 
   return (
     <div className="space-y-2">

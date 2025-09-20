@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { formatFileSize } from "@/lib/utils/utils";
+import { formatFileSize } from "@/lib/utils/file";
 import { useFileUpload } from "@/contexts/file-upload-context";
 
 import { FileUpIcon } from "lucide-react";

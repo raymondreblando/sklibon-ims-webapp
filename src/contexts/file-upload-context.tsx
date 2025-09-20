@@ -8,17 +8,7 @@ import React, {
   useRef,
   useState,
   type ComponentProps,
-  type JSX,
 } from "react";
-import {
-  FileArchiveIcon,
-  FileIcon,
-  FileSpreadsheetIcon,
-  FileTextIcon,
-  HeadphonesIcon,
-  ImageIcon,
-  VideoIcon,
-} from "lucide-react";
 
 export type FileUpload = {
   id: string;
@@ -33,19 +23,11 @@ interface FileUploadContextProps {
   accepted: { [key: string]: string };
   files: Array<FileUpload>;
   errors: Array<string>;
-  inputProps: ComponentProps<"input">;
+  inputProps?: ComponentProps<"input">;
   addError: (error: string) => void;
   addFile: (file: File) => void;
   removeFile: (fileId: string) => void;
   resetUploads: () => void;
-  getFileIcon: (file: {
-    file:
-      | File
-      | {
-          type: string;
-          name: string;
-        };
-  }) => JSX.Element;
 }
 
 const FileUploadContext = createContext<FileUploadContextProps | undefined>(
@@ -64,7 +46,7 @@ interface FileUploadProviderProps {
   folder: string;
   accepted: { [key: string]: string };
   children: React.ReactNode;
-  fileInputProps: ComponentProps<"input">;
+  fileInputProps?: ComponentProps<"input">;
   maxFileSize?: number;
 }
 
@@ -83,46 +65,6 @@ export const FileUploadProvider = ({
   const [inputProps] = useState(fileInputProps);
 
   const inputRef = useRef<HTMLInputElement>(null);
-
-  const getFileIcon = useCallback(
-    (file: { file: File | { type: string; name: string } }) => {
-      const fileType =
-        file.file instanceof File ? file.file.type : file.file.type;
-      const fileName =
-        file.file instanceof File ? file.file.name : file.file.name;
-
-      if (
-        fileType.includes("pdf") ||
-        fileName.endsWith(".pdf") ||
-        fileType.includes("word") ||
-        fileName.endsWith(".doc") ||
-        fileName.endsWith(".docx")
-      ) {
-        return <FileTextIcon className="size-4" />;
-      } else if (
-        fileType.includes("zip") ||
-        fileType.includes("archive") ||
-        fileName.endsWith(".zip") ||
-        fileName.endsWith(".rar")
-      ) {
-        return <FileArchiveIcon className="size-4" />;
-      } else if (
-        fileType.includes("excel") ||
-        fileName.endsWith(".xls") ||
-        fileName.endsWith(".xlsx")
-      ) {
-        return <FileSpreadsheetIcon className="size-4" />;
-      } else if (fileType.includes("video/")) {
-        return <VideoIcon className="size-4" />;
-      } else if (fileType.includes("audio/")) {
-        return <HeadphonesIcon className="size-4" />;
-      } else if (fileType.startsWith("image/")) {
-        return <ImageIcon className="size-4" />;
-      }
-      return <FileIcon className="size-4" />;
-    },
-    [],
-  );
 
   const addError = useCallback((error: string) => {
     setErrors((prev) => (prev ? [...prev, error] : [error]));
@@ -180,7 +122,6 @@ export const FileUploadProvider = ({
       addFile,
       removeFile,
       resetUploads,
-      getFileIcon,
       inputRef,
       inputProps,
     }),
@@ -194,7 +135,6 @@ export const FileUploadProvider = ({
       addFile,
       removeFile,
       resetUploads,
-      getFileIcon,
       inputProps,
     ],
   );
