@@ -7,7 +7,7 @@ import { useImagekitUpload } from "@/hooks/imagekit/use-imagekit-upload";
 import { useCreateReportMutation } from "@/hooks/mutations/use-report-mutations";
 
 import { handleRequestError } from "@/lib/utils/error-handler";
-import { ReportSchema, type CreateReportField } from "@/lib/schemas/report";
+import { CreateReportSchema, type CreateReportField } from "@/lib/schemas/report";
 
 export const useCreateReportForm = () => {
   const { folder, files, resetUploads } = useFileUpload();
@@ -15,7 +15,7 @@ export const useCreateReportForm = () => {
   const mutation = useCreateReportMutation();
 
   const form = useForm<CreateReportField>({
-    resolver: zodResolver(ReportSchema),
+    resolver: zodResolver(CreateReportSchema),
     defaultValues: {
       barangay_id: "",
       subject: "",

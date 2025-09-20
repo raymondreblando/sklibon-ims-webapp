@@ -4,6 +4,7 @@ import type { ReportWithRelation } from "@/types/schema";
 
 import { API_ENDPOINTS } from "@/lib/constants/api-constants";
 import type {
+  CreateAttachmentField,
   CreateReportField,
   UpdateReportField,
 } from "@/lib/schemas/report";
@@ -48,6 +49,23 @@ export const updateReport = async (
 export const deleteReport = async (id: string) => {
   const { data: response } = await api.delete<ApiResponse<ReportWithRelation>>(
     `${API_ENDPOINTS.REPORTS}/${id}`,
+  );
+
+  return response;
+};
+
+export const createAttachment = async (data: CreateAttachmentField) => {
+  const { data: response } = await api.post<ApiResponse<ReportWithRelation>>(
+    API_ENDPOINTS.ATTACHMENTS,
+    data,
+  );
+
+  return response;
+};
+
+export const deleteAttachment = async (id: string) => {
+  const { data: response } = await api.delete<ApiResponse<ReportWithRelation>>(
+    `${API_ENDPOINTS.ATTACHMENTS}/${id}`,
   );
 
   return response;

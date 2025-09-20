@@ -17,6 +17,7 @@ export const API_ENDPOINTS = {
   HOTLINES: "/hotlines",
   REQUEST_TYPES: "/request-types",
   REPORTS: "/reports",
+  ATTACHMENTS: "/attachments",
   PROVINCES: "/locations/provinces",
   MUNICIPALITIES: "/locations/municipalities",
   BARANGAYS: `/locations/barangays/${import.meta.env.VITE_MUNICIPALITY_ID}`,

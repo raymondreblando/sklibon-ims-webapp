@@ -19,6 +19,7 @@ export { UpdateHotlineForm } from "./hotline/update";
 export { CreatePositionForm } from "./position/create";
 export { UpdatePositionForm } from "./position/update";
 export { CreateReportForm } from "./report/create";
+export { UpdateReportForm } from "./report/update";
 export { CreateRequestTypeForm } from "./request-type/create";
 export { UpdateRequestTypeForm } from "./request-type/update";
 export { CreateUserForm } from "./user/create";
