@@ -1,3 +1,3 @@
-export { MultipleUploader } from "./multiple-uploader";
-export { ProfileUploader } from "./profile-uploader";
-export { SingleUploader } from "./single-uploader";
+export { Attachment } from "./attachment";
+export { ProfileUpload } from "./profile-upload";
+export { FileUpload } from "./file-upload";

@@ -4,4 +4,6 @@ export { ContactCardSkeleton } from "./contact-card-skeleton";
 export { HotlineCardSkeleton } from "./hotline-card-skeleton";
 export { ProfileUploaderSkeleton } from "./profile-uploader-skeleton";
 export { ProfileCardUserSkeleton } from "./profile-card-user-skeleton";
+export { ReportCardSkeleton } from "./report-card-skeleton";
+export { ReportViewCardSkeleton } from "./report-view-card-skeleton";
 export { UserProfileCardSkeleton } from "./user-profile-card-skeleton";

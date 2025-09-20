@@ -3,8 +3,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useModal } from "@/contexts/modal-context";
-import { useUpload } from "@/contexts/upload-context";
-import { useUploadFile } from "@/hooks/upload/use-upload-file";
+import { useFileUpload } from "@/contexts/file-upload-context";
+import { useImagekitUpload } from "@/hooks/imagekit/use-imagekit-upload";
 
 import { handleRequestError } from "@/lib/utils/error-handler";
 import { useChangeProfilePicMutation } from "@/hooks/mutations/use-account-mutation";
@@ -15,8 +15,8 @@ import {
 
 export const useChangeProfilePicForm = () => {
   const { hide } = useModal();
-  const { files } = useUpload();
-  const { uploadFile } = useUploadFile();
+  const { files, folder, resetUploads } = useFileUpload();
+  const { uploadFile } = useImagekitUpload(folder);
 
   const mutation = useChangeProfilePicMutation();
 
@@ -39,13 +39,14 @@ export const useChangeProfilePicForm = () => {
 
       const abortController = new AbortController();
 
-      const url = await uploadFile(files[0], abortController.signal);
-      await mutation.mutateAsync({ profile: url });
+      const response = await uploadFile(files[0].file, abortController.signal);
+      await mutation.mutateAsync({ profile: response?.url });
       hide();
+      resetUploads();
     } catch (error) {
       handleRequestError({ error, setError: form.setError });
     }
-  }, [mutation, form, hide, files, uploadFile]);
+  }, [mutation, form, hide, files, uploadFile, resetUploads]);
 
   return { form, onSubmit };
 };
