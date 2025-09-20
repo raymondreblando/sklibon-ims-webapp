@@ -2,7 +2,12 @@ import { useCreateReportForm } from "./use-create-report-form";
 import { QUERY_KEYS } from "@/lib/constants/api-constants";
 import { getBarangays } from "@/services/api/locations";
 
-import { FormCombobox, FormInput, FormWrapper } from "@/components/forms";
+import {
+  FormCombobox,
+  FormInput,
+  FormTextarea,
+  FormWrapper,
+} from "@/components/forms";
 import { FileUpload } from "@/components/upload";
 import { FormField } from "@/components/ui/form";
 
@@ -31,7 +36,7 @@ export const CreateReportForm = () => {
         valueKey="id"
       />
       <FormInput name="subject" label="Subject" />
-      <FormInput name="description" label="Description" />
+      <FormTextarea name="description" label="Description" />
 
       <FormField
         control={form.control}
