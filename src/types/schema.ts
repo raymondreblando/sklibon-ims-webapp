@@ -91,6 +91,9 @@ export type Contact = {
 export type Attachment = {
   id: string;
   attachment: string;
+  filename: string;
+  type: string;
+  size: number;
 };
 
 export type Province = {

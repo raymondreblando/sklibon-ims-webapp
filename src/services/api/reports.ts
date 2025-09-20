@@ -25,6 +25,14 @@ export const createReport = async (data: CreateReportField) => {
   return response;
 };
 
+export const getReportById = async (id: string | undefined) => {
+  const { data: response } = await api.get<ApiResponse<ReportWithRelation>>(
+    `${API_ENDPOINTS.REPORTS}/${id}`,
+  );
+
+  return response.data;
+};
+
 export const updateReport = async (
   id: string | undefined,
   data: UpdateReportField,

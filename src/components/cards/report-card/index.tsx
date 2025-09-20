@@ -18,7 +18,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-interface ReportCardProps {
+export interface ReportCardProps {
   id: string;
   title: string;
   dateCreated: Date;

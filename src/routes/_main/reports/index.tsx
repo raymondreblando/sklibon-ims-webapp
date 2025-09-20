@@ -1,10 +1,12 @@
+import { useEffect } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useDataTable } from "@/hooks/use-data-table";
 import { useReportsQuery } from "@/hooks/queries/use-reports-query";
 
 import { ButtonLink } from "@/components/buttons";
 import { Searchbar } from "@/components/ui/searchbar";
-import { fallback, getColumns } from "@/components/cards/report/columns";
+import { useBreadcrumb } from "@/components/ui/breadcrumb";
+import { fallback, getColumns } from "@/components/cards/report-card/columns";
 import { ReportGrid } from "./-report-grid";
 
 export const Route = createFileRoute("/_main/reports/")({
@@ -12,12 +14,17 @@ export const Route = createFileRoute("/_main/reports/")({
 });
 
 function RouteComponent() {
+  const { setItems } = useBreadcrumb();
   const { isPending, isError, data, refetch } = useReportsQuery();
   const columns = getColumns();
   const { table, setGlobalFilter } = useDataTable({
     columns,
     data: data ? data?.data : fallback,
   });
+
+  useEffect(() => {
+    setItems([{ title: "Reports" }]);
+  }, [setItems]);
 
   return (
     <>

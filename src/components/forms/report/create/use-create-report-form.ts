@@ -42,12 +42,17 @@ export const useCreateReportForm = () => {
 
         const abortController = new AbortController();
 
-        const urls = await Promise.all(
+        const responses = await Promise.all(
           files.map((file) => uploadFile(file.file, abortController.signal)),
         );
 
-        urls.filter(Boolean).forEach((url) => {
-          append({ attachment: url as string });
+        responses.filter(Boolean).forEach((response, index) => {
+          append({
+            attachment: response?.url as string,
+            filename: files[index].file.name,
+            file_type: files[index].file.type,
+            file_size: response?.size as number,
+          });
         });
 
         await mutation.mutateAsync(form.getValues());

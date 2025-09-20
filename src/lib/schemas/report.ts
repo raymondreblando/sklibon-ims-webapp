@@ -14,7 +14,16 @@ export const ReportSchema = z
     description: z
       .string()
       .min(1, { message: "The description field is required." }),
-    attachments: z.array(z.object({ attachment: z.string() })).optional(),
+    attachments: z
+      .array(
+        z.object({
+          attachment: z.string(),
+          filename: z.string(),
+          file_type: z.string(),
+          file_size: z.number(),
+        }),
+      )
+      .optional(),
     hasSelectedFile: z.boolean().optional(),
   })
   .refine((data) => data.hasSelectedFile === true, {
