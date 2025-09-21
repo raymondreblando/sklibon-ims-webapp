@@ -17,10 +17,7 @@ function RouteComponent() {
   const { setItems } = useBreadcrumb();
 
   useEffect(() => {
-    setItems([
-      { title: "Galleries", url: "/galleries" },
-      { title: "Create gallery" },
-    ]);
+    setItems([{ title: "Galleries", url: "/galleries" }, { title: "Create" }]);
   }, [setItems]);
 
   return (
