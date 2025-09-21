@@ -14,11 +14,12 @@ import {
 
 export const UserInfo = () => {
   return (
-    <div className="border-input flex flex-col gap-y-4 rounded-md md:border md:p-8">
+    <div className="space-y-4 p-4 md:p-8">
       <HeadingWithWrapper
         className="text-left"
-        headingProps={{ variant: "default" }}
+        headingProps={{ variant: "default", className: "md:text-lg" }}
         heading="Personal Information"
+        subheadingProps={{ className: "md:text-sm font-medium" }}
         subheading="Provide the user’s basic details (name, age, gender, phone, etc.)."
       />
       <div className="grid gap-4 md:grid-cols-2">

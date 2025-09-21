@@ -7,8 +7,10 @@ import { useBreadcrumb } from "@/components/ui/breadcrumb";
 import { useFindUserQuery } from "@/hooks/queries/use-users-query";
 import { QueryStatusWrapper } from "@/components/hocs/query-status-wrapper";
 import { FormSkeleton, ProfileCardUserSkeleton } from "@/components/skeletons";
-import { Card, CardHeader } from "@/components/ui/card";
+import { CardHeader } from "@/components/ui/card";
 import { ProfileCardUser } from "@/components/cards";
+import { Heading, Subheading } from "@/components/headings";
+import { Separator } from "@/components/ui/separator";
 
 export const Route = createFileRoute("/_main/users/$userId/edit")({
   component: RouteComponent,
@@ -21,36 +23,41 @@ function RouteComponent() {
   );
 
   useEffect(() => {
-    setItems([
-      { title: "SK Members", url: "/users" },
-      { title: "Edit Member" },
-    ]);
+    setItems([{ title: "SK Members", url: "/users" }, { title: "Edit" }]);
   }, [setItems]);
 
   return (
-    <div className="p-8">
-      <QueryStatusWrapper
-        isPending={isPending}
-        isError={isError}
-        loadingComp={
-          <div className="mx-auto flex max-w-[640px] flex-col gap-y-4 border-0 pt-20 shadow-none md:pt-32">
-            <ProfileCardUserSkeleton />
-            <FormSkeleton withHeading={true} withSubheading={true} />
+    <QueryStatusWrapper
+      isPending={isPending}
+      isError={isError}
+      loadingComp={
+        <div className="border-input mx-auto my-4 max-w-[640px] rounded-md border-0 md:my-8 md:border">
+          <ProfileCardUserSkeleton />
+          <FormSkeleton withHeading={true} withSubheading={true} />
+        </div>
+      }
+      onRetry={refetch}
+    >
+      {data && (
+        <ProfileCardProvider user={data.data}>
+          <div className="border-input mx-auto my-4 max-w-[640px] rounded-md border-0 md:my-8 md:border">
+            <div className="p-4 text-left md:px-8 md:py-6">
+              <Heading className="text-xl font-bold md:text-3xl">
+                Edit SK Member Account
+              </Heading>
+              <Subheading className="text-muted text-sm font-medium md:text-base">
+                Fill in the required details to update the sk member account.
+              </Subheading>
+            </div>
+            <Separator className="bg-input" />
+            <CardHeader className="flex flex-col items-center justify-center py-6 md:py-8">
+              <ProfileCardUser />
+            </CardHeader>
+            <Separator className="bg-input" />
+            <UpdateUserForm />
           </div>
-        }
-        onRetry={refetch}
-      >
-        {data && (
-          <ProfileCardProvider user={data.data}>
-            <Card className="mx-auto max-w-[640px] border-0 pt-20 shadow-none md:pt-32">
-              <CardHeader className="border-input relative flex flex-col items-center justify-center gap-y-2 rounded-md border pt-20 pb-8">
-                <ProfileCardUser />
-              </CardHeader>
-              <UpdateUserForm />
-            </Card>
-          </ProfileCardProvider>
-        )}
-      </QueryStatusWrapper>
-    </div>
+        </ProfileCardProvider>
+      )}
+    </QueryStatusWrapper>
   );
 }

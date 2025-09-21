@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "@tanstack/react-router";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { handleRequestError } from "@/lib/utils/error-handler";
@@ -8,6 +9,7 @@ import { CreateUserSchema, type CreateUserField } from "@/lib/schemas/user";
 
 export const useCreateUserForm = () => {
   const mutation = useCreateUserMutation();
+  const navigate = useNavigate();
 
   const form = useForm<CreateUserField>({
     resolver: zodResolver(CreateUserSchema),
@@ -41,11 +43,12 @@ export const useCreateUserForm = () => {
       try {
         await mutation.mutateAsync(values);
         form.reset();
+        navigate({ to: "/users" });
       } catch (error) {
         handleRequestError({ error, setError: form.setError });
       }
     },
-    [form, mutation],
+    [form, mutation, navigate],
   );
 
   return { form, onSubmit };

@@ -1,25 +1,24 @@
+import { useProfileCard } from "@/contexts/profile-card-context";
+
 import { Heading } from "@/components/headings";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import { ProfileCardUser } from "./profile-card-user";
-import { useProfileCard } from "@/contexts/profile-card-context";
 
 export const ProfileCard = () => {
   const { items } = useProfileCard();
 
   return (
-    <Card className="mx-auto max-w-[640px] border-0 pt-20 shadow-none md:pt-32">
-      <CardHeader className="border-input relative flex flex-col items-center justify-center gap-y-2 rounded-md border pt-20 pb-8">
+    <Card className="border-input mx-auto my-4 max-w-[640px] rounded-md border-0 shadow-none md:my-8 md:border">
+      <CardHeader className="flex flex-col items-center justify-center gap-y-1">
         <ProfileCardUser />
       </CardHeader>
-      <CardContent className="flex flex-col gap-y-4 px-0">
+      <CardContent className="flex flex-col p-0">
         {items.map((item, index) => (
-          <div
-            key={`${item.heading}-${index}`}
-            className="border-input rounded-md border"
-          >
-            <Heading className="border-input border-b px-6 py-4">
-              {item.heading}
-            </Heading>
+          <div key={`${item.heading}-${index}`}>
+            <Separator className="bg-input my-2" />
+            <Heading className="px-6">{item.heading}</Heading>
+            <Separator className="bg-input my-2" />
             <div className="grid gap-6 p-6 md:grid-cols-3">
               {item.items.map((info, infoIndex) => (
                 <div

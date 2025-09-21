@@ -34,9 +34,7 @@ function RouteComponent() {
     >
       {data && (
         <ProfileCardProvider user={data.data}>
-          <div className="p-8">
-            <ProfileCard />
-          </div>
+          <ProfileCard />
         </ProfileCardProvider>
       )}
     </QueryStatusWrapper>
