@@ -7,6 +7,7 @@ import { FileUploadProvider } from "@/contexts/file-upload-context";
 import { useBreadcrumb } from "@/components/ui/breadcrumb";
 import { Heading, Subheading } from "@/components/headings";
 import { CreateGalleryForm } from "@/components/forms";
+import { Separator } from "@/components/ui/separator";
 
 export const Route = createFileRoute("/_main/galleries/add")({
   component: RouteComponent,
@@ -23,15 +24,16 @@ function RouteComponent() {
   }, [setItems]);
 
   return (
-    <div className="mx-auto flex max-w-[650px] flex-col gap-y-8 p-8">
-      <div className="text-left md:text-center">
-        <Heading className="text-xl font-bold md:text-3xl">
-          Create new gallery
+    <div className="border-input mx-auto my-4 max-w-[650px] rounded-md border-0 md:my-8 md:border">
+      <div className="p-4 text-left md:px-8 md:py-6">
+        <Heading className="text-lg font-bold md:text-2xl">
+          Create New Gallery
         </Heading>
-        <Subheading className="text-muted font-mdeium text-sm md:text-base">
+        <Subheading className="text-muted text-sm font-medium">
           Fill in the details below to create a new image gallery.
         </Subheading>
       </div>
+      <Separator className="bg-input" />
       <FileUploadProvider
         folder="/sklibon-ims/galleries/"
         accepted={FILE_TYPES.IMAGES}

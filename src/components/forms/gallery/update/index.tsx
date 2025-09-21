@@ -15,6 +15,7 @@ export const UpdateGalleryForm = () => {
         idle: "Update gallery",
         submitting: "Updating gallery...",
       }}
+      formProps={{ className: "space-y-2 p-4 md:px-8 md:py-5" }}
     >
       <GalleryInfo />
       <GalleryImages />

@@ -15,6 +15,7 @@ export const CreateGalleryForm = () => {
         idle: "Create gallery",
         submitting: "Creating gallery...",
       }}
+      formProps={{ className: "p-4 md:px-8 md:py-5" }}
     >
       <FormInput name="title" label="Title" />
       <FormTextarea name="description" label="Description" />
