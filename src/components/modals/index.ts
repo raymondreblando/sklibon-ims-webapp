@@ -1,4 +1,4 @@
-export { DeleteConfirmationDialog } from "./delete-confirmation-modal";
+export { ConfirmationDialog } from "./confirmation-modal";
 
 export { ChangePasswordDialog } from "./account/change-password-dialog";
 export { ChangeProfileDialog } from "./account/change-profile-dialog";

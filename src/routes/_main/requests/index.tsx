@@ -6,7 +6,7 @@ import { useModal } from "@/contexts/modal-context";
 import { useDeleteRequestMutation } from "@/hooks/mutations/use-request-mutations";
 
 import { useBreadcrumb } from "@/components/ui/breadcrumb";
-import { DeleteConfirmationDialog } from "@/components/modals";
+import { ConfirmationDialog } from "@/components/modals";
 import { RequestTable } from "@/components/tables/request";
 
 export const Route = createFileRoute("/_main/requests/")({
@@ -25,7 +25,7 @@ function RouteComponent() {
   const onDelete = useCallback(
     (request: RequestWithRelation) => {
       show(
-        <DeleteConfirmationDialog
+        <ConfirmationDialog
           onConfirm={() => deleteRequest.mutate(request.id)}
           isConfirming={deleteRequest.isPending}
         />,

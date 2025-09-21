@@ -8,7 +8,7 @@ import { useDeleteGalleryMutation } from "@/hooks/mutations/use-gallery-mutation
 
 import { EmptyStateWrapper, QueryStatusWrapper } from "@/components/hocs";
 import { GalleryCard } from "@/components/cards";
-import { DeleteConfirmationDialog } from "@/components/modals";
+import { ConfirmationDialog } from "@/components/modals";
 import { GalleryCardSkeleton } from "@/components/skeletons";
 
 interface GalleryGridProps {
@@ -31,7 +31,7 @@ export const GalleryGrid = ({
   const onDelete = useCallback(
     (id: string) => {
       show(
-        <DeleteConfirmationDialog
+        <ConfirmationDialog
           onConfirm={() => deleteGallery.mutate(id)}
           isConfirming={deleteGallery.isPending}
           message="Are you sure you want to delete this gallery?"

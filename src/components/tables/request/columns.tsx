@@ -32,7 +32,8 @@ export const getColumns = ({
 }: {
   onDelete?: (resource: RequestWithRelation) => void;
 }): ColumnDef<RequestWithRelation>[] => {
-  const role = getAuthUser()?.role.role;
+  const user = getAuthUser();
+  const role = user?.role.role;
 
   const baseColumns = [
     {
@@ -149,8 +150,12 @@ export const getColumns = ({
                 </Link>
               </DropdownMenuItem>
 
-              {row.status === "pending" && (
+              {row.status === "pending" && row.requester.id === user?.id && (
                 <>
+                  <DropdownMenuItem onClick={() => onDelete?.(row)}>
+                    <XIcon className="group-focus:text-accent-foreground" />
+                    <span>Cancel</span>
+                  </DropdownMenuItem>
                   <DropdownMenuItem asChild>
                     <Link
                       to="/requests/$requestId/edit"

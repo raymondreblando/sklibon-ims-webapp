@@ -7,10 +7,7 @@ import { useDeletePositionMutation } from "@/hooks/mutations/use-position-mutati
 
 import { useBreadcrumb } from "@/components/ui/breadcrumb";
 import { PositionTable } from "@/components/tables/positions";
-import {
-  DeleteConfirmationDialog,
-  UpdatePositionDialog,
-} from "@/components/modals";
+import { ConfirmationDialog, UpdatePositionDialog } from "@/components/modals";
 
 export const Route = createFileRoute("/_main/positions")({
   component: RouteComponent,
@@ -27,7 +24,7 @@ function RouteComponent() {
 
   const onDelete = (position: Position) => {
     show(
-      <DeleteConfirmationDialog
+      <ConfirmationDialog
         onConfirm={() => deletePosition.mutate(position.id)}
         isConfirming={deletePosition.isPending}
       />,

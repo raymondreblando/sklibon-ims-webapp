@@ -8,7 +8,7 @@ import { useDeleteRequestTypeMutation } from "@/hooks/mutations/use-request-type
 import { useBreadcrumb } from "@/components/ui/breadcrumb";
 import { RequestTypeTable } from "@/components/tables/request-types";
 import {
-  DeleteConfirmationDialog,
+  ConfirmationDialog,
   UpdateRequestTypeDialog,
 } from "@/components/modals";
 
@@ -27,7 +27,7 @@ function RouteComponent() {
 
   const onDelete = (position: RequestType) => {
     show(
-      <DeleteConfirmationDialog
+      <ConfirmationDialog
         onConfirm={() => deleteRequestType.mutate(position.id)}
         isConfirming={deleteRequestType.isPending}
       />,

@@ -11,19 +11,19 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
-interface DeleteConfirmationDialogProps {
+interface ConfirmationDialogProps {
   onConfirm: () => void;
   isConfirming: boolean;
   message?: string;
   title?: string;
 }
 
-export const DeleteConfirmationDialog = ({
+export const ConfirmationDialog = ({
   onConfirm,
   isConfirming,
   title,
   message,
-}: DeleteConfirmationDialogProps) => {
+}: ConfirmationDialogProps) => {
   const { hide } = useModal();
 
   const handleConfirm = () => {

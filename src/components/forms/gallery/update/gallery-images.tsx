@@ -8,7 +8,7 @@ import { useFindGalleryQuery } from "@/hooks/queries/use-galleries-query";
 import type { UpdateGalleryField } from "@/lib/schemas/gallery";
 
 import { XIcon } from "lucide-react";
-import { DeleteConfirmationDialog } from "@/components/modals";
+import { ConfirmationDialog } from "@/components/modals";
 import { Button } from "@/components/ui/button";
 import { FormField } from "@/components/ui/form";
 import { ImageUpload } from "@/components/upload";
@@ -23,7 +23,7 @@ export const GalleryImages = () => {
   const onDelete = useCallback(
     (id: string) => {
       show(
-        <DeleteConfirmationDialog
+        <ConfirmationDialog
           onConfirm={() => deleteImage.mutate(id)}
           isConfirming={deleteImage.isPending}
           message="Are you sure you want to delete this gallery image?"
