@@ -47,7 +47,7 @@ export const TableUserProfile = ({
       </Avatar>
       <div>
         <p className="text-foreground text-sm font-semibold">{user.name}</p>
-        <p className="text-muted text-xs font-medium">@{user.subtitle}</p>
+        <p className="text-muted text-xs font-medium">{user.subtitle}</p>
       </div>
     </div>
   );
