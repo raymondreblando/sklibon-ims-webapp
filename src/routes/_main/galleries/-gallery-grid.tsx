@@ -2,6 +2,7 @@ import { useCallback } from "react";
 import type { Table } from "@tanstack/react-table";
 import type { GalleryWithRelation } from "@/types/schema";
 
+import { getAuthUser } from "@/lib/utils/auth";
 import { useModal } from "@/contexts/modal-context";
 import { useDeleteGalleryMutation } from "@/hooks/mutations/use-gallery-mutations";
 
@@ -23,6 +24,7 @@ export const GalleryGrid = ({
   onRetry,
   table,
 }: GalleryGridProps) => {
+  const user = getAuthUser();
   const deleteGallery = useDeleteGalleryMutation();
   const { show } = useModal();
 
@@ -67,7 +69,7 @@ export const GalleryGrid = ({
               }}
               onDelete={onDelete}
               images={row.original.images}
-              hasAction={true}
+              hasAction={row.original.uploader.id === user?.id}
             />
           ))}
         </EmptyStateWrapper>
