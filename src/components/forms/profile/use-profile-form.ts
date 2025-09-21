@@ -30,7 +30,7 @@ export const useProfileForm = () => {
         province_id: user?.info.province?.id,
         municipality_id: user?.info.municipality?.id,
         barangay_id: user?.info.barangay?.id,
-        addtional_address: user?.info.additionalAddress ?? "",
+        additional_address: user?.info.additionalAddress ?? "",
       },
     },
   });
