@@ -65,6 +65,7 @@ export type Request = {
   disapprovedDate: Date;
   filedDate: Date;
   reason: string;
+  receivableType: "user" | "barangay";
 };
 
 export type RequestWithRelation = Request & {
