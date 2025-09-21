@@ -48,6 +48,40 @@ export type UserInfo = {
   additionalAddress: string;
 };
 
+export type MinifyUser = Pick<User, "id" | "profile"> & {
+  info: Pick<UserInfo, "firstname" | "lastname"> & {
+    position: Pick<Position, "name">;
+  };
+};
+
+export type Request = {
+  id: string;
+  name: string;
+  description: string;
+  dateNeeded: Date;
+  attachment: string;
+  status: "pending" | "approved" | "disapproved" | "completed" | "cancelled";
+  approvedDate: Date;
+  disapprovedDate: Date;
+  filedDate: Date;
+  reason: string;
+  receivableType: "user" | "barangay";
+};
+
+export type RequestWithRelation = Request & {
+  type: Pick<RequestType, "id" | "name">;
+  receiver:
+    | MinifyUser
+    | (Barangay & {
+        provinceId: string;
+        municipalityId: string;
+        code: string;
+      });
+  requester: MinifyUser;
+  approver: MinifyUser;
+  disapprover: MinifyUser;
+};
+
 export type Position = {
   id: string;
   name: string;

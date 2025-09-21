@@ -16,6 +16,7 @@ export const FormButton = ({
   size = "default",
   isSubmitting,
   loaderClassname,
+  className,
   ...props
 }: FormButtonProps) => {
   return (
@@ -23,7 +24,7 @@ export const FormButton = ({
       size={size}
       {...(isSubmitting && { disabled: true })}
       {...props}
-      className={cn(isSubmitting && "cursor-progress")}
+      className={cn(isSubmitting && "cursor-progress", className)}
     >
       {isSubmitting && (
         <Loader2Icon className={cn("animate-spin", loaderClassname)} />
