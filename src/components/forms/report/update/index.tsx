@@ -15,6 +15,7 @@ export const UpdateReportForm = () => {
         idle: "Update report",
         submitting: "Updating report...",
       }}
+      formProps={{ className: "p-4 md:px-8 md:py-5" }}
     >
       <ReportInfo />
       <Attachments />

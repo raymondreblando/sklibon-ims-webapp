@@ -1,4 +1,5 @@
 import { useCallback } from "react";
+import { useNavigate } from "@tanstack/react-router";
 import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -7,12 +8,16 @@ import { useImagekitUpload } from "@/hooks/imagekit/use-imagekit-upload";
 import { useCreateReportMutation } from "@/hooks/mutations/use-report-mutations";
 
 import { handleRequestError } from "@/lib/utils/error-handler";
-import { CreateReportSchema, type CreateReportField } from "@/lib/schemas/report";
+import {
+  CreateReportSchema,
+  type CreateReportField,
+} from "@/lib/schemas/report";
 
 export const useCreateReportForm = () => {
   const { folder, files, resetUploads } = useFileUpload();
   const { uploadFile } = useImagekitUpload(folder);
   const mutation = useCreateReportMutation();
+  const navigate = useNavigate();
 
   const form = useForm<CreateReportField>({
     resolver: zodResolver(CreateReportSchema),
@@ -58,11 +63,12 @@ export const useCreateReportForm = () => {
         await mutation.mutateAsync(form.getValues());
         form.reset();
         resetUploads();
+        navigate({ to: "/reports" });
       } catch (error) {
         handleRequestError({ error, setError: form.setError });
       }
     },
-    [form, mutation, append, files, uploadFile, resetUploads],
+    [form, mutation, append, files, uploadFile, resetUploads, navigate],
   );
 
   return { form, onSubmit };

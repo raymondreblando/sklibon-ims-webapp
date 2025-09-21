@@ -18,6 +18,7 @@ import {
 
 export const useUpdateReportForm = () => {
   const reportId = Route.useParams().reportId;
+  const navigate = Route.useNavigate();
   const { data } = useFindReportQuery(reportId);
   const { folder, files, resetUploads } = useFileUpload();
   const { uploadFile } = useImagekitUpload(folder);
@@ -64,11 +65,12 @@ export const useUpdateReportForm = () => {
         await mutation.mutateAsync({ id: reportId, data: values });
         form.reset();
         resetUploads();
+        navigate({ to: "/reports" });
       } catch (error) {
         handleRequestError({ error, setError: form.setError });
       }
     },
-    [form, mutation, files, reportId, resetUploads, uploadFile],
+    [form, mutation, files, reportId, resetUploads, uploadFile, navigate],
   );
 
   return { form, onSubmit };
