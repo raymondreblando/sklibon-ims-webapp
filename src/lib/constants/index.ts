@@ -43,6 +43,17 @@ export const ACCOUNT_STATUSES: Option[] = [
   },
 ];
 
+export const RECEIVABLE_TYPES: Option[] = [
+  {
+    key: "user",
+    value: "SK Member",
+  },
+  {
+    key: "barangay",
+    value: "Barangay",
+  },
+];
+
 export const FILE_TYPES = {
   IMAGES: {
     jpg: "image/jpg",
