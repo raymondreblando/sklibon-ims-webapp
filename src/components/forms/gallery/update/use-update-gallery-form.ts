@@ -18,6 +18,7 @@ import {
 
 export const useUpdateGalleryForm = () => {
   const galleryId = Route.useParams().galleryId;
+  const navigate = Route.useNavigate();
   const { data } = useFindGalleryQuery(galleryId);
   const { folder, files, resetUploads } = useFileUpload();
   const { uploadFile } = useImagekitUpload(folder);
@@ -57,11 +58,12 @@ export const useUpdateGalleryForm = () => {
         await mutation.mutateAsync({ id: galleryId, data: values });
         form.reset();
         resetUploads();
+        navigate({ to: "/galleries" });
       } catch (error) {
         handleRequestError({ error, setError: form.setError });
       }
     },
-    [form, mutation, files, uploadFile, resetUploads, galleryId],
+    [form, mutation, files, uploadFile, resetUploads, galleryId, navigate],
   );
 
   return { form, onSubmit };
