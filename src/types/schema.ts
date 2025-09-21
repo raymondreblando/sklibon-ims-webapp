@@ -96,6 +96,27 @@ export type Attachment = {
   size: number;
 };
 
+export type Gallery = {
+  id: string;
+  title: string;
+  description: string;
+  createdAt: Date;
+};
+
+export type GalleryImage = {
+  id: string;
+  imageUrl: string;
+};
+
+export type GalleryWithRelation = Gallery & {
+  uploader: Pick<User, "id" | "profile"> & {
+    info: Pick<UserInfo, "firstname" | "lastname"> & {
+      position: Pick<Position, "name">;
+    };
+  };
+  images: Array<GalleryImage>;
+};
+
 export type Province = {
   id: string;
   name: string;

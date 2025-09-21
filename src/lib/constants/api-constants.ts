@@ -18,6 +18,8 @@ export const API_ENDPOINTS = {
   REQUEST_TYPES: "/request-types",
   REPORTS: "/reports",
   ATTACHMENTS: "/attachments",
+  GALLERIES: "/galleries",
+  GALLERY_IMAGES: "/gallery-images",
   PROVINCES: "/locations/provinces",
   MUNICIPALITIES: "/locations/municipalities",
   BARANGAYS: `/locations/barangays/${import.meta.env.VITE_MUNICIPALITY_ID}`,
@@ -34,6 +36,7 @@ export const QUERY_KEYS = {
   REQUEST_TYPES: "request-types",
   USERS: "users",
   REPORTS: "reports",
+  GALLERIES: "galleries",
   USER_PROFILE: "user-profile",
   PROFILE_PIC: "profile-pic",
 };

@@ -19,7 +19,10 @@ function RouteComponent() {
   );
 
   useEffect(() => {
-    setItems([{ title: "Users", url: "/users" }, { title: "User Profile" }]);
+    setItems([
+      { title: "SK Members", url: "/users" },
+      { title: "Member Profile" },
+    ]);
   }, [setItems]);
 
   return (
