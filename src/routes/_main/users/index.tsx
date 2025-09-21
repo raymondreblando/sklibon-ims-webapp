@@ -19,7 +19,7 @@ function RouteComponent() {
   const { show } = useModal();
 
   useEffect(() => {
-    setItems([{ title: "Users" }]);
+    setItems([{ title: "SK Members" }]);
   }, [setItems]);
 
   const onDelete = (user: UserWithRelation) => {

@@ -12,7 +12,7 @@ function RouteComponent() {
   const { setItems } = useBreadcrumb();
 
   useEffect(() => {
-    setItems([{ title: "Users", url: "/users" }, { title: "Add User" }]);
+    setItems([{ title: "SK Members", url: "/users" }, { title: "Add" }]);
   }, [setItems]);
 
   return <CreateUserForm />;
