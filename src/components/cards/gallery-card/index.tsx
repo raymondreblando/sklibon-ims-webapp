@@ -17,6 +17,7 @@ interface GalleryCardProps {
   images: Array<GalleryImage>;
   dateCreated: Date;
   onDelete: (id: string) => void;
+  hasAction: boolean;
 }
 
 export const GalleryCard = ({
@@ -25,9 +26,10 @@ export const GalleryCard = ({
   uploader,
   images,
   onDelete,
+  hasAction,
 }: GalleryCardProps) => {
   return (
-    <Card className="border-0 shadow-none block p-1">
+    <Card className="block border-0 p-1 shadow-none">
       <ImageGrid title={title} images={images} />
       <Content title={title} total={images.length} />
       <Separator className="bg-input my-2" />
@@ -37,6 +39,7 @@ export const GalleryCard = ({
         position={uploader.position}
         profile={uploader.profile}
         onDelete={onDelete}
+        hasAction={hasAction}
       />
     </Card>
   );

@@ -16,6 +16,7 @@ interface FooterProps {
   position: string;
   profile: string | undefined;
   onDelete: (id: string) => void;
+  hasAction: boolean;
 }
 
 export const Footer = ({
@@ -24,6 +25,7 @@ export const Footer = ({
   position,
   profile,
   onDelete,
+  hasAction,
 }: FooterProps) => {
   const actions = useMemo(() => {
     return [
@@ -31,19 +33,22 @@ export const Footer = ({
         Icon: ClapperboardIcon,
         label: "View Gallery",
         href: `/gallery/${id}/view`,
+        show: true,
       },
       {
         Icon: PencilIcon,
         label: "Edit Gallery",
         href: `/galleries/${id}/edit`,
+        show: hasAction,
       },
       {
         Icon: TrashIcon,
         label: "Delete Gallery",
         onDelete: onDelete,
+        show: hasAction,
       },
     ];
-  }, [onDelete, id]);
+  }, [onDelete, hasAction, id]);
 
   return (
     <CardFooter className="flex items-center justify-between p-0">
@@ -60,22 +65,28 @@ export const Footer = ({
         </div>
       </div>
       <div className="text-muted flex items-center gap-x-2">
-        {actions.map((action) => (
-          <Tooltip key={`${action.label}-${id}`}>
-            <TooltipTrigger className="cursor-pointer" asChild>
-              {action.href ? (
-                <Link to={action.href}>
-                  <action.Icon size={16} />
-                </Link>
-              ) : (
-                <action.Icon onClick={() => action.onDelete?.(id)} size={16} />
-              )}
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>{action.label}</p>
-            </TooltipContent>
-          </Tooltip>
-        ))}
+        {actions.map(
+          (action) =>
+            action.show && (
+              <Tooltip key={`${action.label}-${id}`}>
+                <TooltipTrigger className="cursor-pointer" asChild>
+                  {action.href ? (
+                    <Link to={action.href}>
+                      <action.Icon size={16} />
+                    </Link>
+                  ) : (
+                    <action.Icon
+                      onClick={() => action.onDelete?.(id)}
+                      size={16}
+                    />
+                  )}
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{action.label}</p>
+                </TooltipContent>
+              </Tooltip>
+            ),
+        )}
       </div>
     </CardFooter>
   );

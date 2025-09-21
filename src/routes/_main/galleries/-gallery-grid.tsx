@@ -67,6 +67,7 @@ export const GalleryGrid = ({
               }}
               onDelete={onDelete}
               images={row.original.images}
+              hasAction={true}
             />
           ))}
         </EmptyStateWrapper>

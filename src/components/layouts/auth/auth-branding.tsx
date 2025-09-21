@@ -5,7 +5,7 @@ import SKLogo from "@/assets/logo.webp";
 
 const links = linkOptions([
   {
-    to: "/dashboard",
+    to: "/sk-galleries",
     label: "Galleries",
     activeOptions: { exact: true },
   },
