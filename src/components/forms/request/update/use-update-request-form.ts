@@ -17,6 +17,8 @@ import { useFindRequestQuery } from "@/hooks/queries/use-requests-query";
 
 export const useUpdateRequestForm = () => {
   const requestId = Route.useParams().requestId;
+  const navigate = Route.useNavigate();
+
   const { data } = useFindRequestQuery(requestId);
   const { folder, files, resetUploads } = useFileUpload();
   const { uploadFile } = useImagekitUpload(folder);
@@ -54,10 +56,11 @@ export const useUpdateRequestForm = () => {
       await mutation.mutateAsync({ id: requestId, data: form.getValues() });
       form.reset();
       resetUploads();
+      navigate({ to: "/requests" });
     } catch (error) {
       handleRequestError({ error, setError: form.setError });
     }
-  }, [form, mutation, files, uploadFile, resetUploads, requestId]);
+  }, [form, mutation, files, uploadFile, resetUploads, requestId, navigate]);
 
   return { form, onSubmit };
 };

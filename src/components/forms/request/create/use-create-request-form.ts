@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "@tanstack/react-router";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import {
@@ -16,6 +17,7 @@ export const useCreateRequestForm = () => {
   const { folder, files, resetUploads } = useFileUpload();
   const { uploadFile } = useImagekitUpload(folder);
   const mutation = useCreateRequestMutation();
+  const navigate = useNavigate();
 
   const form = useForm<CreateRequestField>({
     resolver: zodResolver(CreateRequestSchema),
@@ -52,11 +54,12 @@ export const useCreateRequestForm = () => {
         await mutation.mutateAsync(form.getValues());
         form.reset();
         resetUploads();
+        navigate({ to: "/requests" });
       } catch (error) {
         handleRequestError({ error, setError: form.setError });
       }
     },
-    [form, mutation, files, uploadFile, resetUploads],
+    [form, mutation, files, uploadFile, resetUploads, navigate],
   );
 
   return { form, onSubmit };
