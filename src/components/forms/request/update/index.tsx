@@ -30,7 +30,7 @@ export const UpdateRequestForm = () => {
         submitting: "Updating request...",
       }}
       buttonProps={{ className: "md:col-span-2" }}
-      formProps={{ className: "grid md:grid-cols-2 gap-4" }}
+      formProps={{ className: "grid md:grid-cols-2 gap-4 p-4 md:px-8 md:py-5" }}
     >
       <FormInput className="md:col-span-2" name="name" label="Request name" />
       <FormTextarea
