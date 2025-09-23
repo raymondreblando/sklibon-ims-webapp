@@ -2,7 +2,10 @@ import { toast } from "react-toastify";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { QUERY_KEYS } from "@/lib/constants/api-constants";
-import type { UpdateRequestField } from "@/lib/schemas/request";
+import type {
+  UpdateRequestField,
+  UpdateRequestStatusField,
+} from "@/lib/schemas/request";
 
 import {
   createRequest,
@@ -31,7 +34,7 @@ export const useUpdateRequestMutation = () => {
       data,
     }: {
       id: string | undefined;
-      data: UpdateRequestField;
+      data: UpdateRequestField | UpdateRequestStatusField;
     }) => updateRequest(id, data),
     onSuccess: ({ message }) => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.REQUESTS] });

@@ -1,9 +1,12 @@
 import { useCallback, useEffect } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import type { RequestWithRelation } from "@/types/schema";
+import type { UpdateRequestStatusField } from "@/lib/schemas/request";
 
 import { useModal } from "@/contexts/modal-context";
-import { useDeleteRequestMutation } from "@/hooks/mutations/use-request-mutations";
+import {
+  useDeleteRequestMutation,
+  useUpdateRequestMutation,
+} from "@/hooks/mutations/use-request-mutations";
 
 import { useBreadcrumb } from "@/components/ui/breadcrumb";
 import { ConfirmationDialog } from "@/components/modals";
@@ -16,6 +19,7 @@ export const Route = createFileRoute("/_main/requests/")({
 function RouteComponent() {
   const { setItems } = useBreadcrumb();
   const deleteRequest = useDeleteRequestMutation();
+  const updateRequest = useUpdateRequestMutation();
   const { show } = useModal();
 
   useEffect(() => {
@@ -23,10 +27,10 @@ function RouteComponent() {
   }, [setItems]);
 
   const onDelete = useCallback(
-    (request: RequestWithRelation) => {
+    (id: string) => {
       show(
         <ConfirmationDialog
-          onConfirm={() => deleteRequest.mutate(request.id)}
+          onConfirm={() => deleteRequest.mutate(id)}
           isConfirming={deleteRequest.isPending}
         />,
       );
@@ -34,5 +38,20 @@ function RouteComponent() {
     [deleteRequest, show],
   );
 
-  return <RequestTable onDelete={onDelete} />;
+  const onUpdate = useCallback(
+    (id: string, data: UpdateRequestStatusField, message: string) => {
+      show(
+        <ConfirmationDialog
+          onConfirm={() => updateRequest.mutate({ id, data })}
+          isConfirming={updateRequest.isPending}
+          message={message}
+          title="Confirmation"
+          description="This will permanently update the transaction's status."
+        />,
+      );
+    },
+    [updateRequest, show],
+  );
+
+  return <RequestTable onDelete={onDelete} onUpdate={onUpdate} />;
 }

@@ -30,6 +30,7 @@ export const useUpdateRequestForm = () => {
       request_type_id: data?.type.id,
       name: data?.name,
       description: data?.description,
+      status: data?.status,
       date_needed: data?.dateNeeded
         ? format(new Date(data?.dateNeeded), "yyyy-MM-dd")
         : "",

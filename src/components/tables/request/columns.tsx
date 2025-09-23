@@ -1,10 +1,11 @@
 import { Link } from "@tanstack/react-router";
 import type { ColumnDef } from "@tanstack/react-table";
 
-import type { RequestWithRelation } from "@/types/schema";
 import { ROLES } from "@/lib/constants";
 import { formatTableCount } from "@/lib/utils/utils";
 import { getAuthUser } from "@/lib/utils/auth";
+import type { RequestWithRelation } from "@/types/schema";
+import type { UpdateRequestStatusField } from "@/lib/schemas/request";
 
 import {
   ArrowDownToLineIcon,
@@ -29,8 +30,14 @@ import {
 
 export const getColumns = ({
   onDelete,
+  onUpdate,
 }: {
-  onDelete?: (resource: RequestWithRelation) => void;
+  onDelete: (id: string) => void;
+  onUpdate: (
+    id: string,
+    data: UpdateRequestStatusField,
+    message: string,
+  ) => void;
 }): ColumnDef<RequestWithRelation>[] => {
   const user = getAuthUser();
   const role = user?.role.role;
@@ -123,18 +130,42 @@ export const getColumns = ({
               <DropdownMenuSeparator />
               {role !== ROLES.USER && row.status === "pending" && (
                 <>
-                  <DropdownMenuItem onClick={() => onDelete?.(row)}>
+                  <DropdownMenuItem
+                    onClick={() =>
+                      onUpdate(
+                        row.id,
+                        { status: "approved" },
+                        "Are you sure you want to approved this request?",
+                      )
+                    }
+                  >
                     <CircleCheckIcon className="group-focus:text-accent-foreground" />
                     <span>Approved</span>
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => onDelete?.(row)}>
+                  <DropdownMenuItem
+                    onClick={() =>
+                      onUpdate(
+                        row.id,
+                        { status: "disapproved" },
+                        "Are you sure you want to disapproved this request?",
+                      )
+                    }
+                  >
                     <XIcon className="group-focus:text-accent-foreground" />
                     <span>Disapproved</span>
                   </DropdownMenuItem>
                 </>
               )}
               {row.status === "approved" && (
-                <DropdownMenuItem onClick={() => onDelete?.(row)}>
+                <DropdownMenuItem
+                  onClick={() =>
+                    onUpdate(
+                      row.id,
+                      { status: "completed" },
+                      "Are you sure you want to mark this request as completed?",
+                    )
+                  }
+                >
                   <BadgeCheckIcon className="group-focus:text-accent-foreground" />
                   <span>Mark as Complete</span>
                 </DropdownMenuItem>
@@ -152,7 +183,15 @@ export const getColumns = ({
 
               {row.status === "pending" && row.requester.id === user?.id && (
                 <>
-                  <DropdownMenuItem onClick={() => onDelete?.(row)}>
+                  <DropdownMenuItem
+                    onClick={() =>
+                      onUpdate(
+                        row.id,
+                        { status: "cancelled" },
+                        "Are you sure you want to cancel this request?",
+                      )
+                    }
+                  >
                     <XIcon className="group-focus:text-accent-foreground" />
                     <span>Cancel</span>
                   </DropdownMenuItem>
@@ -166,7 +205,7 @@ export const getColumns = ({
                       <span>Edit</span>
                     </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => onDelete?.(row)}>
+                  <DropdownMenuItem onClick={() => onDelete(row.id)}>
                     <TrashIcon className="group-focus:text-accent-foreground" />
                     <span>Delete</span>
                   </DropdownMenuItem>
