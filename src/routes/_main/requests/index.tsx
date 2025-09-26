@@ -1,6 +1,9 @@
 import { useCallback, useEffect } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import type { UpdateRequestStatusField } from "@/lib/schemas/request";
+import type {
+  UpdateRequestStatusField,
+  UpdateRequestStatusWithReasonField,
+} from "@/lib/schemas/request";
 
 import { useModal } from "@/contexts/modal-context";
 import {
@@ -9,8 +12,13 @@ import {
 } from "@/hooks/mutations/use-request-mutations";
 
 import { useBreadcrumb } from "@/components/ui/breadcrumb";
-import { ConfirmationDialog } from "@/components/modals";
+import { UpdateRequestWithReasonForm } from "@/components/forms";
 import { RequestTable } from "@/components/tables/request";
+import {
+  ConfirmationDialog,
+  UpdateWithReasonDialog,
+  ViewReasonDialog,
+} from "@/components/modals";
 
 export const Route = createFileRoute("/_main/requests/")({
   component: RouteComponent,
@@ -53,5 +61,31 @@ function RouteComponent() {
     [updateRequest, show],
   );
 
-  return <RequestTable onDelete={onDelete} onUpdate={onUpdate} />;
+  const onUpdateWithReason = useCallback(
+    (data: UpdateRequestStatusWithReasonField) => {
+      show(
+        <UpdateWithReasonDialog title="Update Request Status">
+          <UpdateRequestWithReasonForm />
+        </UpdateWithReasonDialog>,
+        { data },
+      );
+    },
+    [show],
+  );
+
+  const onViewReason = useCallback(
+    (reason: string) => {
+      show(<ViewReasonDialog reason={reason} />);
+    },
+    [show],
+  );
+
+  return (
+    <RequestTable
+      onDelete={onDelete}
+      onUpdate={onUpdate}
+      onUpdateWithReason={onUpdateWithReason}
+      onViewReason={onViewReason}
+    />
+  );
 }

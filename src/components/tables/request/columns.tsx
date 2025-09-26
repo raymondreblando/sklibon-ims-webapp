@@ -5,12 +5,16 @@ import { ROLES } from "@/lib/constants";
 import { formatTableCount } from "@/lib/utils/utils";
 import { getAuthUser } from "@/lib/utils/auth";
 import type { RequestWithRelation } from "@/types/schema";
-import type { UpdateRequestStatusField } from "@/lib/schemas/request";
+import type {
+  UpdateRequestStatusField,
+  UpdateRequestStatusWithReasonField,
+} from "@/lib/schemas/request";
 
 import {
   ArrowDownToLineIcon,
   BadgeCheckIcon,
   CircleCheckIcon,
+  ClipboardListIcon,
   MoreHorizontal,
   PencilIcon,
   TrashIcon,
@@ -28,17 +32,23 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export const getColumns = ({
-  onDelete,
-  onUpdate,
-}: {
+interface GetRequestColumnsProps {
   onDelete: (id: string) => void;
   onUpdate: (
     id: string,
     data: UpdateRequestStatusField,
     message: string,
   ) => void;
-}): ColumnDef<RequestWithRelation>[] => {
+  onUpdateWithReason: (data: UpdateRequestStatusWithReasonField) => void;
+  onViewReason: (reason: string) => void;
+}
+
+export const getColumns = ({
+  onDelete,
+  onUpdate,
+  onUpdateWithReason,
+  onViewReason,
+}: GetRequestColumnsProps): ColumnDef<RequestWithRelation>[] => {
   const user = getAuthUser();
   const role = user?.role.role;
 
@@ -128,34 +138,37 @@ export const getColumns = ({
             <DropdownMenuContent>
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              {role !== ROLES.USER && row.status === "pending" && (
-                <>
-                  <DropdownMenuItem
-                    onClick={() =>
-                      onUpdate(
-                        row.id,
-                        { status: "approved" },
-                        "Are you sure you want to approved this request?",
-                      )
-                    }
-                  >
-                    <CircleCheckIcon className="group-focus:text-accent-foreground" />
-                    <span>Approved</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() =>
-                      onUpdate(
-                        row.id,
-                        { status: "disapproved" },
-                        "Are you sure you want to disapproved this request?",
-                      )
-                    }
-                  >
-                    <XIcon className="group-focus:text-accent-foreground" />
-                    <span>Disapproved</span>
-                  </DropdownMenuItem>
-                </>
-              )}
+              {(row.receiver.id === user?.id ||
+                row.receiver.id === user?.info.barangay.id) &&
+                row.requester.id !== user.id &&
+                row.status === "pending" && (
+                  <>
+                    <DropdownMenuItem
+                      onClick={() =>
+                        onUpdate(
+                          row.id,
+                          { status: "approved" },
+                          "Are you sure you want to approved this request?",
+                        )
+                      }
+                    >
+                      <CircleCheckIcon className="group-focus:text-accent-foreground" />
+                      <span>Approved</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() =>
+                        onUpdateWithReason({
+                          id: row.id,
+                          status: "disapproved",
+                          reason: "",
+                        })
+                      }
+                    >
+                      <XIcon className="group-focus:text-accent-foreground" />
+                      <span>Disapproved</span>
+                    </DropdownMenuItem>
+                  </>
+                )}
               {row.status === "approved" && (
                 <DropdownMenuItem
                   onClick={() =>
@@ -181,15 +194,22 @@ export const getColumns = ({
                 </Link>
               </DropdownMenuItem>
 
+              {["disapproved", "cancelled"].includes(row.status) && (
+                <DropdownMenuItem onClick={() => onViewReason(row.reason)}>
+                  <ClipboardListIcon className="group-focus:text-accent-foreground" />
+                  <span>View Reason</span>
+                </DropdownMenuItem>
+              )}
+
               {row.status === "pending" && row.requester.id === user?.id && (
                 <>
                   <DropdownMenuItem
                     onClick={() =>
-                      onUpdate(
-                        row.id,
-                        { status: "cancelled" },
-                        "Are you sure you want to cancel this request?",
-                      )
+                      onUpdateWithReason({
+                        id: row.id,
+                        status: "cancelled",
+                        reason: "",
+                      })
                     }
                   >
                     <XIcon className="group-focus:text-accent-foreground" />

@@ -1,11 +1,15 @@
 import { getColumns } from "./columns";
 import { useRequestsQuery } from "@/hooks/queries/use-requests-query";
 
+import type {
+  UpdateRequestStatusField,
+  UpdateRequestStatusWithReasonField,
+} from "@/lib/schemas/request";
+
 import { ButtonLink } from "@/components/buttons";
 import { DataTable } from "@/components/data-table";
 import { QueryStatusWrapper } from "@/components/hocs";
 import { DataTableSkeleton } from "@/components/skeletons";
-import type { UpdateRequestStatusField } from "@/lib/schemas/request";
 
 interface RequestTableProps {
   onDelete: (id: string) => void;
@@ -14,11 +18,18 @@ interface RequestTableProps {
     data: UpdateRequestStatusField,
     message: string,
   ) => void;
+  onUpdateWithReason: (data: UpdateRequestStatusWithReasonField) => void;
+  onViewReason: (reason: string) => void;
 }
 
-export const RequestTable = ({ onDelete, onUpdate }: RequestTableProps) => {
+export const RequestTable = ({
+  onDelete,
+  onUpdate,
+  onUpdateWithReason,
+  onViewReason,
+}: RequestTableProps) => {
   const { isPending, isError, data, refetch } = useRequestsQuery();
-  const columns = getColumns({ onDelete, onUpdate });
+  const columns = getColumns({ onDelete, onUpdate, onUpdateWithReason, onViewReason });
 
   return (
     <QueryStatusWrapper

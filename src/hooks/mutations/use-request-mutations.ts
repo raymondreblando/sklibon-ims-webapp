@@ -5,6 +5,7 @@ import { QUERY_KEYS } from "@/lib/constants/api-constants";
 import type {
   UpdateRequestField,
   UpdateRequestStatusField,
+  UpdateRequestStatusWithReasonField,
 } from "@/lib/schemas/request";
 
 import {
@@ -34,7 +35,10 @@ export const useUpdateRequestMutation = () => {
       data,
     }: {
       id: string | undefined;
-      data: UpdateRequestField | UpdateRequestStatusField;
+      data:
+        | UpdateRequestField
+        | UpdateRequestStatusField
+        | UpdateRequestStatusWithReasonField;
     }) => updateRequest(id, data),
     onSuccess: ({ message }) => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.REQUESTS] });
