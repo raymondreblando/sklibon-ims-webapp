@@ -1,4 +1,5 @@
 import type { UserWithRelation } from "@/types/schema";
+import { format } from "date-fns";
 import React, { createContext, useContext, useMemo } from "react";
 
 interface ProfileCardItem {
@@ -38,7 +39,12 @@ export const ProfileCardProvider = ({
       { label: "Middlename", value: user.info.middlename },
       { label: "Lastname", value: user.info.lastname },
       { label: "Gender", value: user.info.gender },
-      { label: "Birthdate", value: user.info.birthdate },
+      {
+        label: "Birthdate",
+        value: user.info.birthdate
+          ? format(user.info.birthdate, "PPP")
+          : "Not Set",
+      },
       { label: "Age", value: user.info.age },
       { label: "Contact number", value: user.info.phoneNumber },
       { label: "Current position", value: user.info.position?.name },

@@ -25,6 +25,7 @@ export { CreateReportForm } from "./report/create";
 export { UpdateReportForm } from "./report/update";
 export { CreateRequestForm } from "./request/create";
 export { UpdateRequestForm } from "./request/update";
+export { UpdateRequestWithReasonForm } from "./request/update-with-reason";
 export { CreateRequestTypeForm } from "./request-type/create";
 export { UpdateRequestTypeForm } from "./request-type/update";
 export { CreateUserForm } from "./user/create";

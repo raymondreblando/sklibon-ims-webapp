@@ -7,10 +7,7 @@ import { useDeleteContactMutation } from "@/hooks/mutations/use-contact-mutation
 
 import { useBreadcrumb } from "@/components/ui/breadcrumb";
 import { ContactTable } from "@/components/tables/contact";
-import {
-  DeleteConfirmationDialog,
-  UpdateContactDialog,
-} from "@/components/modals";
+import { ConfirmationDialog, UpdateContactDialog } from "@/components/modals";
 
 export const Route = createFileRoute("/_main/contacts")({
   component: RouteComponent,
@@ -27,7 +24,7 @@ function RouteComponent() {
 
   const onDelete = (contact: ContactWithRelation) => {
     show(
-      <DeleteConfirmationDialog
+      <ConfirmationDialog
         onConfirm={() => deleteContact.mutate(contact.id)}
         isConfirming={deleteContact.isPending}
       />,

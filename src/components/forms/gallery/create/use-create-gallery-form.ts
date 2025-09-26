@@ -1,4 +1,5 @@
 import { useCallback } from "react";
+import { useNavigate } from "@tanstack/react-router";
 import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -16,6 +17,7 @@ export const useCreateGalleryForm = () => {
   const { folder, files, resetUploads } = useFileUpload();
   const { uploadFile } = useImagekitUpload(folder);
   const mutation = useCreateGalleryMutation();
+  const navigate = useNavigate();
 
   const form = useForm<CreateGalleryField>({
     resolver: zodResolver(CreateGallerySchema),
@@ -58,11 +60,12 @@ export const useCreateGalleryForm = () => {
         await mutation.mutateAsync(form.getValues());
         form.reset();
         resetUploads();
+        navigate({ to: "/galleries" });
       } catch (error) {
         handleRequestError({ error, setError: form.setError });
       }
     },
-    [form, mutation, append, files, uploadFile, resetUploads],
+    [form, mutation, append, files, uploadFile, resetUploads, navigate],
   );
 
   return { form, onSubmit };

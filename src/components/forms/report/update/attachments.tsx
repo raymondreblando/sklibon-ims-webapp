@@ -9,7 +9,7 @@ import { useModal } from "@/contexts/modal-context";
 
 import { FormField } from "@/components/ui/form";
 import { Attachment, FileUpload } from "@/components/upload";
-import { DeleteConfirmationDialog } from "@/components/modals";
+import { ConfirmationDialog } from "@/components/modals";
 import { useDeleteAttachmentMutation } from "@/hooks/mutations/use-report-mutations";
 
 export const Attachments = () => {
@@ -23,7 +23,7 @@ export const Attachments = () => {
   const onDelete = useCallback(
     (id: string) => {
       show(
-        <DeleteConfirmationDialog
+        <ConfirmationDialog
           onConfirm={() => deleteAttachment.mutate(id)}
           isConfirming={deleteAttachment.isPending}
           message="Are you sure you want to delete this attachment?"

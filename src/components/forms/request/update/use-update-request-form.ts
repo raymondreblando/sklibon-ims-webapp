@@ -17,6 +17,8 @@ import { useFindRequestQuery } from "@/hooks/queries/use-requests-query";
 
 export const useUpdateRequestForm = () => {
   const requestId = Route.useParams().requestId;
+  const navigate = Route.useNavigate();
+
   const { data } = useFindRequestQuery(requestId);
   const { folder, files, resetUploads } = useFileUpload();
   const { uploadFile } = useImagekitUpload(folder);
@@ -28,6 +30,7 @@ export const useUpdateRequestForm = () => {
       request_type_id: data?.type.id,
       name: data?.name,
       description: data?.description,
+      status: data?.status,
       date_needed: data?.dateNeeded
         ? format(new Date(data?.dateNeeded), "yyyy-MM-dd")
         : "",
@@ -54,10 +57,11 @@ export const useUpdateRequestForm = () => {
       await mutation.mutateAsync({ id: requestId, data: form.getValues() });
       form.reset();
       resetUploads();
+      navigate({ to: "/requests" });
     } catch (error) {
       handleRequestError({ error, setError: form.setError });
     }
-  }, [form, mutation, files, uploadFile, resetUploads, requestId]);
+  }, [form, mutation, files, uploadFile, resetUploads, requestId, navigate]);
 
   return { form, onSubmit };
 };

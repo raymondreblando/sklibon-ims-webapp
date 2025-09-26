@@ -10,6 +10,7 @@ import { QueryStatusWrapper } from "@/components/hocs";
 import { FormSkeleton } from "@/components/skeletons";
 import { Heading, Subheading } from "@/components/headings";
 import { UpdateGalleryForm } from "@/components/forms";
+import { Separator } from "@/components/ui/separator";
 
 export const Route = createFileRoute("/_main/galleries/$galleryId/edit")({
   component: RouteComponent,
@@ -22,40 +23,36 @@ function RouteComponent() {
   );
 
   useEffect(() => {
-    setItems([
-      { title: "Galleries", url: "/galleries" },
-      { title: "Edit Gallery" },
-    ]);
+    setItems([{ title: "Galleries", url: "/galleries" }, { title: "Edit" }]);
   }, [setItems]);
 
   return (
-    <div className="p-4 md:p-8">
-      <QueryStatusWrapper
-        isPending={isPending}
-        isError={isError}
-        loadingComp={<FormSkeleton withHeading={true} withSubheading={true} />}
-        onRetry={refetch}
-      >
-        {data && (
-          <div className="mx-auto flex max-w-[650px] flex-col gap-y-8  p-4 md:p-8">
-            <div className="text-left md:text-center">
-              <Heading className="text-xl font-bold md:text-3xl">
-                Update gallery details
-              </Heading>
-              <Subheading className="text-muted font-mdeium text-sm md:text-base">
-                Fill in the details below to update gallery details.
-              </Subheading>
-            </div>
-            <FileUploadProvider
-              folder="/sklibon-ims/galleries/"
-              accepted={FILE_TYPES.IMAGES}
-              fileInputProps={{ multiple: true }}
-            >
-              <UpdateGalleryForm />
-            </FileUploadProvider>
+    <QueryStatusWrapper
+      isPending={isPending}
+      isError={isError}
+      loadingComp={<FormSkeleton withHeading={true} withSubheading={true} />}
+      onRetry={refetch}
+    >
+      {data && (
+        <div className="border-input mx-auto my-4 max-w-[650px] rounded-md border-0 md:my-8 md:border">
+          <div className="p-4 text-left md:px-8 md:py-6">
+            <Heading className="text-lg font-bold md:text-2xl">
+              Edit Gallery Details
+            </Heading>
+            <Subheading className="text-muted text-sm font-medium">
+              Fill in the details below to update gallery details.
+            </Subheading>
           </div>
-        )}
-      </QueryStatusWrapper>
-    </div>
+          <Separator className="bg-input" />
+          <FileUploadProvider
+            folder="/sklibon-ims/galleries/"
+            accepted={FILE_TYPES.IMAGES}
+            fileInputProps={{ multiple: true }}
+          >
+            <UpdateGalleryForm />
+          </FileUploadProvider>
+        </div>
+      )}
+    </QueryStatusWrapper>
   );
 }

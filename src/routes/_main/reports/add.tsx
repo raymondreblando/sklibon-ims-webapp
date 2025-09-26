@@ -6,6 +6,7 @@ import { FileUploadProvider } from "@/contexts/file-upload-context";
 import { useBreadcrumb } from "@/components/ui/breadcrumb";
 import { Heading, Subheading } from "@/components/headings";
 import { CreateReportForm } from "@/components/forms";
+import { Separator } from "@/components/ui/separator";
 
 export const Route = createFileRoute("/_main/reports/add")({
   component: RouteComponent,
@@ -15,22 +16,20 @@ function RouteComponent() {
   const { setItems } = useBreadcrumb();
 
   useEffect(() => {
-    setItems([
-      { title: "Reports", url: "/reports" },
-      { title: "Create report" },
-    ]);
+    setItems([{ title: "Reports", url: "/reports" }, { title: "Create" }]);
   }, [setItems]);
 
   return (
-    <div className="mx-auto flex max-w-[650px] flex-col gap-y-8 p-8">
-      <div className="text-left md:text-center">
-        <Heading className="text-xl font-bold md:text-3xl">
-          Create new report
+    <div className="border-input mx-auto my-4 max-w-[650px] rounded-md border-0 md:my-8 md:border">
+      <div className="p-4 text-left md:px-8 md:py-6">
+        <Heading className="text-lg font-bold md:text-2xl">
+          Create New Report
         </Heading>
-        <Subheading className="text-muted font-mdeium text-sm md:text-base">
+        <Subheading className="text-muted text-sm font-medium">
           Fill in the details below to generate and submit a new report.
         </Subheading>
       </div>
+      <Separator className="bg-input" />
       <FileUploadProvider
         folder="/sklibon-ims/reports/"
         accepted={FILE_TYPES.DOCUMENTS}

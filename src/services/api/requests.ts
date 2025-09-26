@@ -6,6 +6,8 @@ import { API_ENDPOINTS } from "@/lib/constants/api-constants";
 import type {
   CreateRequestField,
   UpdateRequestField,
+  UpdateRequestStatusField,
+  UpdateRequestStatusWithReasonField,
 } from "@/lib/schemas/request";
 
 export const getRequests = async () => {
@@ -35,7 +37,10 @@ export const getRequestById = async (id: string | undefined) => {
 
 export const updateRequest = async (
   id: string | undefined,
-  data: UpdateRequestField,
+  data:
+    | UpdateRequestField
+    | UpdateRequestStatusField
+    | UpdateRequestStatusWithReasonField,
 ) => {
   const { data: response } = await api.put<ApiResponse<RequestWithRelation>>(
     `${API_ENDPOINTS.REQUESTS}/${id}`,

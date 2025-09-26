@@ -31,8 +31,32 @@ const BaseSchema = z
     error: "No attachment found. Please upload an attachment.",
   });
 
+const UpdateRequestStatusSchema = z.object({
+  status: z.enum(["approved", "disapproved", "cancelled", "completed"]),
+});
+
+export const UpdateRequestStatusWithReasonSchema =
+  UpdateRequestStatusSchema.extend({
+    id: z.string().optional(),
+    reason: z.string().min(1, { message: "The reason field is required." }),
+  });
+
 export const CreateRequestSchema = BaseSchema;
-export const UpdateRequestSchema = BaseSchema;
+export const UpdateRequestSchema = BaseSchema.safeExtend({
+  status: z.enum([
+    "pending",
+    "approved",
+    "disapproved",
+    "cancelled",
+    "completed",
+  ]),
+});
 
 export type CreateRequestField = z.infer<typeof CreateRequestSchema>;
 export type UpdateRequestField = z.infer<typeof UpdateRequestSchema>;
+export type UpdateRequestStatusField = z.infer<
+  typeof UpdateRequestStatusSchema
+>;
+export type UpdateRequestStatusWithReasonField = z.infer<
+  typeof UpdateRequestStatusWithReasonSchema
+>;

@@ -46,7 +46,7 @@ export const items: SidebarItemProps[] = [
   {
     title: "Attendances",
     url: "/attendances",
-    authorize: [ROLES.USER],
+    authorize: [ROLES.SUPERADMIN, ROLES.ADMIN, ROLES.USER],
     icon: LandPlotIcon,
     isActive: false,
   },

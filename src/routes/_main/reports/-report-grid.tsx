@@ -8,7 +8,7 @@ import { useDeleteReportMutation } from "@/hooks/mutations/use-report-mutations"
 import { ReportCard } from "@/components/cards";
 import { EmptyStateWrapper, QueryStatusWrapper } from "@/components/hocs";
 import { ReportCardSkeleton } from "@/components/skeletons";
-import { DeleteConfirmationDialog } from "@/components/modals";
+import { ConfirmationDialog } from "@/components/modals";
 
 interface ReportGridProps {
   isPending: boolean;
@@ -29,7 +29,7 @@ export const ReportGrid = ({
   const onDelete = useCallback(
     (id: string) => {
       show(
-        <DeleteConfirmationDialog
+        <ConfirmationDialog
           onConfirm={() => deleteReport.mutate(id)}
           isConfirming={deleteReport.isPending}
         />,

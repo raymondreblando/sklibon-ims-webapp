@@ -21,12 +21,12 @@ function RouteComponent() {
   }, [setItems]);
 
   return (
-    <div className="border-input mx-auto flex max-w-[650px] flex-col gap-y-6 rounded-md border p-4 md:my-8 md:p-8">
-      <div className="space-y-1 text-left">
-        <Heading className="text-base font-bold md:text-2xl">
+    <div className="border-input mx-auto my-4 max-w-[650px] rounded-md border-0 md:my-8 md:border">
+      <div className="p-4 text-left md:px-8 md:py-6">
+        <Heading className="text-lg font-bold md:text-2xl">
           Create New Request
         </Heading>
-        <Subheading className="text-muted text-xs font-medium md:text-sm">
+        <Subheading className="text-muted text-sm font-medium">
           Fill out the form below to submit your request for processing.
         </Subheading>
       </div>

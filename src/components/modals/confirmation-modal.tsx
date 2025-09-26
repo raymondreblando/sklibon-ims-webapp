@@ -11,19 +11,21 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
-interface DeleteConfirmationDialogProps {
+interface ConfirmationDialogProps {
   onConfirm: () => void;
   isConfirming: boolean;
   message?: string;
   title?: string;
+  description?: string;
 }
 
-export const DeleteConfirmationDialog = ({
+export const ConfirmationDialog = ({
   onConfirm,
   isConfirming,
   title,
   message,
-}: DeleteConfirmationDialogProps) => {
+  description,
+}: ConfirmationDialogProps) => {
   const { hide } = useModal();
 
   const handleConfirm = () => {
@@ -40,8 +42,9 @@ export const DeleteConfirmationDialog = ({
         {message ?? "Are you sure you want to delete this record?"}
       </DialogTitle>
       <DialogDescription>
-        This action cannot be undone. This will permanently delete your account
-        and remove your data from our servers.
+        This action cannot be undone.{" "}
+        {description ??
+          "This will permanently delete your account and remove your data from our servers."}
       </DialogDescription>
       <DialogFooter>
         <DialogClose asChild>

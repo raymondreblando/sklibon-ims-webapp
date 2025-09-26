@@ -12,11 +12,12 @@ const comboBoxClassName = "w-[350px] p-0 md:w-[325px]";
 
 export const AddressInfo = () => {
   return (
-    <div className="border-input flex flex-col gap-y-4 rounded-md md:border md:p-8">
+    <div className="space-y-4 gap-y-4 rounded-md p-4 md:p-8">
       <HeadingWithWrapper
         className="text-left"
-        headingProps={{ variant: "default" }}
+        headingProps={{ variant: "default", className: "md:text-lg" }}
         heading="Address Information"
+        subheadingProps={{ className: "md:text-sm font-medium" }}
         subheading="Manage your barangay, municipality, and province details."
       />
       <div className="grid gap-4 md:grid-cols-2">
@@ -57,7 +58,7 @@ export const AddressInfo = () => {
           valueKey="id"
         />
         <FormInput
-          name="info.addtional_address"
+          name="info.additional_address"
           label="Additional"
           placeholder="Optional"
         />

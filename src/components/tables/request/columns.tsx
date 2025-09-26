@@ -1,15 +1,20 @@
 import { Link } from "@tanstack/react-router";
 import type { ColumnDef } from "@tanstack/react-table";
 
-import type { RequestWithRelation } from "@/types/schema";
 import { ROLES } from "@/lib/constants";
 import { formatTableCount } from "@/lib/utils/utils";
 import { getAuthUser } from "@/lib/utils/auth";
+import type { RequestWithRelation } from "@/types/schema";
+import type {
+  UpdateRequestStatusField,
+  UpdateRequestStatusWithReasonField,
+} from "@/lib/schemas/request";
 
 import {
   ArrowDownToLineIcon,
   BadgeCheckIcon,
   CircleCheckIcon,
+  ClipboardListIcon,
   MoreHorizontal,
   PencilIcon,
   TrashIcon,
@@ -27,12 +32,25 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+interface GetRequestColumnsProps {
+  onDelete: (id: string) => void;
+  onUpdate: (
+    id: string,
+    data: UpdateRequestStatusField,
+    message: string,
+  ) => void;
+  onUpdateWithReason: (data: UpdateRequestStatusWithReasonField) => void;
+  onViewReason: (reason: string) => void;
+}
+
 export const getColumns = ({
   onDelete,
-}: {
-  onDelete?: (resource: RequestWithRelation) => void;
-}): ColumnDef<RequestWithRelation>[] => {
-  const role = getAuthUser()?.role.role;
+  onUpdate,
+  onUpdateWithReason,
+  onViewReason,
+}: GetRequestColumnsProps): ColumnDef<RequestWithRelation>[] => {
+  const user = getAuthUser();
+  const role = user?.role.role;
 
   const baseColumns = [
     {
@@ -120,20 +138,47 @@ export const getColumns = ({
             <DropdownMenuContent>
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              {role !== ROLES.USER && row.status === "pending" && (
-                <>
-                  <DropdownMenuItem onClick={() => onDelete?.(row)}>
-                    <CircleCheckIcon className="group-focus:text-accent-foreground" />
-                    <span>Approved</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => onDelete?.(row)}>
-                    <XIcon className="group-focus:text-accent-foreground" />
-                    <span>Disapproved</span>
-                  </DropdownMenuItem>
-                </>
-              )}
+              {(row.receiver.id === user?.id ||
+                row.receiver.id === user?.info.barangay.id) &&
+                row.requester.id !== user.id &&
+                row.status === "pending" && (
+                  <>
+                    <DropdownMenuItem
+                      onClick={() =>
+                        onUpdate(
+                          row.id,
+                          { status: "approved" },
+                          "Are you sure you want to approved this request?",
+                        )
+                      }
+                    >
+                      <CircleCheckIcon className="group-focus:text-accent-foreground" />
+                      <span>Approved</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() =>
+                        onUpdateWithReason({
+                          id: row.id,
+                          status: "disapproved",
+                          reason: "",
+                        })
+                      }
+                    >
+                      <XIcon className="group-focus:text-accent-foreground" />
+                      <span>Disapproved</span>
+                    </DropdownMenuItem>
+                  </>
+                )}
               {row.status === "approved" && (
-                <DropdownMenuItem onClick={() => onDelete?.(row)}>
+                <DropdownMenuItem
+                  onClick={() =>
+                    onUpdate(
+                      row.id,
+                      { status: "completed" },
+                      "Are you sure you want to mark this request as completed?",
+                    )
+                  }
+                >
                   <BadgeCheckIcon className="group-focus:text-accent-foreground" />
                   <span>Mark as Complete</span>
                 </DropdownMenuItem>
@@ -149,8 +194,27 @@ export const getColumns = ({
                 </Link>
               </DropdownMenuItem>
 
-              {row.status === "pending" && (
+              {["disapproved", "cancelled"].includes(row.status) && (
+                <DropdownMenuItem onClick={() => onViewReason(row.reason)}>
+                  <ClipboardListIcon className="group-focus:text-accent-foreground" />
+                  <span>View Reason</span>
+                </DropdownMenuItem>
+              )}
+
+              {row.status === "pending" && row.requester.id === user?.id && (
                 <>
+                  <DropdownMenuItem
+                    onClick={() =>
+                      onUpdateWithReason({
+                        id: row.id,
+                        status: "cancelled",
+                        reason: "",
+                      })
+                    }
+                  >
+                    <XIcon className="group-focus:text-accent-foreground" />
+                    <span>Cancel</span>
+                  </DropdownMenuItem>
                   <DropdownMenuItem asChild>
                     <Link
                       to="/requests/$requestId/edit"
@@ -161,7 +225,7 @@ export const getColumns = ({
                       <span>Edit</span>
                     </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => onDelete?.(row)}>
+                  <DropdownMenuItem onClick={() => onDelete(row.id)}>
                     <TrashIcon className="group-focus:text-accent-foreground" />
                     <span>Delete</span>
                   </DropdownMenuItem>

@@ -1,7 +1,10 @@
 import { QUERY_KEYS } from "@/lib/constants/api-constants";
 import { RECEIVABLE_TYPES } from "@/lib/constants";
 import { useCreateRequestForm } from "./use-create-request-form";
+
 import { getRequestTypes } from "@/services/api/request-types";
+import { getUsers } from "@/services/api/users";
+import { getBarangays } from "@/services/api/locations";
 
 import { FormField } from "@/components/ui/form";
 import { FileUpload } from "@/components/upload";
@@ -13,8 +16,6 @@ import {
   FormTextarea,
   FormWrapper,
 } from "@/components/forms";
-import { getUsers } from "@/services/api/users";
-import { getBarangays } from "@/services/api/locations";
 
 export const CreateRequestForm = () => {
   const { form, onSubmit } = useCreateRequestForm();
@@ -29,7 +30,7 @@ export const CreateRequestForm = () => {
         submitting: "Creating request...",
       }}
       buttonProps={{ className: "md:col-span-2" }}
-      formProps={{ className: "grid md:grid-cols-2 gap-4" }}
+      formProps={{ className: "grid md:grid-cols-2 gap-4 p-4 md:px-8 md:py-5" }}
     >
       <FormInput className="md:col-span-2" name="name" label="Request name" />
       <FormTextarea

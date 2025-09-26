@@ -10,6 +10,7 @@ import { QueryStatusWrapper } from "@/components/hocs";
 import { FormSkeleton } from "@/components/skeletons";
 import { UpdateReportForm } from "@/components/forms";
 import { Heading, Subheading } from "@/components/headings";
+import { Separator } from "@/components/ui/separator";
 
 export const Route = createFileRoute("/_main/reports/$reportId/edit")({
   component: RouteComponent,
@@ -22,37 +23,36 @@ function RouteComponent() {
   );
 
   useEffect(() => {
-    setItems([{ title: "Reports", url: "/reports" }, { title: "Edit Report" }]);
+    setItems([{ title: "Reports", url: "/reports" }, { title: "Edit" }]);
   }, [setItems]);
 
   return (
-    <div className="p-8">
-      <QueryStatusWrapper
-        isPending={isPending}
-        isError={isError}
-        loadingComp={<FormSkeleton withHeading={true} withSubheading={true} />}
-        onRetry={refetch}
-      >
-        {data && (
-          <div className="mx-auto flex max-w-[650px] flex-col gap-y-8 p-8">
-            <div className="text-left md:text-center">
-              <Heading className="text-xl font-bold md:text-3xl">
-                Update report details
-              </Heading>
-              <Subheading className="text-muted font-mdeium text-sm md:text-base">
-                Adjust report information and attachments as needed.
-              </Subheading>
-            </div>
-            <FileUploadProvider
-              folder="/sklibon-ims/reports/"
-              accepted={FILE_TYPES.DOCUMENTS}
-              fileInputProps={{ multiple: true }}
-            >
-              <UpdateReportForm />
-            </FileUploadProvider>
+    <QueryStatusWrapper
+      isPending={isPending}
+      isError={isError}
+      loadingComp={<FormSkeleton withHeading={true} withSubheading={true} />}
+      onRetry={refetch}
+    >
+      {data && (
+        <div className="border-input mx-auto my-4 max-w-[650px] rounded-md border-0 md:my-8 md:border">
+          <div className="p-4 text-left md:px-8 md:py-6">
+            <Heading className="text-lg font-bold md:text-2xl">
+              Edit Report Details
+            </Heading>
+            <Subheading className="text-muted text-sm font-medium">
+              Adjust report information and attachments as needed.
+            </Subheading>
           </div>
-        )}
-      </QueryStatusWrapper>
-    </div>
+          <Separator className="bg-input" />
+          <FileUploadProvider
+            folder="/sklibon-ims/reports/"
+            accepted={FILE_TYPES.DOCUMENTS}
+            fileInputProps={{ multiple: true }}
+          >
+            <UpdateReportForm />
+          </FileUploadProvider>
+        </div>
+      )}
+    </QueryStatusWrapper>
   );
 }

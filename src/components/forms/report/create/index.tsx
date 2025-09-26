@@ -22,6 +22,7 @@ export const CreateReportForm = () => {
         idle: "Create report",
         submitting: "Creating report...",
       }}
+      formProps={{ className: "p-4 md:px-8 md:py-5" }}
     >
       <FormCombobox
         popoverContentClassname=""

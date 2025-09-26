@@ -2,12 +2,13 @@ import { useCallback } from "react";
 import type { Table } from "@tanstack/react-table";
 import type { GalleryWithRelation } from "@/types/schema";
 
+import { getAuthUser } from "@/lib/utils/auth";
 import { useModal } from "@/contexts/modal-context";
 import { useDeleteGalleryMutation } from "@/hooks/mutations/use-gallery-mutations";
 
 import { EmptyStateWrapper, QueryStatusWrapper } from "@/components/hocs";
 import { GalleryCard } from "@/components/cards";
-import { DeleteConfirmationDialog } from "@/components/modals";
+import { ConfirmationDialog } from "@/components/modals";
 import { GalleryCardSkeleton } from "@/components/skeletons";
 
 interface GalleryGridProps {
@@ -23,13 +24,14 @@ export const GalleryGrid = ({
   onRetry,
   table,
 }: GalleryGridProps) => {
+  const user = getAuthUser();
   const deleteGallery = useDeleteGalleryMutation();
   const { show } = useModal();
 
   const onDelete = useCallback(
     (id: string) => {
       show(
-        <DeleteConfirmationDialog
+        <ConfirmationDialog
           onConfirm={() => deleteGallery.mutate(id)}
           isConfirming={deleteGallery.isPending}
           message="Are you sure you want to delete this gallery?"
@@ -67,7 +69,7 @@ export const GalleryGrid = ({
               }}
               onDelete={onDelete}
               images={row.original.images}
-              hasAction={true}
+              hasAction={row.original.uploader.id === user?.id}
             />
           ))}
         </EmptyStateWrapper>
