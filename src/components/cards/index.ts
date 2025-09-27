@@ -1,5 +1,6 @@
 export { ContactCard } from "./contact-card";
 export { EventCard } from "./event-card";
+export { EventViewCard } from "./event-view-card";
 export { GalleryCard } from "./gallery-card";
 export { HotlineCard } from "./hotline-card";
 export { ProfileCard } from "./user-profile-card";

@@ -90,6 +90,7 @@ export type Event = {
   expiredDate: Date;
   openAttendance: boolean;
   imageUrl: string;
+  venue: string;
   status: "upcoming" | "ongoing" | "completed" | "cancelled" | "archived";
   latitude: string;
   longitude: string;
@@ -98,7 +99,7 @@ export type Event = {
 export type EventWithRelation = Event & {
   barangay: Barangay;
   creator: MinifyUser;
-  attedances: Omit<Attendance, "event">[];
+  attendances: Array<Omit<Attendance, "event">>;
 };
 
 export type Attendance = {

@@ -38,3 +38,23 @@ export const preventNumericInput = (
     event.preventDefault();
   }
 };
+
+export const getEventBadgeVariant = (status: string) => {
+  switch (status) {
+    case "upcoming":
+      return "default";
+      break;
+    case "ongoing":
+      return "default";
+      break;
+    case "completed":
+      return "success";
+      break;
+    case "cancelled":
+      return "destructive";
+      break;
+    default:
+      throw new Error("Invalid event status");
+      break;
+  }
+};
