@@ -1,8 +1,10 @@
+import { useMemo } from "react";
 import { format } from "date-fns";
 import { textElipsis } from "@/lib/utils/utils";
 import { useEventCard } from "@/contexts/event-card-context";
 
 import { CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import {
   Tooltip,
   TooltipContent,
@@ -11,6 +13,18 @@ import {
 
 export const Content = () => {
   const { event } = useEventCard();
+
+  const variant = useMemo(() => {
+    if (event.status === "upcoming") {
+      return "default";
+    } else if (event.status === "ongoing") {
+      return "secondary";
+    } else if (event.status === "completed") {
+      return "success";
+    } else {
+      return "destructive";
+    }
+  }, [event]);
 
   return (
     <CardContent className="min-h-[250px] space-y-4 py-4">
@@ -24,6 +38,9 @@ export const Content = () => {
           <p>{event.name}</p>
         </TooltipContent>
       </Tooltip>
+      <Badge variant={variant} className="rounded-sm">
+        {event.status}
+      </Badge>
       <div>
         <p className="text-muted text-sm font-semibold">
           Event Date: {format(event.eventDate, "MMM dd, yyyy hh:mm a")}

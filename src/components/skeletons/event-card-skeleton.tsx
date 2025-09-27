@@ -23,6 +23,7 @@ export const EventCardSkeleton = ({ count }: EventCardSkeletonProps) => {
       <Separator className="bg-input" />
       <CardContent className="space-y-4 py-4">
         <Skeleton className="h-6 w-36 rounded-full" />
+        <Skeleton className="h-5 w-36 rounded-md" />
         <div>
           <Skeleton className="h-4 w-16 rounded-full mb-1" />
           <Skeleton className="h-4 w-16 rounded-full" />

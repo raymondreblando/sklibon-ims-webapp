@@ -8,10 +8,10 @@ import { getAuthUser, isAuthenticated } from "@/lib/utils/auth";
 import {
   ArchiveIcon,
   CircleCheckBigIcon,
+  CircleXIcon,
   ExternalLinkIcon,
   PencilIcon,
   TrashIcon,
-  XIcon,
 } from "lucide-react";
 import {
   Tooltip,
@@ -43,15 +43,15 @@ export const FooterAction = () => {
         label: "Mark Event as Completed",
         onUpdate: onUpdate,
         status: "completed",
-        show: showActions(),
+        show: showActions() && event.status === "ongoing",
         message: "Are you sure you want to mark this event as completed?",
       },
       {
-        Icon: XIcon,
+        Icon: CircleXIcon,
         label: "Cancel Event",
         onUpdate: onUpdate,
         status: "cancelled",
-        show: showActions(),
+        show: showActions() && event.status === "upcoming",
         message: "Are you sure you want to cancel this event?",
       },
       {
@@ -59,20 +59,21 @@ export const FooterAction = () => {
         label: "Archive",
         onUpdate: onUpdate,
         status: "archived",
-        show: showActions(),
+        show:
+          showActions() && ["completed", "cancelled"].includes(event.status),
         message: "Are you sure you want to archive this event?",
       },
       {
         Icon: PencilIcon,
         label: "Edit Event",
         href: `/events/${event.id}/edit`,
-        show: showActions(),
+        show: showActions() && event.status === "upcoming",
       },
       {
         Icon: TrashIcon,
         label: "Delete Event",
         onDelete: onDelete,
-        show: showActions(),
+        show: showActions() && event.status === "upcoming",
       },
     ];
   }, [onDelete, onUpdate, showActions, event]);

@@ -9,6 +9,9 @@ export const getColumns = (): ColumnDef<EventWithRelation>[] => [
     accessorKey: "name",
   },
   {
+    accessorKey: "status",
+  },
+  {
     id: "eventDate",
     accessorFn: (props) => format(props.eventDate, "MMM dd, yyyy"),
   },
