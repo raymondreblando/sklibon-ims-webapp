@@ -82,6 +82,33 @@ export type RequestWithRelation = Request & {
   disapprover: MinifyUser;
 };
 
+export type Event = {
+  id: string;
+  name: string;
+  description: string;
+  eventDate: Date;
+  expiredDate: Date;
+  openAttendance: boolean;
+  imageUrl: string;
+  status: "upcoming" | "ongoing" | "completed" | "cancelled" | "archived";
+  latitude: string;
+  longitude: string;
+};
+
+export type EventWithRelation = Event & {
+  barangay: Barangay;
+  creator: MinifyUser;
+  attedances: Omit<Attendance, "event">[];
+};
+
+export type Attendance = {
+  id: string;
+  timeIn: Date;
+  timeOut: Date;
+  user: MinifyUser;
+  event: Event;
+};
+
 export type Position = {
   id: string;
   name: string;

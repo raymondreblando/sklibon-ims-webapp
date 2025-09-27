@@ -13,6 +13,8 @@ export const API_ENDPOINTS = {
   USERS: "/users",
   ROLES: "/roles",
   REQUESTS: "/requests",
+  EVENTS: "/events",
+  ATTENDANCE: "/attendances",
   POSITIONS: "/positions",
   CONTACTS: "/contacts",
   HOTLINES: "/hotlines",
@@ -29,6 +31,8 @@ export const API_ENDPOINTS = {
 export const QUERY_KEYS = {
   ROLES: "roles",
   REQUESTS: "requests",
+  EVENTS: "events",
+  ATTENDANCES: "attendances",
   POSITIONS: "positions",
   CONTACTS: "contacts",
   HOTLINES: "hotlines",
