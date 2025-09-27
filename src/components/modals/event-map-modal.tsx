@@ -18,11 +18,12 @@ export const EventMapDialog = () => {
   return (
     <Button
       variant="ghost"
-      className="border-input hover:bg-background-muted border font-medium md:col-span-2"
+      type="button"
+      className="hover:bg-background-muted border font-medium md:col-span-2"
       onClick={() => show(<Content setValue={setValue} />)}
     >
       <MapPinIcon />
-      Set Event Location
+      Set Pin Location
     </Button>
   );
 };

@@ -23,6 +23,7 @@ export const useCreateEventForm = () => {
       event_date: "",
       expired_date: "",
       image_url: "",
+      venue: "",
       hasSelectedFile: false,
       latitude: undefined,
       longitude: undefined,

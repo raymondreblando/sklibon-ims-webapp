@@ -20,6 +20,7 @@ const BaseSchema = z.object({
     .string({ error: "The event expired date field is required." })
     .min(1, { message: "The event expired date field is required." }),
   image_url: z.string().optional(),
+  venue: z.string().min(1, { message: "The event venue field is required." }),
   hasSelectedFile: z.boolean(),
   latitude: z.number().optional(),
   longitude: z.number().optional(),

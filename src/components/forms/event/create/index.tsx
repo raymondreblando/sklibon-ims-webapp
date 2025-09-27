@@ -6,12 +6,7 @@ import { getBarangays } from "@/services/api/locations";
 
 import { ImageUpload } from "@/components/upload";
 import { EventMapDialog } from "@/components/modals";
-import {
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { FormField, FormItem, FormMessage } from "@/components/ui/form";
 import {
   FormCombobox,
   FormDateTimePicker,
@@ -79,12 +74,12 @@ export const CreateEventForm = () => {
           />
         )}
       />
+      <FormInput name="venue" label="Event venue" className="md:col-span-2" />
       <FormField
         control={form.control}
         name="hasSelectedCoordinates"
         render={() => (
-          <FormItem className="md:col-span-2 flex flex-col justify-start">
-            <FormLabel className="text-base">Event location</FormLabel>
+          <FormItem className="flex flex-col justify-start md:col-span-2">
             <EventMapDialog />
             <FormMessage />
           </FormItem>
