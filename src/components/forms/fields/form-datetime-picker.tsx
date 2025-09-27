@@ -50,7 +50,7 @@ export const FormDateTimePicker = <T extends FieldValues>({
       name={name}
       render={({ field, fieldState }) => {
         const date = field.value ? new Date(field.value) : undefined;
-        const time = date ? format(date, "HH:mm") : "";
+        const time = date ? format(date, "HH:mm") : "00:00";
 
         const handleDateSelect = (selected: Date | undefined) => {
           if (!selected) return;
