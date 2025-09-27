@@ -27,7 +27,7 @@ export const Content = () => {
   }, [event]);
 
   return (
-    <CardContent className="min-h-[250px] space-y-4 py-4">
+    <CardContent className="h-[300px] space-y-4 py-4">
       <Tooltip>
         <TooltipTrigger asChild>
           <p className="mb-1 text-lg font-semibold">
@@ -49,7 +49,7 @@ export const Content = () => {
           Expired Date: {format(event.expiredDate, "MMM dd, yyyy hh:mm a")}
         </p>
       </div>
-      <p className="text-sm font-medium">
+      <p className="text-sm font-medium text-pretty">
         {textElipsis(event.description, 300)}
       </p>
     </CardContent>
