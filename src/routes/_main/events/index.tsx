@@ -37,7 +37,7 @@ function RouteComponent() {
           }}
         />
         <div className="flex items-center space-x-4">
-          <ButtonLink to="/reports/add">Create Event</ButtonLink>
+          <ButtonLink to="/events/add">Create Event</ButtonLink>
         </div>
       </div>
       <EventGrid

@@ -31,7 +31,7 @@ export const CreateEventSchema = BaseSchema.superRefine((data, ctx) => {
     ctx.addIssue({
       code: "custom",
       message: "No event photo is uploaded. Please upload event photo.",
-      input: data.hasSelectedFile,
+      path: ["hasSelectedFile"],
     });
   }
 
@@ -40,7 +40,7 @@ export const CreateEventSchema = BaseSchema.superRefine((data, ctx) => {
       code: "custom",
       message:
         "Event location field is required. Please select event location.",
-      input: data.hasSelectedCoordinates,
+      path: ["hasSelectedCoordinates"],
     });
   }
 });
