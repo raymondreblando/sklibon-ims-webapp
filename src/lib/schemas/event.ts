@@ -58,4 +58,4 @@ export const UpdateEventSchema = BaseSchema.extend({
 
 export type CreateEventField = z.infer<typeof CreateEventSchema>;
 export type UpdateEventField = z.infer<typeof UpdateEventSchema>;
-export type UpdateEventStatusField = z.infer<typeof UpdateEventSchema>;
+export type UpdateEventStatusField = z.infer<typeof UpdateEventStatusSchema>;
