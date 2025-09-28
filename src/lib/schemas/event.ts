@@ -22,8 +22,8 @@ const BaseSchema = z.object({
   image_url: z.string().optional(),
   venue: z.string().min(1, { message: "The event venue field is required." }),
   hasSelectedFile: z.boolean(),
-  latitude: z.number().optional(),
-  longitude: z.number().optional(),
+  latitude: z.string().optional(),
+  longitude: z.string().optional(),
   hasSelectedCoordinates: z.boolean(),
 });
 
@@ -55,6 +55,7 @@ const UpdateEventStatusSchema = z.object({
 
 export const UpdateEventSchema = BaseSchema.extend({
   ...UpdateEventStatusSchema.shape,
+  open_attendance: z.boolean().optional(),
 });
 
 export type CreateEventField = z.infer<typeof CreateEventSchema>;
