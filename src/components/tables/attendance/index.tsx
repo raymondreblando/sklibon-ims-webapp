@@ -7,9 +7,13 @@ import { QueryStatusWrapper } from "@/components/hocs/query-status-wrapper";
 
 interface AttendanceTableProps {
   onUpdate: (id: string) => void;
+  withActions?: boolean;
 }
 
-export const AttendanceTable = ({ onUpdate }: AttendanceTableProps) => {
+export const AttendanceTable = ({
+  onUpdate,
+  withActions,
+}: AttendanceTableProps) => {
   const { isPending, isError, data, refetch } = useAttendancesQuery();
   const columns = getColumns({ onUpdate });
 
@@ -20,7 +24,13 @@ export const AttendanceTable = ({ onUpdate }: AttendanceTableProps) => {
       loadingComp={<DataTableSkeleton columnLength={columns.length} />}
       onRetry={refetch}
     >
-      {data && <DataTable data={data.data} columns={columns} />}
+      {data && (
+        <DataTable
+          data={data.data}
+          columns={columns}
+          withActions={withActions}
+        />
+      )}
     </QueryStatusWrapper>
   );
 };
