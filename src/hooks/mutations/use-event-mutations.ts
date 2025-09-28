@@ -13,6 +13,7 @@ import {
   deleteEvent,
   updateEvent,
 } from "@/services/api/events";
+import { isAxiosError } from "axios";
 
 export const useCreateEventMutation = () => {
   const queryClient = useQueryClient();
@@ -62,15 +63,19 @@ export const useDeleteEventMutation = () => {
   });
 };
 
-export const useCreateAttendanceMutation = (id: string) => {
+export const useCreateAttendanceMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: createAttenance,
     onSuccess: ({ message }) => {
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.EVENTS, id] });
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.ATTENDANCES] });
       toast.success(message);
+    },
+    onError: (error) => {
+      if (isAxiosError(error)) {
+        toast.error(error.response?.data.message);
+      }
     },
   });
 };

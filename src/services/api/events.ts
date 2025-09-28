@@ -56,7 +56,7 @@ export const deleteEvent = async (id: string) => {
 
 export const createAttenance = async (id: string | undefined) => {
   const { data: response } = await api.put<ApiResponse<Attendance>>(
-    `${API_ENDPOINTS.ATTACHMENTS}/${id}`,
+    `${API_ENDPOINTS.ATTENDANCES}/${id}`,
   );
 
   return response;

@@ -11,6 +11,7 @@ import {
   CircleXIcon,
   ExternalLinkIcon,
   PencilIcon,
+  TimerIcon,
   TrashIcon,
 } from "lucide-react";
 import {
@@ -20,7 +21,7 @@ import {
 } from "@/components/ui/tooltip";
 
 export const FooterAction = () => {
-  const { event, onDelete, onUpdate } = useEventCard();
+  const { event, onDelete, onUpdate, onAttend } = useEventCard();
   const user = getAuthUser();
 
   const showActions = useCallback(() => {
@@ -39,29 +40,50 @@ export const FooterAction = () => {
         show: true,
       },
       {
+        Icon: TimerIcon,
+        label: event.openAttendance ? "Time In" : "Time Out",
+        onUpdate: () => onAttend(event.id),
+        show: event.openAttendance,
+      },
+      {
         Icon: CircleCheckBigIcon,
         label: "Mark Event as Completed",
-        onUpdate: onUpdate,
-        status: "completed",
+        onUpdate: () =>
+          onUpdate(
+            event.id,
+            {
+              status: "completed",
+            },
+            "Are you sure you want to mark this event as completed?",
+          ),
         show: showActions() && event.status === "ongoing",
-        message: "Are you sure you want to mark this event as completed?",
       },
       {
         Icon: CircleXIcon,
         label: "Cancel Event",
-        onUpdate: onUpdate,
-        status: "cancelled",
+        onUpdate: () =>
+          onUpdate(
+            event.id,
+            {
+              status: "cancelled",
+            },
+            "Are you sure you want to cancel this event?",
+          ),
         show: showActions() && event.status === "upcoming",
-        message: "Are you sure you want to cancel this event?",
       },
       {
         Icon: ArchiveIcon,
         label: "Archive",
-        onUpdate: onUpdate,
-        status: "archived",
+        onUpdate: () =>
+          onUpdate(
+            event.id,
+            {
+              status: "archived",
+            },
+            "Are you sure you want to archive this event?",
+          ),
         show:
           showActions() && ["completed", "cancelled"].includes(event.status),
-        message: "Are you sure you want to archive this event?",
       },
       {
         Icon: PencilIcon,
@@ -72,11 +94,11 @@ export const FooterAction = () => {
       {
         Icon: TrashIcon,
         label: "Delete Event",
-        onDelete: onDelete,
+        onDelete: () => onDelete(event.id),
         show: showActions() && event.status === "upcoming",
       },
     ];
-  }, [onDelete, onUpdate, showActions, event]);
+  }, [onDelete, onUpdate, showActions, onAttend, event]);
 
   return (
     <div className="text-muted flex items-center gap-x-2">
@@ -92,21 +114,10 @@ export const FooterAction = () => {
                 ) : (
                   <action.Icon
                     className="cursor-pointer"
-                    onClick={() =>
-                      action.onDelete
-                        ? action.onDelete(event.id)
-                        : action.onUpdate?.(
-                            event.id,
-                            {
-                              status: action.status as
-                                | "cancelled"
-                                | "completed"
-                                | "upcoming"
-                                | "ongoing"
-                                | "archived",
-                            },
-                            action.message,
-                          )
+                    onClick={
+                      action.label === "Delete Event"
+                        ? action.onDelete
+                        : action?.onUpdate
                     }
                     size={16}
                   />

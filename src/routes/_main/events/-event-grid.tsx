@@ -6,6 +6,7 @@ import type { UpdateEventStatusField } from "@/lib/schemas/event";
 import { useModal } from "@/contexts/modal-context";
 import { EventCardProvider } from "@/contexts/event-card-context";
 import {
+  useCreateAttendanceMutation,
   useDeleteEventMutation,
   useUpdateEventMutation,
 } from "@/hooks/mutations/use-event-mutations";
@@ -30,6 +31,7 @@ export const EventGrid = ({
 }: EventGridProps) => {
   const deleteEvent = useDeleteEventMutation();
   const updateEvent = useUpdateEventMutation();
+  const attendEvent = useCreateAttendanceMutation();
   const { show } = useModal();
 
   const onDelete = useCallback(
@@ -60,6 +62,21 @@ export const EventGrid = ({
     [updateEvent, show],
   );
 
+  const onAttend = useCallback(
+    (id: string) => {
+      show(
+        <ConfirmationDialog
+          onConfirm={() => attendEvent.mutate(id)}
+          isConfirming={attendEvent.isPending}
+          message="Are you sure you want to time-in in this event?"
+          title="Confirmation"
+          description="This will record your attedance for this event."
+        />,
+      );
+    },
+    [attendEvent, show],
+  );
+
   return (
     <div className="grid gap-4 px-6 py-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       <QueryStatusWrapper
@@ -81,6 +98,7 @@ export const EventGrid = ({
               event={row.original}
               onDelete={onDelete}
               onUpdate={onUpdate}
+              onAttend={onAttend}
             >
               <EventCard />
             </EventCardProvider>

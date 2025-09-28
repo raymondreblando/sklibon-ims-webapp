@@ -14,7 +14,7 @@ export const API_ENDPOINTS = {
   ROLES: "/roles",
   REQUESTS: "/requests",
   EVENTS: "/events",
-  ATTENDANCE: "/attendances",
+  ATTENDANCES: "/attendances",
   POSITIONS: "/positions",
   CONTACTS: "/contacts",
   HOTLINES: "/hotlines",
