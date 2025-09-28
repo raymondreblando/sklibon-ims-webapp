@@ -45,7 +45,7 @@ export const getEventBadgeVariant = (status: string) => {
       return "default";
       break;
     case "ongoing":
-      return "default";
+      return "secondary";
       break;
     case "completed":
       return "success";
