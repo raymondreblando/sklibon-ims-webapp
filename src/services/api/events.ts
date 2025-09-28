@@ -54,6 +54,14 @@ export const deleteEvent = async (id: string) => {
   return response;
 };
 
+export const getAttendances = async () => {
+  const { data: response } = await api.get<ApiResponse<Attendance[]>>(
+    API_ENDPOINTS.ATTENDANCES,
+  );
+
+  return response;
+};
+
 export const createAttenance = async (id: string | undefined) => {
   const { data: response } = await api.put<ApiResponse<Attendance>>(
     `${API_ENDPOINTS.ATTENDANCES}/${id}`,
