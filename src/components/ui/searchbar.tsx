@@ -14,11 +14,11 @@ interface SearchbarProps {
 export const Searchbar = ({ wrapperProps, inputProps }: SearchbarProps) => {
   return (
     <div
+      {...wrapperProps}
       className={cn(
         "bg-background-muted border-input flex items-center gap-x-2 rounded-md border px-4",
         wrapperProps?.className,
       )}
-      {...wrapperProps}
     >
       <Input
         placeholder={inputProps?.placeholder}

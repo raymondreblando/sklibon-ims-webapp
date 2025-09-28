@@ -11,7 +11,7 @@ export const UploadPreview = ({ file }: UploadPreviewProps) => {
   const { removeFile } = useFileUpload();
 
   return (
-    <div className="bg-accent relative aspect-square rounded-md">
+    <div className="bg-accent relative rounded-md group-[data-aspect='square']:aspect-square group-[data-aspect='video']:aspect-video">
       <img
         src={file.preview}
         alt={file.file.name}

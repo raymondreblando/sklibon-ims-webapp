@@ -43,6 +43,17 @@ export const ACCOUNT_STATUSES: Option[] = [
   },
 ];
 
+export const EVENT_STATUSES: Option[] = [
+  {
+    key: "upcoming",
+    value: "Upcoming",
+  },
+  {
+    key: "ongoing",
+    value: "On Going",
+  },
+];
+
 export const RECEIVABLE_TYPES: Option[] = [
   {
     key: "user",

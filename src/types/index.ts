@@ -71,3 +71,5 @@ export type UploadProgress = {
   file: File;
   progress: number;
 };
+
+export type EventPageLayout = "grid" | "calendar";
