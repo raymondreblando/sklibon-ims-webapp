@@ -53,7 +53,7 @@ export const EventGrid = ({
           isConfirming={updateEvent.isPending}
           message={message}
           title="Confirmation"
-          description="This will permanently update the transaction's status."
+          description="This will permanently update the event status."
         />,
       );
     },
