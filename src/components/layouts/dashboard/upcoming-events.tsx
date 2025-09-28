@@ -21,9 +21,6 @@ export const UpcomingEvents = () => {
             className="flex flex-wrap items-center justify-between gap-4 px-6 py-3"
           >
             <div className="flex items-center gap-4">
-              <div className="bg-primary/20 text-primary grid h-8 w-8 place-items-center rounded-md font-semibold">
-                {index + 1}
-              </div>
               <div className="flex items-center gap-x-2">
                 <CalendarDaysIcon className="size-7" strokeWidth={1.4} />
                 <div>
