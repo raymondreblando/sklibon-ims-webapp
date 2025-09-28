@@ -179,6 +179,14 @@ export type GalleryWithRelation = Gallery & {
   images: Array<GalleryImage>;
 };
 
+export type Archive = {
+  id: string;
+  archivableType: "report" | "event";
+  archivable: ReportWithRelation | EventWithRelation;
+  archivedBy: MinifyUser;
+  createdAt: Date;
+};
+
 export type Province = {
   id: string;
   name: string;
