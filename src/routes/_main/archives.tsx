@@ -23,9 +23,9 @@ function RouteComponent() {
         <ConfirmationDialog
           onConfirm={() => timeOutAttendance.mutate(id)}
           isConfirming={timeOutAttendance.isPending}
-          message="Are you sure you want to time-out in this event?"
+          message="Are you sure you want to unarchive this item?"
           title="Confirmation"
-          description="This will record your attedance for this event."
+          description="This will remove the item in the archive."
         />,
       );
     },
