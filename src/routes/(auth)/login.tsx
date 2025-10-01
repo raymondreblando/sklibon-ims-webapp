@@ -5,7 +5,7 @@ import { LoginForm } from "@/components/forms/login-form";
 import { HeadingWithWrapper } from "@/components/headings";
 import { AuthWrapper, RedirectLink } from "@/components/layouts/auth";
 
-export const Route = createFileRoute("/(auth)/")({
+export const Route = createFileRoute("/(auth)/login")({
   validateSearch: (search: Record<string, unknown>) => {
     return {
       redirect: search.redirect ?? undefined,
