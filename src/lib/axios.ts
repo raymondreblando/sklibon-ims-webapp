@@ -84,30 +84,34 @@ axios.interceptors.response.use(
       isRefreshing = true;
 
       return new Promise((resolve, reject) => {
-        axios.post("/auth/refresh-token").then(({ data }) => {
-          const accessToken = data.data.access_token;
-          localStorage.setItem("accessToken", accessToken);
+        axios
+          .post("/auth/refresh-token")
+          .then(({ data }) => {
+            const accessToken = data.data.access_token;
+            localStorage.setItem("accessToken", accessToken);
 
-          if (api.defaults.headers.common) {
-            api.defaults.headers.common["Authorization"] =
-              `Bearer ${accessToken}`;
-          }
+            if (api.defaults.headers.common) {
+              api.defaults.headers.common["Authorization"] =
+                `Bearer ${accessToken}`;
+            }
 
-          if (originalRequest.headers) {
-            originalRequest.headers["Authorization"] = `Bearer ${accessToken}`;
-          }
+            if (originalRequest.headers) {
+              originalRequest.headers["Authorization"] =
+                `Bearer ${accessToken}`;
+            }
 
-          processQueue(null, accessToken);
-          resolve(axios(originalRequest));
-        }).catch((err: AxiosError) => {
-          processQueue(err, null);
+            processQueue(null, accessToken);
+            resolve(axios(originalRequest));
+          })
+          .catch((err: AxiosError) => {
+            processQueue(err, null);
 
-          localStorage.removeItem('user');
-          localStorage.removeItem('accessToken');
+            localStorage.removeItem("user");
+            localStorage.removeItem("accessToken");
 
-          router.navigate({ to: "/" });
-          reject(err);
-        });
+            router.navigate({ to: "/", search: { redirect: "" } });
+            reject(err);
+          });
       });
     }
   },
