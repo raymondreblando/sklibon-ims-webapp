@@ -1,11 +1,14 @@
 import { useMemo } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 
+import { router } from "@/lib/router";
 import { useFindGalleryQuery } from "@/hooks/queries/use-galleries-query";
 
-import Carousel, { type SlideData } from "@/components/ui/carousel-2";
 import { XIcon } from "lucide-react";
-import { router } from "@/lib/router";
+import {
+  type SlideData,
+  GalleryCarousel,
+} from "@/components/layouts/gallery/gallery-carousel";
 
 export const Route = createFileRoute("/gallery/$galleryId/view")({
   component: RouteComponent,
@@ -32,7 +35,7 @@ function RouteComponent() {
         </div>
       ) : (
         <div className="relative min-h-screen w-full overflow-hidden py-20">
-          <Carousel slides={slideData as SlideData[]} />
+          <GalleryCarousel slides={slideData as SlideData[]} />
         </div>
       )}
     </div>

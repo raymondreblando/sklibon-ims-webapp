@@ -19,7 +19,7 @@ const Slide = ({ slide, index, current, handleSlideClick }: SlideProps) => {
 
   const xRef = useRef(0);
   const yRef = useRef(0);
-  const frameRef = useRef<number>();
+  const frameRef = useRef<number>(0);
 
   useEffect(() => {
     const animate = () => {
@@ -139,11 +139,11 @@ const CarouselControl = ({
   );
 };
 
-interface CarouselProps {
+interface GalleryCarouselProps {
   slides: SlideData[];
 }
 
-export default function Carousel({ slides }: CarouselProps) {
+export const GalleryCarousel = ({ slides }: GalleryCarouselProps) => {
   const [current, setCurrent] = useState(0);
 
   const handlePreviousClick = () => {
@@ -201,4 +201,4 @@ export default function Carousel({ slides }: CarouselProps) {
       </div>
     </div>
   );
-}
+};
