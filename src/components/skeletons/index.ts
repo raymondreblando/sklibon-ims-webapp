@@ -1,6 +1,7 @@
 export { DataTableSkeleton } from "./data-table-skeleton";
 export { FormSkeleton } from "./form-skeleton";
 export { ContactCardSkeleton } from "./contact-card-skeleton";
+export { EventCalendarSkeleton } from "./event-calendar-skeleton";
 export { EventCardSkeleton } from "./event-card-skeleton";
 export { EventViewCardSkeleton } from "./event-view-card-skeleton";
 export { EventAttedanceSkeleton } from "./event-attedance-skeleton";
