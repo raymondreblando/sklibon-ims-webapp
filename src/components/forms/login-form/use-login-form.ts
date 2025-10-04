@@ -10,7 +10,7 @@ import { login } from "@/services/api/auth";
 import { LoginSchema, type LoginField } from "@/lib/schemas/login";
 import { handleRequestError } from "@/lib/utils/error-handler";
 
-import { Route } from "@/routes/(auth)";
+import { Route } from "@/routes/(auth)/login";
 
 export const useLoginForm = () => {
   const queryClient = useQueryClient();
