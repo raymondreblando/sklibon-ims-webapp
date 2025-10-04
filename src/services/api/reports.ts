@@ -7,6 +7,7 @@ import type {
   CreateAttachmentField,
   CreateReportField,
   UpdateReportField,
+  UpdateReportStatusField,
 } from "@/lib/schemas/report";
 
 export const getReports = async () => {
@@ -36,7 +37,7 @@ export const getReportById = async (id: string | undefined) => {
 
 export const updateReport = async (
   id: string | undefined,
-  data: UpdateReportField,
+  data: UpdateReportField | UpdateReportStatusField,
 ) => {
   const { data: response } = await api.put<ApiResponse<ReportWithRelation>>(
     `${API_ENDPOINTS.REPORTS}/${id}`,

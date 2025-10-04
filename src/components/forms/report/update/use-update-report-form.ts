@@ -30,6 +30,7 @@ export const useUpdateReportForm = () => {
       barangay_id: data?.barangay.id,
       subject: data?.subject,
       description: data?.description,
+      status: "active",
     },
   });
 

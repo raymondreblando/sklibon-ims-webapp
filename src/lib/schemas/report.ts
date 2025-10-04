@@ -37,8 +37,17 @@ export const CreateReportSchema = BaseSchema.refine(
   },
 );
 
-export const UpdateReportSchema = BaseSchema.omit({ attachments: true });
+export const UpdateReportSchema = BaseSchema.omit({ attachments: true }).extend(
+  {
+    status: z.enum(["active", "archived"]),
+  },
+);
+
+const UpdateReportStatusSchema = z.object({
+status: z.enum(["active", "archived"]),
+});
 
 export type CreateReportField = z.infer<typeof CreateReportSchema>;
 export type UpdateReportField = z.infer<typeof UpdateReportSchema>;
+export type UpdateReportStatusField = z.infer<typeof UpdateReportStatusSchema>;
 export type CreateAttachmentField = z.infer<typeof CreateAttachmentSchema>;
