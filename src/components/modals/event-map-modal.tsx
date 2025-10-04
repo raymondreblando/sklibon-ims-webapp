@@ -41,8 +41,8 @@ const Content = ({
       click(e) {
         setPosition([e.latlng.lat, e.latlng.lng]);
 
-        setValue("latitude", e.latlng.lat);
-        setValue("longitude", e.latlng.lng);
+        setValue("latitude", String(e.latlng.lat));
+        setValue("longitude", String(e.latlng.lng));
         setValue("hasSelectedCoordinates", true, { shouldValidate: true });
 
         hide();

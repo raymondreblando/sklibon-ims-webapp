@@ -1,6 +1,5 @@
 import { ImageUpIcon } from "lucide-react";
 import { useModal } from "@/contexts/modal-context";
-import { UploadProvider } from "@/contexts/upload-context";
 
 import { Button } from "@/components/ui/button";
 import { MainDialog } from "@/components/modals/main-dialog";

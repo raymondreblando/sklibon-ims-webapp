@@ -1,20 +1,17 @@
-import { getColumns } from "./columns";
-import { useAttendancesQuery } from "@/hooks/queries/use-events-query";
+import { getColumns, data } from "./columns";
+
+import { useContactsQuery } from "@/hooks/queries/use-contacts-query";
 
 import { DataTable } from "@/components/data-table";
 import { DataTableSkeleton } from "@/components/skeletons";
 import { QueryStatusWrapper } from "@/components/hocs/query-status-wrapper";
 
-interface AttendanceTableProps {
+interface ArchiveTableProps {
   onUpdate: (id: string) => void;
-  withActions?: boolean;
 }
 
-export const AttendanceTable = ({
-  onUpdate,
-  withActions,
-}: AttendanceTableProps) => {
-  const { isPending, isError, data, refetch } = useAttendancesQuery();
+export const ArchiveTable = ({ onUpdate }: ArchiveTableProps) => {
+  const { isPending, isError, refetch } = useContactsQuery();
   const columns = getColumns({ onUpdate });
 
   return (
@@ -24,13 +21,7 @@ export const AttendanceTable = ({
       loadingComp={<DataTableSkeleton columnLength={columns.length} />}
       onRetry={refetch}
     >
-      {data && (
-        <DataTable
-          data={data.data}
-          columns={columns}
-          withActions={withActions}
-        />
-      )}
+      {data && <DataTable data={data} columns={columns} />}
     </QueryStatusWrapper>
   );
 };

@@ -1,6 +1,6 @@
 import { api } from "@/lib/axios";
-import type { ApiResponse } from "@/types";
-import type { AuthResponse, ImagekitAuthParams } from "@/types/schema";
+import type { ApiResponse, ImagekitAuthParams } from "@/types";
+import type { AuthResponse } from "@/types/schema";
 
 import { API_ENDPOINTS } from "@/lib/constants/api-constants";
 import type { LoginField } from "@/lib/schemas/login";

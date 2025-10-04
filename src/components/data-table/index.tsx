@@ -14,21 +14,26 @@ export interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   actionComp?: React.ReactNode;
+  withActions?: boolean;
 }
 
 export const DataTable = <TData, TValue>({
   columns,
   data,
   actionComp,
+  withActions = true,
 }: DataTableProps<TData, TValue>) => {
   const { table, setGlobalFilter } = useDataTable({ columns, data });
 
   return (
     <TableContext.Provider value={table as Table<unknown>}>
-      <DataTableActions
-        setGlobalFilter={setGlobalFilter}
-        actionComp={actionComp}
-      />
+      {withActions && (
+        <DataTableActions
+          setGlobalFilter={setGlobalFilter}
+          actionComp={actionComp}
+        />
+      )}
+
       <div className="w-full overflow-hidden bg-white">
         <TableComponent>
           <DataTableHeader />
@@ -41,7 +46,7 @@ export const DataTable = <TData, TValue>({
           </TableBody>
         </TableComponent>
       </div>
-      <DataTablePagination />
+      {withActions && <DataTablePagination />}
     </TableContext.Provider>
   );
 };
