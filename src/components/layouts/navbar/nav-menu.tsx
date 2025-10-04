@@ -1,5 +1,9 @@
 import type { ComponentProps } from "react";
-import { Link, type LinkComponentProps } from "@tanstack/react-router";
+import {
+  Link,
+  linkOptions,
+  type LinkComponentProps,
+} from "@tanstack/react-router";
 
 import {
   NavigationMenu,
@@ -7,13 +11,33 @@ import {
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
 
-const navigationLinks = [
-  { href: "#", label: "Home", active: true },
-  { href: "#", label: "Events" },
-  { href: "#", label: "Gallery" },
-  { href: "#", label: "SK Officials" },
-  { href: "#", label: "About" },
-];
+const navigationLinks = linkOptions([
+  {
+    to: "/",
+    hash: "hero-section",
+    label: "Home",
+  },
+  {
+    to: "/",
+    hash: "event-section",
+    label: "Events",
+  },
+  {
+    to: "/",
+    hash: "gallery-section",
+    label: "Gallery",
+  },
+  {
+    to: "/",
+    hash: "skofficials-section",
+    label: "SK Officials",
+  },
+  {
+    to: "/",
+    hash: "about-section",
+    label: "About",
+  },
+]);
 
 interface NavMenuProps {
   menuProps?: Pick<ComponentProps<"nav">, "className"> & {
@@ -40,8 +64,15 @@ export const NavMenu = ({
           <NavigationMenuItem key={index} className={itemClassname}>
             <Link
               {...linkProps}
-              href={link.href}
+              to={link.to}
+              hash={link.hash}
               className={linkProps?.className}
+              activeOptions={{
+                exact: true,
+                includeHash: true,
+              }}
+              activeProps={{ className: "text-primary font-extrabold" }}
+              resetScroll={false}
             >
               {link.label}
             </Link>

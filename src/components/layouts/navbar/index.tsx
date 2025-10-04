@@ -1,3 +1,5 @@
+import { cn } from "@/lib/utils/utils";
+
 import { MenuIcon } from "./menu-icon";
 import { NavLogo } from "./nav-logo";
 import { NavMenu } from "./nav-menu";
@@ -9,9 +11,18 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-export default function NavBar() {
+interface NavBarProps {
+  scrollYPos: number;
+}
+
+export default function NavBar({ scrollYPos }: NavBarProps) {
   return (
-    <header className="border-input/50 border-b px-4 md:px-6">
+    <header
+      className={cn(
+        "fixed inset-x-0 top-0 z-10 px-4 transition-colors duration-150 ease-in-out md:px-6",
+        scrollYPos > 0 && "border-input/50 border-b bg-white",
+      )}
+    >
       <div className="flex h-16 items-center justify-between gap-4">
         <div className="flex items-center gap-2">
           <Popover>
@@ -30,7 +41,12 @@ export default function NavBar() {
                 lisClassname="flex-col items-start gap-0 md:gap-2"
                 itemClassname="w-full"
                 linkProps={{
-                  className: "py-1.5",
+                  className: cn(
+                    "py-1.5",
+                    scrollYPos > 0
+                      ? "text-foreground"
+                      : "text-primary-foreground",
+                  ),
                 }}
               />
             </PopoverContent>
@@ -42,13 +58,23 @@ export default function NavBar() {
             menuProps={{ className: "max-md:hidden" }}
             lisClassname="flex items-center gap-6"
             linkProps={{
-              className:
-                "text-sm font-semibold text-muted-foreground hover:text-primary py-1.5 font-medium",
+              className: cn(
+                "text-sm font-semibold text-muted-foreground hover:text-primary py-1.5 font-medium text-primary-foreground",
+                scrollYPos > 0 && "text-foreground",
+              ),
             }}
           />
         </div>
         <div className="flex items-center gap-2">
-          <ButtonLink to="/login" variant="ghost" size="sm" className="text-sm">
+          <ButtonLink
+            to="/login"
+            variant="ghost"
+            size="sm"
+            className={cn(
+              "text-primary-foreground text-sm",
+              scrollYPos > 0 && "text-foreground",
+            )}
+          >
             Log In
           </ButtonLink>
           <ButtonLink to="/register" size="sm" className="text-sm">
