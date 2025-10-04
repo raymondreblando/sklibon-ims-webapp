@@ -6,7 +6,7 @@ interface WithRoleGruadProps {
   children: React.ReactNode;
 }
 
-export const WithRoleGruad = ({ allowed, children }: WithRoleGruadProps) => {
+export const WithRoleGuard = ({ allowed, children }: WithRoleGruadProps) => {
   const role = getAuthUser()?.role.role as RoleType;
 
   if (role && !allowed.includes(role)) return null;

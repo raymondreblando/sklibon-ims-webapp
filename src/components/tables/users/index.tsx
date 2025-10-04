@@ -5,7 +5,7 @@ import { useUserTableAction } from "./hooks/use-user-table-action";
 
 import { ButtonLink } from "@/components/buttons";
 import { DataTable } from "@/components/data-table";
-import { WithRoleGruad } from "@/components/hocs";
+import { WithRoleGuard } from "@/components/hocs";
 import { DataTableSkeleton } from "@/components/skeletons";
 import { QueryStatusWrapper } from "@/components/hocs/query-status-wrapper";
 
@@ -26,9 +26,9 @@ export const UserTable = () => {
           data={data.data}
           columns={columns}
           actionComp={
-            <WithRoleGruad allowed={["Super Admin", "Admin"]}>
+            <WithRoleGuard allowed={["Super Admin", "Admin"]}>
               <ButtonLink to="/users/add">Add User</ButtonLink>
-            </WithRoleGruad>
+            </WithRoleGuard>
           }
         />
       )}
