@@ -2,7 +2,7 @@ import { useCallback, useEffect } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 
 import { useModal } from "@/contexts/modal-context";
-import { useCreateAttendanceMutation } from "@/hooks/mutations/use-event-mutations";
+import { useDeleteArchiveMutation } from "@/hooks/mutations/use-archive-mutations";
 
 import { useBreadcrumb } from "@/components/ui/breadcrumb";
 import { ArchiveTable } from "@/components/tables/archive";
@@ -15,26 +15,24 @@ export const Route = createFileRoute("/_main/archives")({
 function RouteComponent() {
   const { setItems } = useBreadcrumb();
   const { show } = useModal();
-  const timeOutAttendance = useCreateAttendanceMutation();
+  const deleteArchive = useDeleteArchiveMutation();
 
-  const onUpdate = useCallback(
+  const onDelete = useCallback(
     (id: string) => {
       show(
         <ConfirmationDialog
-          onConfirm={() => timeOutAttendance.mutate(id)}
-          isConfirming={timeOutAttendance.isPending}
-          message="Are you sure you want to unarchive this item?"
-          title="Confirmation"
-          description="This will remove the item in the archive."
+          onConfirm={() => deleteArchive.mutate(id)}
+          isConfirming={deleteArchive.isPending}
+          message="Are you sure you want to delete this archive?"
         />,
       );
     },
-    [timeOutAttendance, show],
+    [deleteArchive, show],
   );
 
   useEffect(() => {
     setItems([{ title: "Archives" }]);
   }, [setItems]);
 
-  return <ArchiveTable onUpdate={onUpdate} />;
+  return <ArchiveTable onDelete={onDelete} />;
 }

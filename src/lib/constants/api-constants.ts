@@ -10,6 +10,7 @@ export const API_ENDPOINTS = {
     CHANGE_PASSWORD: "/account/change-password",
     CHANGE_PROFILE: "/account/change-profile-picture",
   },
+  ARCHIVES: "/archives",
   USERS: "/users",
   ROLES: "/roles",
   REQUESTS: "/requests",
@@ -31,6 +32,7 @@ export const API_ENDPOINTS = {
 export const QUERY_KEYS = {
   ROLES: "roles",
   REQUESTS: "requests",
+  ARCHIVES: "/archives",
   EVENTS: "events",
   ATTENDANCES: "attendances",
   POSITIONS: "positions",

@@ -1,18 +1,18 @@
-import { getColumns, data } from "./columns";
+import { getColumns } from "./columns";
 
-import { useContactsQuery } from "@/hooks/queries/use-contacts-query";
+import { useArchivesQuery } from "@/hooks/queries/use-archives-query";
 
 import { DataTable } from "@/components/data-table";
 import { DataTableSkeleton } from "@/components/skeletons";
 import { QueryStatusWrapper } from "@/components/hocs/query-status-wrapper";
 
 interface ArchiveTableProps {
-  onUpdate: (id: string) => void;
+  onDelete: (id: string) => void;
 }
 
-export const ArchiveTable = ({ onUpdate }: ArchiveTableProps) => {
-  const { isPending, isError, refetch } = useContactsQuery();
-  const columns = getColumns({ onUpdate });
+export const ArchiveTable = ({ onDelete }: ArchiveTableProps) => {
+  const { data, isPending, isError, refetch } = useArchivesQuery();
+  const columns = getColumns({ onDelete });
 
   return (
     <QueryStatusWrapper
@@ -21,7 +21,7 @@ export const ArchiveTable = ({ onUpdate }: ArchiveTableProps) => {
       loadingComp={<DataTableSkeleton columnLength={columns.length} />}
       onRetry={refetch}
     >
-      {data && <DataTable data={data} columns={columns} />}
+      {data && <DataTable data={data.data} columns={columns} />}
     </QueryStatusWrapper>
   );
 };
