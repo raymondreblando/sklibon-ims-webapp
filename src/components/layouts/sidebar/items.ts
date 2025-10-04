@@ -55,7 +55,7 @@ export const items: SidebarItemProps[] = [
   {
     title: "SK Members",
     url: "/users",
-    authorize: [ROLES.SUPERADMIN, ROLES.ADMIN],
+    authorize: [ROLES.SUPERADMIN, ROLES.ADMIN, ROLES.USER],
     icon: UsersIcon,
   },
   {

@@ -58,3 +58,17 @@ export const getEventBadgeVariant = (status: string) => {
       break;
   }
 };
+
+export const getUserBadgeVariant = (status: string) => {
+  switch (status) {
+    case "active":
+      return "success";
+      break;
+    case "verified":
+      return "default";
+      break;
+    default:
+      return "destructive";
+      break;
+  }
+};

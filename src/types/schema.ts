@@ -26,13 +26,16 @@ export type Role = {
   role: string;
 };
 
+export type RoleType = "Super Admin" | "Admin" | "User";
+
 export type User = {
   id: string;
   username: string;
   fullname: string;
   email: string;
   profile: string;
-  status: "active" | "deactivated" | "blocked";
+  status: "active" | "verified" | "deactivated" | "blocked";
+  isOnline: boolean;
   createdAt: Date;
 };
 
