@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { useFindGalleryQuery } from "@/hooks/queries/use-galleries-query";
 
-import Carousel, { type SlideData } from "@/components/ui/carousel";
+import Carousel, { type SlideData } from "@/components/ui/carousel-2";
 import { XIcon } from "lucide-react";
 import { router } from "@/lib/router";
 
