@@ -7,8 +7,8 @@ const headingVariants = cva("text-foreground", {
     variant: {
       default: "text-sm font-semibold md:text-base",
       lg: "text-base md:text-2xl font-extrabold",
-      xl: "text-lg md:text-4xl font-extrabold",
-      xxl: "text-xl md:text-6xl font-extrabold",
+      xl: "text-2xl md:text-4xl font-extrabold",
+      xxl: "text-3xl md:text-6xl font-extrabold",
     },
   },
   defaultVariants: {

@@ -47,6 +47,7 @@ export const QUERY_KEYS = {
   USERS: "users",
   REPORTS: "reports",
   GALLERIES: "galleries",
+  GALLERY_IMAGES: "gallery-images",
   USER_PROFILE: "user-profile",
   PROFILE_PIC: "profile-pic",
 };
