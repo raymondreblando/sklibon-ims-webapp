@@ -1,6 +1,6 @@
 import { api } from "@/lib/axios";
 import type { ApiResponse } from "@/types";
-import type { GalleryWithRelation } from "@/types/schema";
+import type { GalleryImage, GalleryWithRelation } from "@/types/schema";
 
 import { API_ENDPOINTS } from "@/lib/constants/api-constants";
 import type {
@@ -49,6 +49,14 @@ export const updateGallery = async (
 export const deleteGallery = async (id: string) => {
   const { data: response } = await api.delete<ApiResponse<GalleryWithRelation>>(
     `${API_ENDPOINTS.GALLERIES}/${id}`,
+  );
+
+  return response;
+};
+
+export const getGalleryImages = async () => {
+  const { data: response } = await api.get<ApiResponse<GalleryImage[]>>(
+    API_ENDPOINTS.GALLERY_IMAGES,
   );
 
   return response;

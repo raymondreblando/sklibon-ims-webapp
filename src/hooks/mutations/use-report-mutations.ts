@@ -2,7 +2,7 @@ import { toast } from "react-toastify";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { QUERY_KEYS } from "@/lib/constants/api-constants";
-import type { UpdateReportField } from "@/lib/schemas/report";
+import type { UpdateReportField, UpdateReportStatusField } from "@/lib/schemas/report";
 import {
   createReport,
   deleteAttachment,
@@ -33,7 +33,7 @@ export const useUpdateReportMutation = () => {
       data,
     }: {
       id: string | undefined;
-      data: UpdateReportField;
+      data: UpdateReportField | UpdateReportStatusField;
     }) => updateReport(id, data),
     onSuccess: ({ message }) => {
       queryClient.invalidateQueries({

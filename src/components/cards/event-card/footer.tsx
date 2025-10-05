@@ -3,9 +3,11 @@ import { useEventCard } from "@/contexts/event-card-context";
 import { CardFooter } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { FooterAction } from "./footer-action";
+import { getAuthUser } from "@/lib/utils/auth";
 
 export const Footer = () => {
   const { event } = useEventCard();
+  const userId = getAuthUser()?.id;
 
   return (
     <CardFooter className="flex flex-wrap items-center justify-between gap-2 py-4">
@@ -18,7 +20,7 @@ export const Footer = () => {
         </Avatar>
         <div>
           <p className="text-sm font-semibold">
-            {event.creator.info.firstname}
+            {event.creator.id === userId ? "You" : event.creator.info.firstname}
           </p>
           <p className="text-muted text-[10px] font-medium">Creator</p>
         </div>

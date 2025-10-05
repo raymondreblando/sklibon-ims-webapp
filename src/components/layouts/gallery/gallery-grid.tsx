@@ -1,15 +1,12 @@
-import { useCallback } from "react";
 import type { Table } from "@tanstack/react-table";
 import type { GalleryWithRelation } from "@/types/schema";
 
 import { getAuthUser } from "@/lib/utils/auth";
-import { useModal } from "@/contexts/modal-context";
-import { useDeleteGalleryMutation } from "@/hooks/mutations/use-gallery-mutations";
 
 import { EmptyStateWrapper, QueryStatusWrapper } from "@/components/hocs";
 import { GalleryCard } from "@/components/cards";
-import { ConfirmationDialog } from "@/components/modals";
 import { GalleryCardSkeleton } from "@/components/skeletons";
+import { useGalleryActions } from "./hooks/use-gallery-actions";
 
 interface GalleryGridProps {
   isPending: boolean;
@@ -25,21 +22,7 @@ export const GalleryGrid = ({
   table,
 }: GalleryGridProps) => {
   const user = getAuthUser();
-  const deleteGallery = useDeleteGalleryMutation();
-  const { show } = useModal();
-
-  const onDelete = useCallback(
-    (id: string) => {
-      show(
-        <ConfirmationDialog
-          onConfirm={() => deleteGallery.mutate(id)}
-          isConfirming={deleteGallery.isPending}
-          message="Are you sure you want to delete this gallery?"
-        />,
-      );
-    },
-    [deleteGallery, show],
-  );
+  const { onDelete } = useGalleryActions();
 
   return (
     <div className="grid gap-4 px-6 py-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">

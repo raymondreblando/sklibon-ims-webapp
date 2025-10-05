@@ -64,7 +64,7 @@ export const AccountSchema = z
       .max(100, {
         message: "Email address must not be greater than 100 characters.",
       }),
-    status: z.enum(["active", "deactivated", "blocked"], {
+    status: z.enum(["active", "verified", "deactivated", "blocked"], {
       error: "Please select a valid status.",
     }),
     role_id: z.string().min(1, "Please select a valid role."),
@@ -91,13 +91,20 @@ export const CreateUserSchema = z.object({
 });
 
 export const UpdateUserSchema = z.object({
-  action: z.enum(["update", "deactivated", "blocked"]),
+  action: z.enum(["update", "status"]),
   info: InfoSchema,
   account: z.object({
     ...AccountSchema.omit({ password: true, password_confirmation: true })
       .shape,
     password: z.string().optional(),
     password_confirmation: z.string().optional(),
+  }),
+});
+
+const UpdateUserStatusSchema = z.object({
+  action: z.enum(["update", "status"]),
+  account: z.object({
+    ...AccountSchema.pick({ status: true }).shape,
   }),
 });
 
@@ -135,6 +142,7 @@ export const ChangeProfilePicSchema = z
 
 export type CreateUserField = z.infer<typeof CreateUserSchema>;
 export type UpdateUserField = z.infer<typeof UpdateUserSchema>;
+export type UpdateUserStatusField = z.infer<typeof UpdateUserStatusSchema>;
 export type UserProfileField = z.infer<typeof UserProfileSchema>;
 export type ChangePasswordField = z.infer<typeof ChangePasswordSchema>;
 export type ChangeProfilePicField = z.infer<typeof ChangeProfilePicSchema>;

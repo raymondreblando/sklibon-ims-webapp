@@ -26,13 +26,16 @@ export type Role = {
   role: string;
 };
 
+export type RoleType = "Super Admin" | "Admin" | "User";
+
 export type User = {
   id: string;
   username: string;
   fullname: string;
   email: string;
   profile: string;
-  status: "active" | "deactivated" | "blocked";
+  status: "active" | "verified" | "deactivated" | "blocked";
+  isOnline: boolean;
   createdAt: Date;
 };
 
@@ -185,6 +188,26 @@ export type Archive = {
   archivable: ReportWithRelation | EventWithRelation;
   archivedBy: MinifyUser;
   createdAt: Date;
+};
+
+export type StatisticInfo = {
+  status: string;
+  total: number;
+  fill: string;
+};
+
+export type DashboardData = {
+  overviews: {
+    pending: number;
+    approved: number;
+    completed: number;
+    cancelled: number;
+  };
+  upcomingEvents: Array<EventWithRelation>;
+  requestStatistics: Array<{ date: string; current: number; prev: number }>;
+  memberStatistics: Array<StatisticInfo>;
+  attendanceStatistics: Array<StatisticInfo>;
+  attendanceLogs: Array<Attendance>;
 };
 
 export type Province = {

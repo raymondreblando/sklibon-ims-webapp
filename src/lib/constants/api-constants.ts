@@ -10,6 +10,7 @@ export const API_ENDPOINTS = {
     CHANGE_PASSWORD: "/account/change-password",
     CHANGE_PROFILE: "/account/change-profile-picture",
   },
+  DASHBOARD: "/dashboard/statistics",
   ARCHIVES: "/archives",
   USERS: "/users",
   ROLES: "/roles",
@@ -32,6 +33,7 @@ export const API_ENDPOINTS = {
 export const QUERY_KEYS = {
   ROLES: "roles",
   REQUESTS: "requests",
+  DASHBOARD: "/dashboard",
   ARCHIVES: "/archives",
   EVENTS: "events",
   ATTENDANCES: "attendances",
@@ -45,6 +47,7 @@ export const QUERY_KEYS = {
   USERS: "users",
   REPORTS: "reports",
   GALLERIES: "galleries",
+  GALLERY_IMAGES: "gallery-images",
   USER_PROFILE: "user-profile",
   PROFILE_PIC: "profile-pic",
 };

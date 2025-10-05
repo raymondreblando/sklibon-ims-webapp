@@ -2,9 +2,13 @@ import { ButtonLink } from "@/components/buttons";
 import { Heading } from "@/components/headings";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { useDashboardContext } from "@/contexts/dashboard-context";
+import { format } from "date-fns";
 import { CalendarDaysIcon } from "lucide-react";
 
 export const UpcomingEvents = () => {
+  const { data } = useDashboardContext();
+
   return (
     <Card className="gap-0 p-0">
       <CardHeader className="flex flex-wrap items-center justify-between py-4">
@@ -15,20 +19,23 @@ export const UpcomingEvents = () => {
       </CardHeader>
       <Separator className="bg-input" />
       <CardContent className="p-0">
-        {Array.from({ length: 5 }).map((_, index) => (
+        {data.upcomingEvents.map((event) => (
           <div
-            key={`upcoming-event-${index}`}
+            key={`upcoming-event-${event.id}`}
             className="flex flex-wrap items-center justify-between gap-4 px-6 py-3"
           >
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-x-2">
-                <CalendarDaysIcon className="size-7" strokeWidth={1.4} />
+                <CalendarDaysIcon
+                  className="text-muted size-6"
+                  strokeWidth={1.4}
+                />
                 <div>
                   <p className="text-sm font-semibold md:text-base">
-                    Health and Wellness Fair
+                    {event.name}
                   </p>
                   <p className="text-muted text-[10px] font-medium md:text-xs">
-                    Barangay Nogpo Health Center
+                    {event.venue}
                   </p>
                 </div>
               </div>
@@ -36,7 +43,7 @@ export const UpcomingEvents = () => {
             <div className="space-y-0.5 md:text-right">
               <p className="text-xs font-semibold">Date</p>
               <p className="text-muted text-xs font-semibold uppercase">
-                Oct 20, 2025
+                {format(event.eventDate, "MMM dd, yyy")}
               </p>
             </div>
           </div>

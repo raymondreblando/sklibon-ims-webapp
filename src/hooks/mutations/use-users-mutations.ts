@@ -2,7 +2,7 @@ import { toast } from "react-toastify";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { QUERY_KEYS } from "@/lib/constants/api-constants";
-import type { UpdateUserField } from "@/lib/schemas/user";
+import type { UpdateUserField, UpdateUserStatusField } from "@/lib/schemas/user";
 import { createUser, deleteUser, updateUser } from "@/services/api/users";
 
 export const useCreateUserMutation = () => {
@@ -26,7 +26,7 @@ export const useUpdateUserMutation = () => {
       data,
     }: {
       id: string | undefined;
-      data: UpdateUserField;
+      data: UpdateUserField | UpdateUserStatusField;
     }) => updateUser(id, data),
     onSuccess: ({ message }) => {
       queryClient.invalidateQueries({

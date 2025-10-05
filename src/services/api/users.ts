@@ -3,7 +3,7 @@ import type { ApiResponse } from "@/types";
 import type { UserWithRelation } from "@/types/schema";
 
 import { API_ENDPOINTS } from "@/lib/constants/api-constants";
-import type { CreateUserField, UpdateUserField } from "@/lib/schemas/user";
+import type { CreateUserField, UpdateUserField, UpdateUserStatusField } from "@/lib/schemas/user";
 
 export const getUsers = async () => {
   const { data: response } = await api.get<ApiResponse<UserWithRelation[]>>(
@@ -32,7 +32,7 @@ export const getUserById = async (id: string | undefined) => {
 
 export const updateUser = async (
   id: string | undefined,
-  data: UpdateUserField,
+  data: UpdateUserField | UpdateUserStatusField,
 ) => {
   const { data: response } = await api.put<ApiResponse<UserWithRelation>>(
     `${API_ENDPOINTS.USERS}/${id}`,

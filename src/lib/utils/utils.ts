@@ -58,3 +58,37 @@ export const getEventBadgeVariant = (status: string) => {
       break;
   }
 };
+
+export const getEventCalendarColor = (status: string) => {
+  switch (status) {
+    case "upcoming":
+      return "sky";
+      break;
+    case "ongoing":
+      return "amber";
+      break;
+    case "completed":
+      return "emerald";
+      break;
+    case "cancelled":
+      return "rose";
+      break;
+    default:
+      throw new Error("Invalid event status");
+      break;
+  }
+}
+
+export const getUserBadgeVariant = (status: string) => {
+  switch (status) {
+    case "active":
+      return "success";
+      break;
+    case "verified":
+      return "default";
+      break;
+    default:
+      return "destructive";
+      break;
+  }
+};

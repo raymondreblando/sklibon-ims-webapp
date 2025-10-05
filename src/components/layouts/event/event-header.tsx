@@ -11,6 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { WithRoleGuard } from "@/components/hocs";
 
 interface EventHeaderProps {
   setGlobalFilter: React.Dispatch<React.SetStateAction<string>>;
@@ -47,9 +48,11 @@ export const EventHeader = ({
             </SelectGroup>
           </SelectContent>
         </Select>
-        <div className="flex w-full items-center space-x-4 md:w-max">
-          <ButtonLink to="/events/add">Create Event</ButtonLink>
-        </div>
+        <WithRoleGuard allowed={["Super Admin", "Admin"]}>
+          <div className="flex w-full items-center space-x-4 md:w-max">
+            <ButtonLink to="/events/add">Create Event</ButtonLink>
+          </div>
+        </WithRoleGuard>
       </div>
     </div>
   );
