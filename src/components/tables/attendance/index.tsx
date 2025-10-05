@@ -1,4 +1,5 @@
 import { getColumns } from "./columns";
+import type { Attendance } from "@/types/schema";
 import { useAttendancesQuery } from "@/hooks/queries/use-events-query";
 
 import { DataTable } from "@/components/data-table";
@@ -7,11 +8,13 @@ import { QueryStatusWrapper } from "@/components/hocs/query-status-wrapper";
 
 interface AttendanceTableProps {
   onUpdate: (id: string) => void;
+  tableData?: Array<Attendance>;
   withActions?: boolean;
 }
 
 export const AttendanceTable = ({
   onUpdate,
+  tableData,
   withActions,
 }: AttendanceTableProps) => {
   const { isPending, isError, data, refetch } = useAttendancesQuery();
@@ -26,7 +29,7 @@ export const AttendanceTable = ({
     >
       {data && (
         <DataTable
-          data={data.data}
+          data={tableData ?? data.data}
           columns={columns}
           withActions={withActions}
         />

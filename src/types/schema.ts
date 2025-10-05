@@ -190,6 +190,26 @@ export type Archive = {
   createdAt: Date;
 };
 
+export type StatisticInfo = {
+  status: string;
+  total: number;
+  fill: string;
+};
+
+export type DashboardData = {
+  overviews: {
+    pending: number;
+    approved: number;
+    completed: number;
+    cancelled: number;
+  };
+  upcomingEvents: Array<EventWithRelation>;
+  requestStatistics: Array<{ date: string; current: number; prev: number }>;
+  memberStatistics: Array<StatisticInfo>;
+  attendanceStatistics: Array<StatisticInfo>;
+  attendanceLogs: Array<Attendance>;
+};
+
 export type Province = {
   id: string;
   name: string;
