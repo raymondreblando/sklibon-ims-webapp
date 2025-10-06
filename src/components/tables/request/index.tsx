@@ -1,6 +1,8 @@
 import { getColumns } from "./columns";
-import { useRequestsQuery } from "@/hooks/queries/use-requests-query";
+import type { UseQueryResult } from "@tanstack/react-query";
 
+import type { ApiResponse } from "@/types";
+import type { RequestWithRelation } from "@/types/schema";
 import type {
   UpdateRequestStatusField,
   UpdateRequestStatusWithReasonField,
@@ -12,6 +14,8 @@ import { QueryStatusWrapper } from "@/components/hocs";
 import { DataTableSkeleton } from "@/components/skeletons";
 
 interface RequestTableProps {
+  type: "request" | "for-approval";
+  queryResult: UseQueryResult<ApiResponse<RequestWithRelation[]>, Error>;
   onDelete: (id: string) => void;
   onUpdate: (
     id: string,
@@ -23,26 +27,46 @@ interface RequestTableProps {
 }
 
 export const RequestTable = ({
+  type,
+  queryResult,
   onDelete,
   onUpdate,
   onUpdateWithReason,
   onViewReason,
 }: RequestTableProps) => {
-  const { isPending, isError, data, refetch } = useRequestsQuery();
-  const columns = getColumns({ onDelete, onUpdate, onUpdateWithReason, onViewReason });
+  const columns = getColumns({
+    onDelete,
+    onUpdate,
+    onUpdateWithReason,
+    onViewReason,
+  });
 
   return (
     <QueryStatusWrapper
-      isPending={isPending}
-      isError={isError}
+      isPending={queryResult.isPending}
+      isError={queryResult.isError}
       loadingComp={<DataTableSkeleton columnLength={columns.length} />}
-      onRetry={refetch}
+      onRetry={queryResult.refetch}
     >
-      {data && (
+      {queryResult.data && (
         <DataTable
-          data={data.data}
+          data={queryResult.data.data}
           columns={columns}
-          actionComp={<ButtonLink to="/requests/add">Add Request</ButtonLink>}
+          actionComp={
+            type === "request" ? (
+              <>
+                <ButtonLink
+                  to="/requests/for-approval"
+                  className="bg-background-muted text-foreground hover:bg-background-muted/10 border"
+                >
+                  For Approval
+                </ButtonLink>
+                <ButtonLink to="/requests/add">Add Request</ButtonLink>
+              </>
+            ) : (
+              <ButtonLink to="/requests">My Request</ButtonLink>
+            )
+          }
         />
       )}
     </QueryStatusWrapper>

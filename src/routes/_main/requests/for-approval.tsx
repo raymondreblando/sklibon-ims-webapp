@@ -1,29 +1,32 @@
 import { useEffect } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 
-import { useRequestsQuery } from "@/hooks/queries/use-requests-query";
+import { useForApprovalRequestsQuery } from "@/hooks/queries/use-requests-query";
 import { useRequestActions } from "@/components/tables/request/hooks/use-request-action";
 
 import { useBreadcrumb } from "@/components/ui/breadcrumb";
 import { RequestTable } from "@/components/tables/request";
 
-export const Route = createFileRoute("/_main/requests/")({
+export const Route = createFileRoute("/_main/requests/for-approval")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const queryResult = useRequestsQuery();
+  const queryResult = useForApprovalRequestsQuery();
   const { setItems } = useBreadcrumb();
   const { onDelete, onUpdate, onUpdateWithReason, onViewReason } =
     useRequestActions();
 
   useEffect(() => {
-    setItems([{ title: "Requests" }]);
+    setItems([
+      { title: "Requests", url: "/requests" },
+      { title: "For Approval" },
+    ]);
   }, [setItems]);
 
   return (
     <RequestTable
-      type="request"
+      type="for-approval"
       queryResult={queryResult}
       onDelete={onDelete}
       onUpdate={onUpdate}
