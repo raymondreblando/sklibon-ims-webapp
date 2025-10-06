@@ -42,6 +42,7 @@ export const useUpdateRequestMutation = () => {
     }) => updateRequest(id, data),
     onSuccess: ({ message }) => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.REQUESTS] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.APPROVAL_REQUESTS] });
       toast.success(message);
     },
   });
