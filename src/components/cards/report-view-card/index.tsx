@@ -1,7 +1,6 @@
 import { format } from "date-fns";
 import type { Attachment } from "@/types/schema";
 
-import type { ReportCardProps } from "@/components/cards/report-card";
 import { ReportAttachment } from "./report-attacment";
 import { Heading, Subheading } from "@/components/headings";
 import { Separator } from "@/components/ui/separator";
@@ -13,8 +12,14 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 
-interface ReportViewCardProps extends Omit<ReportCardProps, "onDelete" | "id"> {
+interface ReportViewCardProps {
+  title: string;
   description: string;
+  dateCreated: Date;
+  uploader: {
+    firstname: string;
+    profile: string;
+  };
   attachments: Array<Attachment>;
 }
 
