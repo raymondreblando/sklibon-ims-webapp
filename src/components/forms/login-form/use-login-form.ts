@@ -38,7 +38,7 @@ export const useLoginForm = () => {
         localStorage.setItem("accessToken", data.accessToken);
 
         navigate({
-          to: (search.redirect as string | undefined) ?? "/dashboard",
+          to: (search.redirect as string | undefined) ?? "/",
           replace: true,
         });
       } catch (error) {
