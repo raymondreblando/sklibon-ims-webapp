@@ -1,5 +1,6 @@
 import { NavMain } from "./nav-main";
 import { SidebarLogo } from "./sidebar-logo";
+import { AppSidebarFooter } from "./sidebar-footer";
 import {
   Sidebar,
   SidebarContent,
@@ -15,6 +16,7 @@ export const AppSidebar = () => {
       <SidebarContent>
         <NavMain />
       </SidebarContent>
+      <AppSidebarFooter />
     </Sidebar>
   );
 };
