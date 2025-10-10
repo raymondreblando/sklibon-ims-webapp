@@ -13,7 +13,7 @@ import { DataTable } from "@/components/data-table";
 import { QueryStatusWrapper } from "@/components/hocs";
 import { DataTableSkeleton } from "@/components/skeletons";
 
-interface RequestTableProps {
+export interface RequestTableProps {
   type: "request" | "for-approval";
   queryResult: UseQueryResult<ApiResponse<RequestWithRelation[]>, Error>;
   onDelete: (id: string) => void;
@@ -35,6 +35,7 @@ export const RequestTable = ({
   onViewReason,
 }: RequestTableProps) => {
   const columns = getColumns({
+    type,
     onDelete,
     onUpdate,
     onUpdateWithReason,
