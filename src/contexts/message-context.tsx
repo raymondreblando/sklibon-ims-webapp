@@ -7,6 +7,7 @@ import type { ChatMessage } from "@/types/schema";
 import type { ApiResponse } from "@/types";
 
 interface MessageContextProps {
+  chatId: string | undefined;
   queryResult: UseQueryResult<ApiResponse<ChatMessage>, Error>;
 }
 
@@ -28,9 +29,9 @@ export const MessageProvider = ({
   children: React.ReactNode;
 }) => {
   const chatId = Route.useSearch().chatId;
-  const queryResult = useChatMessagesQuery(chatId);
+  const queryResult = useChatMessagesQuery(String(chatId));
 
-  const value = useMemo(() => ({ queryResult }), [queryResult]);
+  const value = useMemo(() => ({ queryResult, chatId }), [queryResult, chatId]);
 
   return (
     <MessageContext.Provider value={value}>{children}</MessageContext.Provider>

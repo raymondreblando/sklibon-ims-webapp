@@ -1,6 +1,7 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 
 import { isAuthenticated } from "@/lib/utils/auth";
+import "@/lib/utils/echo";
 
 import { AppSidebar } from "@/components/layouts/sidebar/app-sidebar";
 import { BreadcrumbProvider } from "@/components/ui/breadcrumb";

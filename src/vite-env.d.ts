@@ -2,6 +2,7 @@
 
 interface ImportMetaEnv {
   readonly VITE_API_URL: string;
+  readonly VITE_BROADCAST_AUTH_URL: string;
   readonly VITE_ECHO_AUTH_ENDPOINT: string;
   readonly VITE_MUNICIPALITY_ID: string;
   readonly VITE_IMAGEKIT_PUBLIC_KEY: string;

@@ -1,7 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { createGroupChat, createPrivateChat } from "@/services/api/chats";
 import { QUERY_KEYS } from "@/lib/constants/api-constants";
+import type { SendMessageField } from "@/lib/schemas/chat";
+import {
+  createGroupChat,
+  createPrivateChat,
+  sendMessage,
+} from "@/services/api/chats";
 
 export const useCreatePrivateChatMutation = () => {
   const queryClient = useQueryClient();
@@ -21,6 +26,25 @@ export const useCreateGroupChatMutation = () => {
     mutationFn: createGroupChat,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.CHATS] });
+    },
+  });
+};
+
+export const useSendMessageMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({
+      id,
+      data,
+    }: {
+      id: string | undefined;
+      data: SendMessageField;
+    }) => sendMessage(id, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.CHATS],
+      });
     },
   });
 };

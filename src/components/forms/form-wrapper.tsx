@@ -11,9 +11,9 @@ interface FormWrapperProps<T extends FieldValues> {
   form: UseFormReturn<T>;
   onSubmit: (values: T) => Promise<void>;
   children: React.ReactElement | React.ReactElement[];
-  buttonText: { idle: string; submitting: string };
-  buttonProps?: Partial<FormButtonProps>;
   hasButton?: boolean;
+  buttonText?: { idle: string; submitting: string };
+  buttonProps?: Partial<FormButtonProps>;
   formProps?: ComponentProps<"form">;
 }
 
@@ -44,7 +44,7 @@ export const FormWrapper = <T extends FieldValues>({
             isSubmitting={isSubmitting}
             className={cn("text-base normal-case", buttonProps?.className)}
           >
-            {isSubmitting ? buttonText.submitting : buttonText.idle}
+            {isSubmitting ? buttonText?.submitting : buttonText?.idle}
           </FormButton>
         )}
       </form>

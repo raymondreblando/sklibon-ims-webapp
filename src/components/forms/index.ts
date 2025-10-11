@@ -17,6 +17,7 @@ export { ChangePasswordForm } from "./account/change-password";
 export { ChangeProfilePicForm } from "./account/change-profile";
 export { CreateGroupChatForm } from "./chat/create-group-chat";
 export { CreatePrivateChatForm } from "./chat/create-private-chat";
+export { SendMessageForm } from "./chat/send-message";
 export { CreateHotlineForm } from "./hotline/create";
 export { CreateContactForm } from "./contact/create";
 export { UpdateContactForm } from "./contact/update";

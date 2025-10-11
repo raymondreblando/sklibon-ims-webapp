@@ -3,10 +3,11 @@ import type { ComponentProps } from "react";
 import EmptyInboxIcon from "@/assets/empty-inbox.svg";
 
 export interface EmptyInboxProps {
+  message: string;
   props?: ComponentProps<"div">;
 }
 
-export const EmptyInbox = ({ props }: EmptyInboxProps) => {
+export const EmptyInbox = ({ props, message }: EmptyInboxProps) => {
   return (
     <div
       {...props}
@@ -16,7 +17,7 @@ export const EmptyInbox = ({ props }: EmptyInboxProps) => {
       )}
     >
       <img src={EmptyInboxIcon} alt="empty" className="w-28" />
-      No conversion found.
+      {message}
     </div>
   );
 };

@@ -15,5 +15,11 @@ export const CreateGroupChatSchema = z.object({
   message: z.string().min(1, { message: "Message is required to proceed." }),
 });
 
+export const SendMessageSchema = z.object({
+  receiver_id: z.string(),
+  message: z.string().min(1, { message: "Please specify your message" }),
+});
+
 export type CreatePrivateChatField = z.infer<typeof CreatePrivateChatSchema>;
 export type CreateGroupChatField = z.infer<typeof CreateGroupChatSchema>;
+export type SendMessageField = z.infer<typeof SendMessageSchema>;

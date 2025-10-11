@@ -2,8 +2,10 @@ export { ConfirmationDialog } from "./confirmation-modal";
 
 export { ChangePasswordDialog } from "./account/change-password-dialog";
 export { ChangeProfileDialog } from "./account/change-profile-dialog";
+export { AddGroupMemberDialog } from "./chat/add-group-member";
 export { CreatePrivateChatDialog } from "./chat/create-private-chat";
 export { CreateGroupChatDialog } from "./chat/create-group-chat";
+export { ViewGroupMemberDialog } from "./chat/view-group-member";
 export { CreateContactDialog } from "./contact/create-contact-dialog";
 export { EventMapDialog } from "./event-map-modal";
 export { UpdateContactDialog } from "./contact/update-contact-dialog";

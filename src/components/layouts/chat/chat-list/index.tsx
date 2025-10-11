@@ -1,6 +1,4 @@
-import { useEffect } from "react";
 import { Route } from "@/routes/_main/chats";
-import { useNavigate } from "@tanstack/react-router";
 import { useChatsQuery } from "@/hooks/queries/use-chats-query";
 
 import { Chat } from "./chat";
@@ -9,23 +7,21 @@ import { Searchbar } from "@/components/ui/searchbar";
 import { Separator } from "@/components/ui/separator";
 import { EmptyStateWrapper, QueryStatusWrapper } from "@/components/hocs";
 import { ChatSkeleton } from "@/components/skeletons";
-import { EmptyInbox } from "../../empty-states";
+import { EmptyInbox } from "@/components/layouts/empty-states";
+import { useEcho } from "@laravel/echo-react";
+import { getAuthUser } from "@/lib/utils/auth";
+import { useQueryClient } from "@tanstack/react-query";
+import { QUERY_KEYS } from "@/lib/constants/api-constants";
 
 export const ChatList = () => {
-  const navigate = useNavigate({ from: Route.fullPath });
   const { chatId } = Route.useSearch();
   const { isPending, isError, data, refetch } = useChatsQuery();
+  const queryClient = useQueryClient();
+  const userId = getAuthUser()?.id;
 
-  useEffect(() => {
-    if (data) {
-      navigate({
-        search: (prev) => ({
-          ...prev,
-          chatId: String(data.data[0].id),
-        }),
-      });
-    }
-  }, [data, navigate]);
+  useEcho(`chat.list.${userId}`, [".chat.created", ".group.created"], () => {
+    queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.CHATS] });
+  });
 
   return (
     <div className="border-input rounded-md border">
@@ -44,7 +40,12 @@ export const ChatList = () => {
         {data && (
           <EmptyStateWrapper
             length={data.data.length}
-            component={<EmptyInbox props={{ className: "min-h-[300px]" }} />}
+            component={
+              <EmptyInbox
+                message="No conversation found."
+                props={{ className: "min-h-[300px]" }}
+              />
+            }
           >
             {data.data.map((message) => {
               const hasParticipants =
