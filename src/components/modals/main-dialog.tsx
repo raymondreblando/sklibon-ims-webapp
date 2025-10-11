@@ -41,13 +41,13 @@ export const MainDialog = ({
       <DialogContent {...contentProps}>
         <DialogHeader>
           <DialogTitle
-            className={cn("font-bold", titleProps?.className)}
+            className={cn("text-left font-bold", titleProps?.className)}
             {...titleProps}
           >
             {title}
           </DialogTitle>
           {description && (
-            <DialogDescription className="text-muted text-sm font-medium">
+            <DialogDescription className="text-left text-muted text-sm font-medium">
               {description}
             </DialogDescription>
           )}
