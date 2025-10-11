@@ -1,13 +1,22 @@
+import { Route } from "@/routes/_main/chats";
+import { useNavigate } from "@tanstack/react-router";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 interface ChatProps {
+  id: string;
   name: string;
   profile: string;
+  message: string;
 }
 
-export const Chat = ({ name, profile }: ChatProps) => {
+export const Chat = ({ id, name, profile, message }: ChatProps) => {
+  const navigate = useNavigate({ from: Route.fullPath });
+
   return (
-    <div className="hover:bg-muted/5 border-b-input flex cursor-pointer gap-x-4 border-b px-6 py-3 transition-colors last:border-0">
+    <div
+      onClick={() => navigate({ search: (prev) => ({ ...prev, chatId: id }) })}
+      className="hover:bg-muted/5 border-b-input flex cursor-pointer items-center gap-x-4 border-b px-6 py-3 transition-colors last:border-0"
+    >
       <div className="relative">
         <Avatar className="border-success mt-1 h-12 w-12 border-2">
           <AvatarImage src={profile} />
@@ -20,8 +29,7 @@ export const Chat = ({ name, profile }: ChatProps) => {
       <div>
         <p className="text-sm font-semibold md:text-base">{name}</p>
         <p className="text-muted line-clamp-2 text-[10px] font-medium md:text-xs">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          {message}
         </p>
       </div>
     </div>

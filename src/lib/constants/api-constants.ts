@@ -25,6 +25,10 @@ export const API_ENDPOINTS = {
   ATTACHMENTS: "/attachments",
   GALLERIES: "/galleries",
   GALLERY_IMAGES: "/gallery-images",
+  NOTIFICATIONS: "/notifications",
+  CHATS: "/chats",
+  PRIVATE_CHAT: "/chat/privates",
+  GROUP_CHAT: "/chat/group-chats",
   PROVINCES: "/locations/provinces",
   MUNICIPALITIES: "/locations/municipalities",
   BARANGAYS: `/locations/barangays/${import.meta.env.VITE_MUNICIPALITY_ID}`,
@@ -33,6 +37,7 @@ export const API_ENDPOINTS = {
 export const QUERY_KEYS = {
   ROLES: "roles",
   REQUESTS: "requests",
+  APPROVAL_REQUESTS: "approval-requests",
   DASHBOARD: "/dashboard",
   ARCHIVES: "/archives",
   EVENTS: "events",
@@ -48,6 +53,8 @@ export const QUERY_KEYS = {
   REPORTS: "reports",
   GALLERIES: "galleries",
   GALLERY_IMAGES: "gallery-images",
+  NOTIFICATIONS: "/notifications",
+  CHATS: "/chats",
   USER_PROFILE: "user-profile",
   PROFILE_PIC: "profile-pic",
 };

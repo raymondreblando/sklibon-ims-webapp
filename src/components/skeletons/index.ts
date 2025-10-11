@@ -1,4 +1,5 @@
 export { AttendanceOverviewSkeleton } from "./attendance-overview-skeleton";
+export { ChatSkeleton } from "./chat-skeleton";
 export { DataTableSkeleton } from "./data-table-skeleton";
 export { FormSkeleton } from "./form-skeleton";
 export { ContactCardSkeleton } from "./contact-card-skeleton";

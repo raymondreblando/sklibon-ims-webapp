@@ -4,6 +4,11 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
 
 export const Route = createFileRoute("/_main/chats")({
+  validateSearch: (search: Record<string, unknown>): { chatId: string } => {
+    return {
+      chatId: (search.chatId as string) || "",
+    };
+  },
   component: RouteComponent,
 });
 
@@ -15,7 +20,7 @@ function RouteComponent() {
   }, [setItems]);
 
   return (
-    <div className="grid grid-cols-[400px_1fr] gap-4 p-4 md:p-8">
+    <div className="grid md:grid-cols-[400px_1fr] gap-4 p-4 md:p-8">
       <ChatList />
       <ChatMessage />
     </div>

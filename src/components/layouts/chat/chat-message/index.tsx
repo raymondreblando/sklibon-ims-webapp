@@ -5,7 +5,7 @@ import { Separator } from "@/components/ui/separator";
 
 export const ChatMessage = () => {
   return (
-    <div className="border-input rounded-md border">
+    <div className="border-input hidden rounded-md border md:block">
       <ChatHeader />
       <Separator className="bg-input" />
       <ChatMessageWrapper />

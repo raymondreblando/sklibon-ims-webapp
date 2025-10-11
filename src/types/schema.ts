@@ -54,6 +54,7 @@ export type UserInfo = {
 export type MinifyUser = Pick<User, "id" | "profile"> & {
   info: Pick<UserInfo, "firstname" | "lastname"> & {
     position: Pick<Position, "name">;
+    barangay: Barangay;
   };
 };
 
@@ -188,6 +189,42 @@ export type Archive = {
   archivable: ReportWithRelation | EventWithRelation;
   archivedBy: MinifyUser;
   createdAt: Date;
+};
+
+export type Participant = {
+  id: string;
+  user: {
+    id: string;
+    profile: string | null;
+    info: {
+      firstname: string;
+      lastname: string;
+    };
+  };
+};
+
+export type Chat = {
+  id: string;
+  name: string | null;
+  type: "private" | "group";
+  lastMessage: string;
+  lastMessageAt: Date;
+  participants: Array<Participant>;
+};
+
+export type NotificationContent = {
+  id: string;
+  user: string | undefined;
+  name: string;
+  status: string | null;
+};
+
+export type NotificationType = "announcement" | "request";
+
+export type Notification = {
+  id: string;
+  type: NotificationType;
+  data: NotificationContent;
 };
 
 export type StatisticInfo = {
