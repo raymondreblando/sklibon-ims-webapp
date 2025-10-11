@@ -13,6 +13,7 @@ interface FormWrapperProps<T extends FieldValues> {
   children: React.ReactElement | React.ReactElement[];
   buttonText: { idle: string; submitting: string };
   buttonProps?: Partial<FormButtonProps>;
+  hasButton?: boolean;
   formProps?: ComponentProps<"form">;
 }
 
@@ -22,6 +23,7 @@ export const FormWrapper = <T extends FieldValues>({
   buttonProps,
   formProps,
   buttonText,
+  hasButton = true,
   children,
 }: FormWrapperProps<T>) => {
   const isSubmitting = form.formState.isSubmitting;
@@ -35,14 +37,16 @@ export const FormWrapper = <T extends FieldValues>({
         className={cn("flex flex-col gap-y-3", formProps?.className)}
       >
         {children}
-        <FormButton
-          type="submit"
-          {...buttonProps}
-          isSubmitting={isSubmitting}
-          className={cn("text-base normal-case", buttonProps?.className)}
-        >
-          {isSubmitting ? buttonText.submitting : buttonText.idle}
-        </FormButton>
+        {hasButton && (
+          <FormButton
+            type="submit"
+            {...buttonProps}
+            isSubmitting={isSubmitting}
+            className={cn("text-base normal-case", buttonProps?.className)}
+          >
+            {isSubmitting ? buttonText.submitting : buttonText.idle}
+          </FormButton>
+        )}
       </form>
     </Form>
   );
