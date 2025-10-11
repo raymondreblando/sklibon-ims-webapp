@@ -5,13 +5,18 @@ import SKLogo from "@/assets/logo.webp";
 
 const links = linkOptions([
   {
+    to: "/",
+    label: "Home",
+    activeOptions: { exact: true },
+  },
+  {
     to: "/sk-galleries",
     label: "Galleries",
     activeOptions: { exact: true },
   },
   {
-    to: "/contacts",
-    label: "Annoucements",
+    to: "/sk-events",
+    label: "Events",
     activeOptions: { exact: true },
   },
   {
