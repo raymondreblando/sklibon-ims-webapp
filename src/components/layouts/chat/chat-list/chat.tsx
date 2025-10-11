@@ -1,21 +1,26 @@
 import { Route } from "@/routes/_main/chats";
 import { useNavigate } from "@tanstack/react-router";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { cn } from "@/lib/utils/utils";
 
 interface ChatProps {
   id: string;
   name: string;
   profile: string;
   message: string;
+  isSelected: boolean;
 }
 
-export const Chat = ({ id, name, profile, message }: ChatProps) => {
+export const Chat = ({ id, name, profile, message, isSelected }: ChatProps) => {
   const navigate = useNavigate({ from: Route.fullPath });
 
   return (
     <div
       onClick={() => navigate({ search: (prev) => ({ ...prev, chatId: id }) })}
-      className="hover:bg-muted/5 border-b-input flex cursor-pointer items-center gap-x-4 border-b px-6 py-3 transition-colors last:border-0"
+      className={cn(
+        "hover:bg-muted/5 border-b-input flex cursor-pointer items-center gap-x-4 border-b px-6 py-3 transition-colors last:border-0",
+        isSelected && "bg-muted/10",
+      )}
     >
       <div className="relative">
         <Avatar className="border-success mt-1 h-12 w-12 border-2">

@@ -2,9 +2,7 @@ import { SendHorizonalIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 
-interface ChatInputProps {}
-
-export const ChatInput = ({}: ChatInputProps) => {
+export const ChatInput = () => {
   return (
     <div className="flex items-center gap-x-4 px-6 py-4">
       <Textarea className="min-h-4 resize-none" />

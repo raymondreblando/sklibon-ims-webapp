@@ -3,27 +3,27 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 interface ChatBubbleProps {
   isSender: boolean;
+  profile: string;
+  receiver: string;
   content: string;
 }
 
-export const ChatBubble = ({ isSender, content }: ChatBubbleProps) => {
+export const ChatBubble = ({
+  isSender,
+  profile,
+  receiver,
+  content,
+}: ChatBubbleProps) => {
   return (
-    <div className={cn("flex mb-2 last:mb-0", isSender && "justify-end")}>
+    <div className={cn("mb-2 flex last:mb-0", isSender && "justify-end")}>
       <div
-        className={cn(
-          "flex items-end gap-x-4",
-          isSender && "flex-row-reverse",
-        )}
+        className={cn("flex items-end gap-x-4", isSender && "flex-row-reverse")}
       >
         {!isSender && (
           <Avatar className="h-8 w-8 border-2">
-            <AvatarImage
-              src={
-                "https://ik.imagekit.io/mhkbf5beo/sklibon-ims/profiles/a37921be-1616-4722-8706-11699f89684c-momo-square.png"
-              }
-            />
+            <AvatarImage src={profile} />
             <AvatarFallback className="bg-primary text-primary-foreground">
-              {"Momo".charAt(0).toUpperCase()}
+              {receiver.charAt(0).toUpperCase()}
             </AvatarFallback>
           </Avatar>
         )}

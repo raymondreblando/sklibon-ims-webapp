@@ -1,12 +1,16 @@
+import { useEffect } from "react";
+import { createFileRoute } from "@tanstack/react-router";
+
+import { MessageProvider } from "@/contexts/message-context";
 import { ChatList, ChatMessage } from "@/components/layouts/chat";
 import { useBreadcrumb } from "@/components/ui/breadcrumb";
-import { createFileRoute } from "@tanstack/react-router";
-import { useEffect } from "react";
 
 export const Route = createFileRoute("/_main/chats")({
-  validateSearch: (search: Record<string, unknown>): { chatId: string } => {
+  validateSearch: (search: Record<string, unknown>): { chatId?: string } => {
+    const chatId = search.chatId as string;
+
     return {
-      chatId: (search.chatId as string) || "",
+      chatId: chatId ? chatId : undefined,
     };
   },
   component: RouteComponent,
@@ -20,9 +24,11 @@ function RouteComponent() {
   }, [setItems]);
 
   return (
-    <div className="grid md:grid-cols-[400px_1fr] gap-4 p-4 md:p-8">
+    <div className="grid gap-4 p-4 md:grid-cols-[400px_1fr] md:p-8">
       <ChatList />
-      <ChatMessage />
+      <MessageProvider>
+        <ChatMessage />
+      </MessageProvider>
     </div>
   );
 }

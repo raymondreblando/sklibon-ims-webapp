@@ -51,7 +51,7 @@ export type UserInfo = {
   additionalAddress: string;
 };
 
-export type MinifyUser = Pick<User, "id" | "profile"> & {
+export type MinifyUser = Pick<User, "id" | "profile" | "isOnline"> & {
   info: Pick<UserInfo, "firstname" | "lastname"> & {
     position: Pick<Position, "name">;
     barangay: Barangay;
@@ -209,6 +209,20 @@ export type Chat = {
   type: "private" | "group";
   lastMessage: string;
   lastMessageAt: Date;
+  participants: Array<Participant>;
+};
+
+export type Message = {
+  id: string;
+  chatId: string;
+  userId: string;
+  message: string;
+  attachment: string;
+  user: MinifyUser;
+};
+
+export type ChatMessage = Omit<Chat, "participants"> & {
+  messages: Array<Message>;
   participants: Array<Participant>;
 };
 

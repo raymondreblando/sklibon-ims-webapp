@@ -1,6 +1,6 @@
 import { api } from "@/lib/axios";
 import type { ApiResponse } from "@/types";
-import type { Chat } from "@/types/schema";
+import type { Chat, ChatMessage } from "@/types/schema";
 
 import { API_ENDPOINTS } from "@/lib/constants/api-constants";
 import type {
@@ -11,6 +11,14 @@ import type {
 export const getChats = async () => {
   const { data: response } = await api.get<ApiResponse<Chat[]>>(
     API_ENDPOINTS.CHATS,
+  );
+
+  return response;
+};
+
+export const getChatMessages = async (id: string | undefined) => {
+  const { data: response } = await api.get<ApiResponse<ChatMessage>>(
+    `${API_ENDPOINTS.CHATS}/${id}`,
   );
 
   return response;

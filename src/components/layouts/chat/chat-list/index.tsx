@@ -1,3 +1,6 @@
+import { useEffect } from "react";
+import { Route } from "@/routes/_main/chats";
+import { useNavigate } from "@tanstack/react-router";
 import { useChatsQuery } from "@/hooks/queries/use-chats-query";
 
 import { Chat } from "./chat";
@@ -9,7 +12,20 @@ import { ChatSkeleton } from "@/components/skeletons";
 import { EmptyInbox } from "../../empty-states";
 
 export const ChatList = () => {
+  const navigate = useNavigate({ from: Route.fullPath });
+  const { chatId } = Route.useSearch();
   const { isPending, isError, data, refetch } = useChatsQuery();
+
+  useEffect(() => {
+    if (data) {
+      navigate({
+        search: (prev) => ({
+          ...prev,
+          chatId: String(data.data[0].id),
+        }),
+      });
+    }
+  }, [data, navigate]);
 
   return (
     <div className="border-input rounded-md border">
@@ -51,6 +67,7 @@ export const ChatList = () => {
                   name={name}
                   profile={profile}
                   message={message.lastMessage}
+                  isSelected={message.id === chatId}
                 />
               );
             })}

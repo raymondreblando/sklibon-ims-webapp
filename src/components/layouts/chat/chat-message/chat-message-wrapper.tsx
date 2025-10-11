@@ -1,52 +1,33 @@
+import { getAuthUser } from "@/lib/utils/auth";
+import { useMessage } from "@/contexts/message-context";
+
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ChatBubble } from "./chat-bubble";
 
-const messages = [
-  {
-    isSender: false,
-    content:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  },
-  {
-    isSender: false,
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
-  },
-  {
-    isSender: true,
-    content:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  },
-  {
-    isSender: false,
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
-  },
-  {
-    isSender: true,
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
-  },
-  {
-    isSender: true,
-    content: "Lorem ipsum dolor sit amet. ",
-  },
-  {
-    isSender: false,
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
-  },
-];
+export const ChatMessageWrapper = () => {
+  const { queryResult } = useMessage();
+  const userId = getAuthUser()?.id;
 
-interface ChatMessageWrapperProps {}
+  const data = queryResult.data?.data;
+  const messages = data?.messages;
 
-export const ChatMessageWrapper = ({}: ChatMessageWrapperProps) => {
   return (
     <ScrollArea className="h-[calc(100vh-340px)]">
       <div className="p-6">
-        {messages.map((message, index) => (
-          <ChatBubble
-            key={`chat-bubble-${index}`}
-            isSender={message.isSender}
-            content={message.content}
-          />
-        ))}
+        {messages &&
+          messages.map((message) => {
+            const isSender = userId === message.userId;
+
+            return (
+              <ChatBubble
+                key={message.id}
+                isSender={isSender}
+                profile={message.user.profile}
+                receiver={message.user.info.firstname}
+                content={message.message}
+              />
+            );
+          })}
       </div>
     </ScrollArea>
   );
