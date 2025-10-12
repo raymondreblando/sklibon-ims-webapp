@@ -22,7 +22,7 @@ export const ChatMessageWrapper = () => {
   }, [messages]);
 
   return (
-    <ScrollArea className="h-[calc(100vh-340px)]">
+    <ScrollArea className="h-[calc(100vh-190px)] lg:h-[calc(100vh-340px)]">
       <div className="p-6">
         {messages &&
           messages.map((message) => {

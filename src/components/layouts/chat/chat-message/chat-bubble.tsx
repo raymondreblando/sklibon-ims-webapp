@@ -29,7 +29,7 @@ export const ChatBubble = ({
         )}
         <div
           className={cn(
-            "max-w-[600px] rounded-t-2xl p-4",
+            "max-w-[250px] lg:max-w-[600px] rounded-t-2xl p-4",
             isSender
               ? "bg-primary/90 text-primary-foreground rounded-l-2xl"
               : "bg-muted/15 text-muted-foreground rounded-r-2xl",

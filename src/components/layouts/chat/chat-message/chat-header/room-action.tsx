@@ -1,8 +1,9 @@
-import { useIsMobile } from "@/hooks/use-mobile";
+import { useChat } from "@/contexts/chat-context";
 import { useModal } from "@/contexts/modal-context";
+import { useMessage } from "@/contexts/message-context";
 
 import { Route } from "@/routes/_main/chats";
-import { UserPlusIcon } from "lucide-react";
+import { UserPlusIcon, XIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AddGroupMemberDialog } from "@/components/modals";
 import {
@@ -13,25 +14,36 @@ import {
 
 export const RoomAction = () => {
   const { show } = useModal();
-  const isMobile = useIsMobile();
+  const { setOpenChat } = useChat();
+  const { queryResult } = useMessage();
   const chatId = Route.useSearch().chatId;
 
   return (
     <div className="flex items-center gap-2">
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Button
-            onClick={() => show(<AddGroupMemberDialog />, { chatId })}
-            variant="outline"
-            className="border-input"
-          >
-            <UserPlusIcon />
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent>
-          <p>Add Group Members</p>
-        </TooltipContent>
-      </Tooltip>
+      {queryResult.data?.data.type === "group" && (
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              onClick={() => show(<AddGroupMemberDialog />, { chatId })}
+              variant="outline"
+              className="border-input"
+            >
+              <UserPlusIcon />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Add Group Members</p>
+          </TooltipContent>
+        </Tooltip>
+      )}
+
+      <Button
+        onClick={() => setOpenChat(false)}
+        variant="outline"
+        className="border-input block lg:hidden"
+      >
+        <XIcon />
+      </Button>
     </div>
   );
 };

@@ -2,6 +2,7 @@ import z from "zod";
 import { useEffect } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 
+import { ChatProvider } from "@/contexts/chat-context";
 import { MessageProvider } from "@/contexts/message-context";
 import { ChatList, ChatMessage } from "@/components/layouts/chat";
 import { useBreadcrumb } from "@/components/ui/breadcrumb";
@@ -26,16 +27,21 @@ function RouteComponent() {
 
   return (
     <div className="grid gap-4 p-4 md:p-8 lg:grid-cols-[400px_1fr]">
-      <ChatList />
-      {chatId ? (
-        <MessageProvider>
-          <ChatMessage />
-        </MessageProvider>
-      ) : (
-        <div className="border-input hidden rounded-md border lg:block">
-          <EmptyInbox props={{ className: "min-h-[calc(100vh-150px)]" }} message="No selected conversation. Please select one to view messages." />
-        </div>
-      )}
+      <ChatProvider>
+        <ChatList />
+        {chatId ? (
+          <MessageProvider>
+            <ChatMessage />
+          </MessageProvider>
+        ) : (
+          <div className="border-input hidden rounded-md border lg:block">
+            <EmptyInbox
+              props={{ className: "min-h-[calc(100vh-150px)]" }}
+              message="No selected conversation. Please select one to view messages."
+            />
+          </div>
+        )}
+      </ChatProvider>
     </div>
   );
 }

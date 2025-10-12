@@ -1,4 +1,7 @@
+import { cn } from "@/lib/utils/utils";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { useEcho } from "@laravel/echo-react";
+import { useChat } from "@/contexts/chat-context";
 import { useMessage } from "@/contexts/message-context";
 import { useQueryClient } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/lib/constants/api-constants";
@@ -16,6 +19,8 @@ import {
 
 export const ChatMessage = () => {
   const queryClient = useQueryClient();
+  const { openChat } = useChat();
+  const isMobile = useIsMobile();
   const { queryResult, chatId } = useMessage();
 
   useEcho(`chat.room.${chatId}`, [".message.sent"], () => {
@@ -23,7 +28,12 @@ export const ChatMessage = () => {
   });
 
   return (
-    <div className="border-input hidden rounded-md border lg:block">
+    <div
+      className={cn(
+        "border-input hidden rounded-md border lg:block",
+        openChat && isMobile ? "fixed inset-0 z-50 block bg-white" : "static",
+      )}
+    >
       <QueryStatusWrapper
         isPending={queryResult.isPending}
         isError={queryResult.isError}

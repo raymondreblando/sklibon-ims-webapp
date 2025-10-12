@@ -1,5 +1,7 @@
 import { Route } from "@/routes/_main/chats";
+import { useChat } from "@/contexts/chat-context";
 import { useNavigate } from "@tanstack/react-router";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils/utils";
 
@@ -23,11 +25,15 @@ export const Chat = ({
   isOnline,
 }: ChatProps) => {
   const navigate = useNavigate({ from: Route.fullPath });
+  const { setOpenChat } = useChat();
   const isPrivate = type === "private";
 
   return (
     <div
-      onClick={() => navigate({ search: (prev) => ({ ...prev, chatId: id }) })}
+      onClick={() => {
+        setOpenChat(true);
+        navigate({ search: (prev) => ({ ...prev, chatId: id }) });
+      }}
       className={cn(
         "hover:bg-muted/5 border-b-input flex cursor-pointer items-center gap-x-4 border-b px-6 py-3 transition-colors last:border-0",
         isSelected && "bg-muted/10",
