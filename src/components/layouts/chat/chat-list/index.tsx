@@ -1,62 +1,110 @@
+import { Route } from "@/routes/_main/chats";
+import { useChatsQuery } from "@/hooks/queries/use-chats-query";
+
+import { Chat } from "./chat";
 import { ChatListHeader } from "./chat-list-header";
 import { Searchbar } from "@/components/ui/searchbar";
-import { Chat } from "./chat";
 import { Separator } from "@/components/ui/separator";
-
-const messages = [
-  {
-    name: "Momo",
-    profile:
-      "https://ik.imagekit.io/mhkbf5beo/sklibon-ims/profiles/a37921be-1616-4722-8706-11699f89684c-momo-square.png",
-  },
-  {
-    name: "Sana",
-    profile:
-      "https://ik.imagekit.io/mhkbf5beo/sklibon-ims/profiles/9e85021d-8e5e-42cc-9277-ba04221180b4-sana-square.png",
-  },
-  {
-    name: "Jihyo",
-    profile:
-      "https://ik.imagekit.io/mhkbf5beo/sklibon-ims/profiles/9b5aaf0e-dbf3-4916-95fb-f6741e6d8632-jihyo-square.png",
-  },
-  {
-    name: "Nayeon",
-    profile:
-      "https://ik.imagekit.io/mhkbf5beo/sklibon-ims/profiles/54cfdabc-948b-4819-b4d0-cc7bd0bf19df-nayeon-square.png",
-  },
-  {
-    name: "Mina",
-    profile:
-      "https://ik.imagekit.io/mhkbf5beo/sklibon-ims/profiles/d256a651-3bba-4c41-aee7-f0ef21d8444b-mina-square.png",
-  },
-  {
-    name: "Dhayun",
-    profile:
-      "https://ik.imagekit.io/mhkbf5beo/sklibon-ims/profiles/3d9a6254-4622-4833-b3c0-de14c7a891e9-dhayun-square.png",
-  },
-  {
-    name: "Chaeyoung",
-    profile:
-      "https://ik.imagekit.io/mhkbf5beo/sklibon-ims/profiles/bd3c24e3-bcf4-4e10-be0d-203b18dccd38-chaeyoung-square.png",
-  },
-];
+import { EmptyStateWrapper, QueryStatusWrapper } from "@/components/hocs";
+import { ChatSkeleton } from "@/components/skeletons";
+import { EmptyInbox } from "@/components/layouts/empty-states";
+import { useEcho } from "@laravel/echo-react";
+import { getAuthUser } from "@/lib/utils/auth";
+import { useQueryClient } from "@tanstack/react-query";
+import { QUERY_KEYS } from "@/lib/constants/api-constants";
+import { useMemo, useState } from "react";
 
 export const ChatList = () => {
+  const { chatId } = Route.useSearch();
+  const { isPending, isError, data, refetch } = useChatsQuery();
+  const [search, setSearch] = useState("");
+  const queryClient = useQueryClient();
+  const userId = getAuthUser()?.id;
+
+  const filteredData = useMemo(() => {
+    if (search === "") return data?.data;
+
+    return data?.data.filter(
+      (chat) =>
+        chat.name?.toLowerCase().includes(search.toLowerCase()) ||
+        chat.participants?.some((participant) =>
+          `${participant.user.info.firstname} ${participant.user.info.lastname}`
+            .toLowerCase()
+            .includes(search.toLowerCase()),
+        ),
+    );
+  }, [search, data]);
+
+  useEcho(
+    `chat.list.${userId}`,
+    [".chat.created", ".group.created", ".participant.added"],
+    () => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.CHATS] });
+    },
+  );
+
   return (
     <div className="border-input rounded-md border">
       <ChatListHeader />
       <Separator className="bg-input" />
       <div className="px-6 py-4">
-        <Searchbar inputProps={{ placeholder: "Search conversations..." }} />
+        <Searchbar
+          inputProps={{
+            placeholder: "Search conversations...",
+            onInput: (e) => setSearch(e.currentTarget.value),
+          }}
+        />
       </div>
       <Separator className="bg-input" />
-      {messages.map((message, index) => (
-        <Chat
-          key={`chat-message-${index}`}
-          name={message.name}
-          profile={message.profile}
-        />
-      ))}
+      <QueryStatusWrapper
+        isPending={isPending}
+        isError={isError}
+        loadingComp={<ChatSkeleton count={6} />}
+        onRetry={refetch}
+      >
+        {data && (
+          <EmptyStateWrapper
+            length={data.data.length}
+            component={
+              <EmptyInbox
+                message="No conversation found."
+                props={{ className: "min-h-[300px]" }}
+              />
+            }
+          >
+            {filteredData?.map((message) => {
+              const hasParticipants =
+                message.participants && message.participants.length > 0;
+              const isPrivate = message.type === "private";
+
+              const name =
+                isPrivate && hasParticipants
+                  ? `${message.participants[0].user.info.firstname} ${message.participants[0].user.info.lastname}`
+                  : message.name || "Unnamed Chat";
+
+              const profile = isPrivate
+                ? message.participants[0].user.profile || ""
+                : "";
+
+              const isOnline =
+                isPrivate && message.participants[0].user.isOnline;
+
+              return (
+                <Chat
+                  key={message.id}
+                  id={message.id}
+                  type={message.type}
+                  name={name}
+                  profile={profile}
+                  message={message.lastMessage}
+                  isSelected={message.id === chatId}
+                  isOnline={isOnline}
+                />
+              );
+            })}
+          </EmptyStateWrapper>
+        )}
+      </QueryStatusWrapper>
     </div>
   );
 };

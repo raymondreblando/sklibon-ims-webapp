@@ -5,10 +5,7 @@ import { ROLES } from "@/lib/constants";
 import { formatTableCount } from "@/lib/utils/utils";
 import { getAuthUser } from "@/lib/utils/auth";
 import type { RequestWithRelation } from "@/types/schema";
-import type {
-  UpdateRequestStatusField,
-  UpdateRequestStatusWithReasonField,
-} from "@/lib/schemas/request";
+import type { RequestTableProps } from ".";
 
 import {
   ArrowDownToLineIcon,
@@ -32,23 +29,16 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-interface GetRequestColumnsProps {
-  onDelete: (id: string) => void;
-  onUpdate: (
-    id: string,
-    data: UpdateRequestStatusField,
-    message: string,
-  ) => void;
-  onUpdateWithReason: (data: UpdateRequestStatusWithReasonField) => void;
-  onViewReason: (reason: string) => void;
-}
-
 export const getColumns = ({
+  type,
   onDelete,
   onUpdate,
   onUpdateWithReason,
   onViewReason,
-}: GetRequestColumnsProps): ColumnDef<RequestWithRelation>[] => {
+}: Omit<
+  RequestTableProps,
+  "queryResult"
+>): ColumnDef<RequestWithRelation>[] => {
   const user = getAuthUser();
   const role = user?.role.role;
 
@@ -63,26 +53,34 @@ export const getColumns = ({
     },
   ] as ColumnDef<RequestWithRelation>[];
 
-  if (role !== ROLES.USER) {
-    baseColumns.push({
-      id: "requester",
-      header: "Requestor",
-      accessorFn: (props) =>
-        `${props.requester.info.firstname} ${props.requester.info.lastname}`,
-      cell: (props) => {
-        const row = props.row.original;
+  if (role !== ROLES.USER || type === "for-approval") {
+    baseColumns.push(
+      {
+        id: "requester",
+        header: "Requestor",
+        accessorFn: (props) =>
+          `${props.requester.info.firstname} ${props.requester.info.lastname}`,
+        cell: (props) => {
+          const row = props.row.original;
 
-        return (
-          <TableUserProfile
-            user={{
-              name: `${row.requester.info.firstname} ${row.requester.info.lastname}`,
-              profile: row.requester.profile,
-              subtitle: String(row.requester.info.position.name),
-            }}
-          />
-        );
+          return (
+            <TableUserProfile
+              user={{
+                name: `${row.requester.info.firstname} ${row.requester.info.lastname}`,
+                profile: row.requester.profile,
+                subtitle: String(row.requester.info.position.name),
+              }}
+            />
+          );
+        },
       },
-    });
+      {
+        id: "requester-address",
+        accessorFn: (props) => props.requester.info.barangay.name,
+        header: "Barangay",
+        cell: (props) => props.getValue(),
+      },
+    );
   }
 
   baseColumns.push(

@@ -2,6 +2,7 @@ import type { EventWithRelation } from "@/types/schema";
 
 import { EventInfo } from "./event-info";
 import { EventAttendance } from "./event-attendance";
+import { WithAuthGuard } from "@/components/hocs";
 
 interface EventViewCardProps {
   event: EventWithRelation;
@@ -23,7 +24,9 @@ export const EventViewCard = ({ event }: EventViewCardProps) => {
           profile: event.creator.profile,
         }}
       />
-      <EventAttendance attendances={event.attendances} />
+      <WithAuthGuard>
+        <EventAttendance attendances={event.attendances} />
+      </WithAuthGuard>
     </div>
   );
 };

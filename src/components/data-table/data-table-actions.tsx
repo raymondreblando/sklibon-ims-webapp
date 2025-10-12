@@ -13,8 +13,9 @@ export const DataTableActions = ({
   actionComp,
 }: DataTableActionsProps) => {
   return (
-    <div className="border-input flex items-center justify-between gap-x-4 border-y bg-white px-6 py-4">
+    <div className="border-input flex flex-wrap-reverse md:flex-wrap items-center justify-between gap-4 border-y bg-white px-6 py-4">
       <Searchbar
+        wrapperProps={{ className: "w-full md:w-max" }}
         inputProps={{
           placeholder: "Search here...",
           onInput: (e) => setGlobalFilter(e.currentTarget.value),

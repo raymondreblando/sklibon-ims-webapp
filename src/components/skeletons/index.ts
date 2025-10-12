@@ -1,4 +1,8 @@
 export { AttendanceOverviewSkeleton } from "./attendance-overview-skeleton";
+export { ChatHeaderSkeleton } from "./chat-header-skeleton";
+export { ChatInputSkeleton } from "./chat-input-skeleton";
+export { ChatMessageWrapperSkeleton } from "./chat-message-wrapper-skeleton";
+export { ChatSkeleton } from "./chat-skeleton";
 export { DataTableSkeleton } from "./data-table-skeleton";
 export { FormSkeleton } from "./form-skeleton";
 export { ContactCardSkeleton } from "./contact-card-skeleton";

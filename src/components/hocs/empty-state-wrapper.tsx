@@ -1,4 +1,5 @@
 import type React from "react";
+import type { JSX } from "react";
 import {
   NoRecord,
   type NoRecordProps,
@@ -7,15 +8,20 @@ import {
 interface EmptyStateWrapperProps extends NoRecordProps {
   length: number;
   children: React.ReactNode;
+  component?: JSX.Element;
 }
 
 export const EmptyStateWrapper = ({
   length,
   children,
+  component,
   props,
 }: EmptyStateWrapperProps) => {
-  if (length === 0)
-    return <NoRecord {...props} props={{ className: props?.className }} />;
+  const EmptyComponent = component || (
+    <NoRecord {...props} props={{ className: props?.className }} />
+  );
+
+  if (length === 0) return EmptyComponent;
 
   return children;
 };

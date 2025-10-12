@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
 
+import { ROLES } from "@/lib/constants";
 import { QUERY_KEYS } from "@/lib/constants/api-constants";
 
 import { login } from "@/services/api/auth";
@@ -37,8 +38,11 @@ export const useLoginForm = () => {
         localStorage.setItem("user", JSON.stringify(data.user));
         localStorage.setItem("accessToken", data.accessToken);
 
+        const redirect =
+          data.user.role.role !== ROLES.USER ? "/dashboard" : "/";
+
         navigate({
-          to: (search.redirect as string | undefined) ?? "/dashboard",
+          to: (search.redirect as string | undefined) ?? redirect,
           replace: true,
         });
       } catch (error) {

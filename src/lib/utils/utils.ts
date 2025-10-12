@@ -1,6 +1,7 @@
 import { clsx, type ClassValue } from "clsx";
 import type React from "react";
 import { twMerge } from "tailwind-merge";
+import type { NotificationContent, NotificationType } from "@/types/schema";
 
 export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 
@@ -19,6 +20,21 @@ export const formatFilename = (filename: string, maxLength = 20) => {
   return name.length > maxLength
     ? `${name.substring(0, maxLength)}....${extension}`
     : filename;
+};
+
+export const generateNotificationMessage = (
+  type: NotificationType,
+  data: NotificationContent,
+) => {
+  if (type === "request") {
+    return data.status
+      ? `Your request ${data.name} was ${data.status?.toLowerCase()} successfully`
+      : `${data.user} just sent you a new request — check it out!`;
+  } else {
+    return data.status
+      ? `The event ${data.name} has been ${data.status}.`
+      : `Announcement: A new event ${data.name}. Review the details.`;
+  }
 };
 
 export const preventNumericInput = (
@@ -53,6 +69,9 @@ export const getEventBadgeVariant = (status: string) => {
     case "cancelled":
       return "destructive";
       break;
+    case "archived":
+      return "destructive";
+      break;
     default:
       throw new Error("Invalid event status");
       break;
@@ -77,7 +96,7 @@ export const getEventCalendarColor = (status: string) => {
       throw new Error("Invalid event status");
       break;
   }
-}
+};
 
 export const getUserBadgeVariant = (status: string) => {
   switch (status) {

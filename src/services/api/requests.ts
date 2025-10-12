@@ -10,9 +10,12 @@ import type {
   UpdateRequestStatusWithReasonField,
 } from "@/lib/schemas/request";
 
-export const getRequests = async () => {
+export const getRequests = async (
+  params?: Record<string, string | number | boolean>,
+) => {
   const { data: response } = await api.get<ApiResponse<RequestWithRelation[]>>(
     API_ENDPOINTS.REQUESTS,
+    { params: params },
   );
 
   return response;

@@ -39,7 +39,7 @@ function RouteComponent() {
               ))}
         </QueryStatusWrapper>
       </div>
-      <RedirectLink linkProps={{ to: "/" }}>Go to login page</RedirectLink>
+      <RedirectLink linkProps={{ to: "/login" }}>Go to login page</RedirectLink>
     </AuthWrapper>
   );
 }
