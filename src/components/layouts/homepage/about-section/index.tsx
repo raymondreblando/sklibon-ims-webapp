@@ -1,6 +1,6 @@
 import { Heading, Subheading } from "@/components/headings";
-import { LibonMap } from "./libon-map";
 import { AboutContent } from "./about-content";
+import { MapPage } from "@/components/map/event-map";
 
 export const AboutSection = () => {
   return (
@@ -28,7 +28,7 @@ export const AboutSection = () => {
         </a>
       </div>
       <AboutContent />
-      <LibonMap />
+      <MapPage />
     </section>
   );
 };
