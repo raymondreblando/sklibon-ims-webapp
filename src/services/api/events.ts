@@ -17,6 +17,15 @@ export const getEvents = async () => {
   return response;
 };
 
+export const getBarangayEvents = async (barangay: string | null) => {
+  const { data: response } = await api.get<ApiResponse<EventWithRelation[]>>(
+    API_ENDPOINTS.EVENTS,
+    { params: { barangay } },
+  );
+
+  return response;
+};
+
 export const createEvent = async (data: CreateEventField) => {
   const { data: response } = await api.post<ApiResponse<EventWithRelation>>(
     API_ENDPOINTS.EVENTS,
