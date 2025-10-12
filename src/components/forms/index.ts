@@ -15,6 +15,7 @@ export { LoginForm } from "./login-form";
 export { RegisterForm } from "./register-form";
 export { ChangePasswordForm } from "./account/change-password";
 export { ChangeProfilePicForm } from "./account/change-profile";
+export { AddGroupMemberForm } from "./chat/add-group-member";
 export { CreateGroupChatForm } from "./chat/create-group-chat";
 export { CreatePrivateChatForm } from "./chat/create-private-chat";
 export { SendMessageForm } from "./chat/send-message";

@@ -193,14 +193,7 @@ export type Archive = {
 
 export type Participant = {
   id: string;
-  user: {
-    id: string;
-    profile: string | null;
-    info: {
-      firstname: string;
-      lastname: string;
-    };
-  };
+  user: MinifyUser;
 };
 
 export type Chat = {

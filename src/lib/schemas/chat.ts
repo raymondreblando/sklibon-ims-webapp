@@ -20,6 +20,21 @@ export const SendMessageSchema = z.object({
   message: z.string().min(1, { message: "Please specify your message" }),
 });
 
+export const AddGroupMemberSchema = z.object({
+  chat_id: z.string(),
+  participants: z
+    .array(
+      z.object({
+        user_id: z.string(),
+        profile: z.string().catch(""),
+        fullname: z.string(),
+        username: z.string(),
+      }),
+    )
+    .min(1, { message: "Please select a user to proceed." }),
+});
+
 export type CreatePrivateChatField = z.infer<typeof CreatePrivateChatSchema>;
 export type CreateGroupChatField = z.infer<typeof CreateGroupChatSchema>;
 export type SendMessageField = z.infer<typeof SendMessageSchema>;
+export type AddGroupMemberField = z.infer<typeof AddGroupMemberSchema>;

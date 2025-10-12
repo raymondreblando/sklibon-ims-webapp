@@ -7,6 +7,7 @@ import type {
   CreatePrivateChatField,
   CreateGroupChatField,
   SendMessageField,
+  AddGroupMemberField,
 } from "@/lib/schemas/chat";
 
 export const getChats = async () => {
@@ -26,19 +27,48 @@ export const getChatMessages = async (id: string | undefined) => {
 };
 
 export const createPrivateChat = async (data: CreatePrivateChatField) => {
-  const { data: response } = await api.post<ApiResponse<{ chatId: string }>>(API_ENDPOINTS.PRIVATE_CHAT, data);
+  const { data: response } = await api.post<ApiResponse<{ chatId: string }>>(
+    API_ENDPOINTS.PRIVATE_CHATS,
+    data,
+  );
 
   return response;
 };
 
 export const createGroupChat = async (data: CreateGroupChatField) => {
-  const { data: response } = await api.post(API_ENDPOINTS.GROUP_CHAT, data);
+  const { data: response } = await api.post(API_ENDPOINTS.GROUP_CHATS, data);
 
   return response;
 };
 
-export const sendMessage = async (id: string | undefined, data: SendMessageField) => {
-  const { data: response } = await api.put(`${API_ENDPOINTS.CHATS}/${id}`, data);
+export const sendMessage = async (
+  id: string | undefined,
+  data: SendMessageField,
+) => {
+  const { data: response } = await api.put(
+    `${API_ENDPOINTS.CHATS}/${id}`,
+    data,
+  );
+
+  return response;
+};
+
+export const addGroupMember = async (data: AddGroupMemberField) => {
+  const { data: response } = await api.post(API_ENDPOINTS.GROUP_MEMBERS, data);
+
+  return response;
+};
+
+export const viewGroupMember = async (chatId: string | undefined) => {
+  const { data: response } = await api.get(API_ENDPOINTS.GROUP_MEMBERS, {
+    params: { chatid: chatId },
+  });
+
+  return response;
+};
+
+export const deleteGroupMember = async (id: string) => {
+  const { data: response } = await api.delete(`${API_ENDPOINTS.GROUP_MEMBERS}/${id}`);
 
   return response;
 };

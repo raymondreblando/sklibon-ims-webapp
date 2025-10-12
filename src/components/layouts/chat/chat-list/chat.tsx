@@ -5,14 +5,25 @@ import { cn } from "@/lib/utils/utils";
 
 interface ChatProps {
   id: string;
+  type: "group" | "private";
   name: string;
   profile: string;
   message: string;
   isSelected: boolean;
+  isOnline: boolean;
 }
 
-export const Chat = ({ id, name, profile, message, isSelected }: ChatProps) => {
+export const Chat = ({
+  id,
+  type,
+  name,
+  profile,
+  message,
+  isSelected,
+  isOnline,
+}: ChatProps) => {
   const navigate = useNavigate({ from: Route.fullPath });
+  const isPrivate = type === "private";
 
   return (
     <div
@@ -23,13 +34,26 @@ export const Chat = ({ id, name, profile, message, isSelected }: ChatProps) => {
       )}
     >
       <div className="relative">
-        <Avatar className="border-success mt-1 h-12 w-12 border-2">
+        <Avatar
+          className={cn(
+            "mt-1 h-12 w-12 border-2",
+            isOnline ? "border-success" : "border-input",
+            !isPrivate && "border-primary",
+          )}
+        >
           <AvatarImage src={profile} />
           <AvatarFallback className="bg-primary text-primary-foreground">
             {name.charAt(0).toUpperCase()}
           </AvatarFallback>
         </Avatar>
-        <span className="bg-success absolute right-0 bottom-1.5 min-h-3 min-w-3 rounded-full"></span>
+        {isPrivate && (
+          <span
+            className={cn(
+              "absolute right-0 bottom-1.5 min-h-3 min-w-3 rounded-full",
+              isOnline ? "bg-success" : "bg-muted",
+            )}
+          ></span>
+        )}
       </div>
       <div>
         <p className="text-sm font-semibold md:text-base">{name}</p>

@@ -1,5 +1,6 @@
 import { getAuthUser } from "@/lib/utils/auth";
 import { useMessage } from "@/contexts/message-context";
+import { useEffect, useRef } from "react";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ChatBubble } from "./chat-bubble";
@@ -7,9 +8,18 @@ import { ChatBubble } from "./chat-bubble";
 export const ChatMessageWrapper = () => {
   const { queryResult } = useMessage();
   const userId = getAuthUser()?.id;
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const data = queryResult.data?.data;
   const messages = data?.messages;
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView();
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   return (
     <ScrollArea className="h-[calc(100vh-340px)]">
@@ -28,6 +38,7 @@ export const ChatMessageWrapper = () => {
               />
             );
           })}
+        <div ref={messagesEndRef} />
       </div>
     </ScrollArea>
   );
