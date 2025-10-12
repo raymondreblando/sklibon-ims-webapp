@@ -69,6 +69,9 @@ export const getEventBadgeVariant = (status: string) => {
     case "cancelled":
       return "destructive";
       break;
+    case "archived":
+      return "destructive";
+      break;
     default:
       throw new Error("Invalid event status");
       break;
