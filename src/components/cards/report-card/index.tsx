@@ -102,7 +102,9 @@ export const ReportCard = ({ report, onDelete, onUpdate }: ReportCardProps) => {
                 ? "You"
                 : report.uploader.info.firstname}
             </p>
-            <p className="text-muted text-[10px] font-medium">Uploader</p>
+            <p className="text-muted text-[10px] font-semibold">
+              Brgy. {report.barangay.name}
+            </p>
           </div>
         </div>
         <div className="text-muted flex items-center gap-x-2">

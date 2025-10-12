@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import { getEventBadgeVariant, textElipsis } from "@/lib/utils/utils";
+import { getEventBadgeVariant } from "@/lib/utils/utils";
 import { useEventCard } from "@/contexts/event-card-context";
 
 import { CardContent } from "@/components/ui/card";
@@ -17,8 +17,8 @@ export const Content = () => {
     <CardContent className="h-[320px] space-y-4 py-4">
       <Tooltip>
         <TooltipTrigger asChild>
-          <p className="mb-1 text-lg font-semibold">
-            {textElipsis(event.name, 56)}
+          <p className="mb-1 line-clamp-1 text-lg font-semibold">
+            {event.name}
           </p>
         </TooltipTrigger>
         <TooltipContent>
@@ -40,8 +40,8 @@ export const Content = () => {
           Expired Date: {format(event.expiredDate, "MMM dd, yyyy hh:mm a")}
         </p>
       </div>
-      <p className="text-sm font-medium text-pretty">
-        {textElipsis(event.description, 300)}
+      <p className="line-clamp-5 text-sm font-medium text-pretty">
+        {event.description}
       </p>
     </CardContent>
   );
