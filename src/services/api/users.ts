@@ -3,11 +3,23 @@ import type { ApiResponse } from "@/types";
 import type { UserWithRelation } from "@/types/schema";
 
 import { API_ENDPOINTS } from "@/lib/constants/api-constants";
-import type { CreateUserField, UpdateUserField, UpdateUserStatusField } from "@/lib/schemas/user";
+import type {
+  CreateUserField,
+  UpdateUserField,
+  UpdateUserStatusField,
+} from "@/lib/schemas/user";
 
 export const getUsers = async () => {
   const { data: response } = await api.get<ApiResponse<UserWithRelation[]>>(
     API_ENDPOINTS.USERS,
+  );
+
+  return response;
+};
+
+export const getBrgyOfficials = async (barangay: string | null) => {
+  const { data: response } = await api.get<ApiResponse<UserWithRelation[]>>(
+    `${API_ENDPOINTS.SK_OFFICIALS}/${barangay}`,
   );
 
   return response;
