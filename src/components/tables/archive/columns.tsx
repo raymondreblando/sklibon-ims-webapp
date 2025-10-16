@@ -1,4 +1,5 @@
 import type { ColumnDef } from "@tanstack/react-table";
+import { Link, linkOptions } from "@tanstack/react-router";
 
 import { format } from "date-fns";
 import { getAuthUser } from "@/lib/utils/auth";
@@ -10,14 +11,20 @@ import type {
   ReportWithRelation,
 } from "@/types/schema";
 
+import { Button } from "@/components/ui/button";
+import { TableUserProfile } from "@/components/layouts/table";
 import {
   CalendarDaysIcon,
+  ExternalLinkIcon,
   FileTextIcon,
   TrashIcon,
   type LucideIcon,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { TableUserProfile } from "@/components/layouts/table";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export const getColumns = ({
   onDelete,
@@ -144,15 +151,42 @@ export const getColumns = ({
       cell: (props) => {
         const userId = getAuthUser()?.id;
         const row = props.row.original;
+        const archivableType = row.archivableType;
 
-        if (row.archivedBy.id !== userId)
-          return '-';
+        const redirectLink =
+          archivableType === "event"
+            ? linkOptions({
+                to: "/events/$eventId/view",
+                params: { eventId: row.archivable.id },
+              })
+            : linkOptions({
+                to: "/reports/$reportId/view",
+                params: { reportId: row.archivable.id },
+              });
+
+        if (row.archivedBy.id !== userId) return "-";
 
         return (
-          <Button variant="outline" onClick={() => onDelete(row.id)}>
-            <TrashIcon />
-            Unarchive
-          </Button>
+          <div className="flex items-center gap-x-4">
+            <Button variant="outline" onClick={() => onDelete(row.id)}>
+              <TrashIcon />
+              Unarchive
+            </Button>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Link
+                  to={redirectLink.to}
+                  params={redirectLink.params}
+                  className="border-input grid h-10 place-items-center rounded-md border px-4 py-2"
+                >
+                  <ExternalLinkIcon className="size-4" />
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>View Archived</p>
+              </TooltipContent>
+            </Tooltip>
+          </div>
         );
       },
     },
