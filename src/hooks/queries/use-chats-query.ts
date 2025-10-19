@@ -3,6 +3,7 @@ import { QUERY_KEYS } from "@/lib/constants/api-constants";
 import {
   getChatMessages,
   getChats,
+  getMessageCount,
   viewGroupMember,
 } from "@/services/api/chats";
 
@@ -14,6 +15,13 @@ export const useChatMessagesQuery = (id: string) => {
   return useQuery({
     queryKey: [QUERY_KEYS.CHATS, id],
     queryFn: () => getChatMessages(id),
+  });
+};
+
+export const useChatMessagesCount = () => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.MESSAGE_COUNT],
+    queryFn: getMessageCount,
   });
 };
 

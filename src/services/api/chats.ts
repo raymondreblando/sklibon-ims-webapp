@@ -26,6 +26,14 @@ export const getChatMessages = async (id: string | undefined) => {
   return response;
 };
 
+export const getMessageCount = async () => {
+  const { data: response } = await api.get<ApiResponse<{ count: number }>>(
+    `${API_ENDPOINTS.CHATS}/count`,
+  );
+
+  return response;
+};
+
 export const createPrivateChat = async (data: CreatePrivateChatField) => {
   const { data: response } = await api.post<ApiResponse<{ chatId: string }>>(
     API_ENDPOINTS.PRIVATE_CHATS,
@@ -68,7 +76,9 @@ export const viewGroupMember = async (chatId: string | undefined) => {
 };
 
 export const deleteGroupMember = async (id: string) => {
-  const { data: response } = await api.delete(`${API_ENDPOINTS.GROUP_MEMBERS}/${id}`);
+  const { data: response } = await api.delete(
+    `${API_ENDPOINTS.GROUP_MEMBERS}/${id}`,
+  );
 
   return response;
 };

@@ -73,3 +73,8 @@ export type UploadProgress = {
 };
 
 export type EventPageLayout = "grid" | "calendar";
+
+export type NotifState = {
+  count: number;
+  read: boolean;
+}

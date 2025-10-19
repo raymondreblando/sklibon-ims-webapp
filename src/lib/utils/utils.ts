@@ -111,3 +111,20 @@ export const getUserBadgeVariant = (status: string) => {
       break;
   }
 };
+
+export const calculateCenterCoordinates = (
+  coordinates: Array<[number, number]>,
+) => {
+  let totalLng = 0;
+  let totalLat = 0;
+
+  coordinates.forEach((coordinate) => {
+    totalLng += coordinate[0];
+    totalLat += coordinate[1];
+  });
+
+  const centerLat = totalLat / coordinates.length;
+  const centerLng = totalLng / coordinates.length;
+
+  return [centerLat, centerLng] as [number, number];
+};
