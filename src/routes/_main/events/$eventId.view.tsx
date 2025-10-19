@@ -6,6 +6,7 @@ import { useBreadcrumb } from "@/components/ui/breadcrumb";
 import { QueryStatusWrapper } from "@/components/hocs";
 import { EventViewCardSkeleton } from "@/components/skeletons";
 import { EventViewCard } from "@/components/cards";
+import { DeletedResource } from "@/components/layouts/empty-states";
 
 export const Route = createFileRoute("/_main/events/$eventId/view")({
   component: RouteComponent,
@@ -26,6 +27,7 @@ function RouteComponent() {
       isPending={isPending}
       isError={isError}
       loadingComp={<EventViewCardSkeleton />}
+      errorComp={<DeletedResource resource="event" />}
       onRetry={refetch}
     >
       {data && (
