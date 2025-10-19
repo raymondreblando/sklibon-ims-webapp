@@ -58,6 +58,7 @@ export const QUERY_KEYS = {
   GALLERY_IMAGES: "gallery-images",
   NOTIFICATIONS: "notifications",
   CHATS: "chats",
+  MESSAGE_COUNT: "message-count",
   GROUP_MEMBERS: "members",
   USER_PROFILE: "user-profile",
   PROFILE_PIC: "profile-pic",
