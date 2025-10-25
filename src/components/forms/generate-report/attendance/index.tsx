@@ -30,12 +30,12 @@ export const AttendanceReportForm = () => {
       />
       <FormCheckbox
         name="with_time"
-        label="Generate with time-in and time-out"
+        label="Generate with minutes count"
         item={{
           id: "true",
-          label: "With Time",
+          label: "With Minute Count",
           description:
-            "This will generate the report with time-in's and time-out's.",
+            "This will generate the report with minucte count based on time-in's and time-out's.",
         }}
         className="md:col-span-2"
       />
