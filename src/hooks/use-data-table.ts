@@ -11,11 +11,12 @@ import type { DataTableProps } from "@/components/data-table";
 export const useDataTable = <TData, TValue>({
   columns,
   data,
+  itemsPerPage = 10,
 }: Omit<DataTableProps<TData, TValue>, "actionComp">) => {
   const [globalFilter, setGlobalFilter] = useState("");
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
-    pageSize: 10,
+    pageSize: itemsPerPage,
   });
 
   const table = useReactTable({
