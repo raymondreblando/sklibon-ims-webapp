@@ -16,4 +16,5 @@ export { UpdatePositionDialog } from "./position/update-position-dialog";
 export { CreateRequestTypeDialog } from "./request-type/create-request-type-dialog";
 export { UpdateRequestTypeDialog } from "./request-type/update-request-type-dialog";
 export { UpdateWithReasonDialog } from "./update-with-reason-modal";
+export { GenerateAttendanceReportDialog } from "./report/generate-attendance-report-dialog";
 export { ViewReasonDialog } from "./view-reason-modal";
