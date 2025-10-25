@@ -43,7 +43,8 @@ export const FooterAction = () => {
         Icon: TimerIcon,
         label: event.openAttendance ? "Time In" : "Time Out",
         onUpdate: () => onAttend(event.id),
-        show: event.openAttendance,
+        show:
+          event.openAttendance && event.status.toLowerCase() === "ongoing",
       },
       {
         Icon: CircleCheckBigIcon,

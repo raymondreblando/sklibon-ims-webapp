@@ -2,7 +2,13 @@ import { ButtonLink } from "@/components/buttons";
 import { Heading } from "@/components/headings";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { useDashboardContext } from "@/contexts/dashboard-context";
+import { textElipsis } from "@/lib/utils/utils";
 import { format } from "date-fns";
 import { CalendarDaysIcon } from "lucide-react";
 
@@ -31,9 +37,16 @@ export const UpcomingEvents = () => {
                   strokeWidth={1.4}
                 />
                 <div>
-                  <p className="text-sm font-semibold md:text-base">
-                    {event.name}
-                  </p>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <p className="line-clamp-1 text-sm font-semibold md:text-base">
+                        {textElipsis(event.name, 35)}
+                      </p>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>{event.name}</p>
+                    </TooltipContent>
+                  </Tooltip>
                   <p className="text-muted text-[10px] font-medium md:text-xs">
                     {event.venue}
                   </p>

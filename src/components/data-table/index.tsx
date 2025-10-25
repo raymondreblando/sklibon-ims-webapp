@@ -15,6 +15,7 @@ export interface DataTableProps<TData, TValue> {
   data: TData[];
   actionComp?: React.ReactNode;
   withActions?: boolean;
+  itemsPerPage?: number;
 }
 
 export const DataTable = <TData, TValue>({

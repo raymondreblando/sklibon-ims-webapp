@@ -39,3 +39,5 @@ export { UpdateRequestTypeForm } from "./request-type/update";
 export { CreateUserForm } from "./user/create";
 export { UpdateUserForm } from "./user/update";
 export { ProfileForm } from "./profile";
+
+export { AttendanceReportForm } from "./generate-report/attendance";

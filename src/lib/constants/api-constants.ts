@@ -23,6 +23,7 @@ export const API_ENDPOINTS = {
   HOTLINES: "/v1/hotlines",
   REQUEST_TYPES: "/v1/request-types",
   REPORTS: "/v1/reports",
+  GENERATE_REPORTS: "/v1/generate-reports",
   ATTACHMENTS: "/v1/attachments",
   GALLERIES: "/v1/galleries",
   GALLERY_IMAGES: "/v1/gallery-images",

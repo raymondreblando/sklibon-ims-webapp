@@ -128,3 +128,17 @@ export const calculateCenterCoordinates = (
 
   return [centerLat, centerLng] as [number, number];
 };
+
+export const downloadFile = (
+  filename: string,
+  data: BlobPart,
+  mimeType?: "application/pdf",
+) => {
+  const blob = new Blob([data], { type: mimeType });
+  const url = window.URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  link.click();
+  window.URL.revokeObjectURL(url);
+};
