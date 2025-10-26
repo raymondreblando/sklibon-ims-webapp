@@ -6,6 +6,7 @@ import { DataTable } from "@/components/data-table";
 import { DataTableSkeleton } from "@/components/skeletons";
 import { QueryStatusWrapper } from "@/components/hocs/query-status-wrapper";
 import { GenerateAttendanceReportDialog } from "@/components/modals";
+import { WithRoleGuard } from "@/components/hocs";
 
 interface AttendanceTableProps {
   onUpdate: (id: string) => void;
@@ -33,7 +34,11 @@ export const AttendanceTable = ({
           data={tableData ?? data.data}
           columns={columns}
           withActions={withActions}
-          actionComp={<GenerateAttendanceReportDialog />}
+          actionComp={
+            <WithRoleGuard allowed={["Admin", "Super Admin"]}>
+              <GenerateAttendanceReportDialog />
+            </WithRoleGuard>
+          }
         />
       )}
     </QueryStatusWrapper>
